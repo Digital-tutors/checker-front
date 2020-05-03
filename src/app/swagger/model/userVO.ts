@@ -16,5 +16,16 @@ export interface UserVO {
   firstName?: string;
   id?: string;
   lastName?: string;
+  role?: UserVO.RoleEnum;
   token?: string;
+}
+export namespace UserVO {
+  export type RoleEnum = 'ROLE_USER' | 'ROLE_STUDENT' | 'ROLE_TEACHER' | 'ROLE_ADMIN' | 'ROLE_SUPER_ADMIN';
+  export const RoleEnum = {
+    USER: 'ROLE_USER' as RoleEnum,
+    STUDENT: 'ROLE_STUDENT' as RoleEnum,
+    TEACHER: 'ROLE_TEACHER' as RoleEnum,
+    ADMIN: 'ROLE_ADMIN' as RoleEnum,
+    SUPERADMIN: 'ROLE_SUPER_ADMIN' as RoleEnum,
+  };
 }

@@ -12,11 +12,18 @@
 import { UserVO } from './userVO';
 
 export interface TopicVO {
-  accessType?: string;
+  accessType?: TopicVO.AccessTypeEnum;
   authorId?: UserVO;
   contributors?: Array<UserVO>;
   createdDate?: string;
   followers?: Array<UserVO>;
   id?: string;
   title?: string;
+}
+export namespace TopicVO {
+  export type AccessTypeEnum = 'PUBLIC' | 'PRIVATE';
+  export const AccessTypeEnum = {
+    PUBLIC: 'PUBLIC' as AccessTypeEnum,
+    PRIVATE: 'PRIVATE' as AccessTypeEnum,
+  };
 }

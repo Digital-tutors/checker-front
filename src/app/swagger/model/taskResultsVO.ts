@@ -21,7 +21,15 @@ export interface TaskResultsVO {
   memory?: string;
   messageOut?: string;
   runtime?: string;
-  status?: string;
+  status?: TaskResultsVO.StatusEnum;
   taskId?: TaskVO;
   userId?: UserVO;
+}
+export namespace TaskResultsVO {
+  export type StatusEnum = 'NOT_CHECKING' | 'RUNNING' | 'COMPLETED';
+  export const StatusEnum = {
+    NOTCHECKING: 'NOT_CHECKING' as StatusEnum,
+    RUNNING: 'RUNNING' as StatusEnum,
+    COMPLETED: 'COMPLETED' as StatusEnum,
+  };
 }

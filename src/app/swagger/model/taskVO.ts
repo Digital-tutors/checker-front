@@ -17,6 +17,14 @@ export interface TaskVO {
   contributors?: Array<UserVO>;
   description?: string;
   id?: string;
-  level?: string;
+  level?: TaskVO.LevelEnum;
   topicId?: TopicVO;
+}
+export namespace TaskVO {
+  export type LevelEnum = 'JUNIOR' | 'MIDDLE' | 'SENIOR';
+  export const LevelEnum = {
+    JUNIOR: 'JUNIOR' as LevelEnum,
+    MIDDLE: 'MIDDLE' as LevelEnum,
+    SENIOR: 'SENIOR' as LevelEnum,
+  };
 }
