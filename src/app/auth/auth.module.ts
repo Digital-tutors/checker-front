@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { ShareModule } from '@share/share.module';
 
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
 import { RoutingModule } from './auth.routes';
 
 @NgModule({
