@@ -7,6 +7,10 @@ import { UnAuthGuard } from '@share/guards/un-auth.guard';
 const routes: Routes = [
   {
     path: 'auth',
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+  },
+  {
+    path: 'auth',
     canActivate: [UnAuthGuard],
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
   },
