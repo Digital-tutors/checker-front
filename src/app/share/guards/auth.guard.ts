@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   private checkForAuth(): boolean {
     if (!localStorage.getItem(environment.token)) {
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/auth/login']);
     }
 
     return !!localStorage.getItem(environment.token);
