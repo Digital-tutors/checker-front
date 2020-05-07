@@ -52,8 +52,10 @@
 
   </section>
 
-  <section class="task-code">
-    <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+  <section class="task-code"
+           [formGroup]="codeForm">
+    <ngx-monaco-editor [options]="editorOptions"
+                       formControlName="code"></ngx-monaco-editor>
   </section>
 </section>
 

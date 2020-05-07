@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
   declarations: [TaskComponent, HeaderComponent],
-  imports: [CommonModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MonacoEditorModule, FormsModule],
+  imports: [CommonModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MonacoEditorModule, ReactiveFormsModule],
 })
 export class TaskModule {}
