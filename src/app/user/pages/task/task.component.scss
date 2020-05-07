@@ -57,7 +57,25 @@
 .task-code {
   padding: 20px;
 
+  .header-code {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    button {
+      height: 40px;
+    }
+  }
+
+  mat-form-field {
+
+  }
+
   ngx-monaco-editor {
-    height: 100%;
+    height: 500px;
+
+    .monaco-editor {
+      padding-top: 20px;
+    }
   }
 }

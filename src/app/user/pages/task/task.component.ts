@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 export class TaskComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
-  public editorOptions = { theme: 'vs-dark', language: 'javascript' };
+  public editorOptions = { theme: 'vs-dark', language: 'cpp' };
   public code = 'function x() {\n\tconsole.log("Hello world!");\n}';
 
   public codeForm: FormGroup;
