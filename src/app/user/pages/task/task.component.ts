@@ -36,6 +36,10 @@ export class TaskComponent implements OnInit, OnDestroy {
     return this.codeForm.get('code').value.split('    ').join('\t');
   }
 
+  public sendCode(): void {
+    console.log(this.getHandledCode());
+  }
+
   public selectLanguage(language: string): void {
     this.editorOptions = {
       ...this.editorOptions,
