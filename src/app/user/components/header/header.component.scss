@@ -1,0 +1,29 @@
+.example-spacer {
+  display: grid;
+  grid-template-columns: 200px auto 100px;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+nav {
+  display: table-cell;
+
+  ul {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+
+    li {
+      list-style: none;
+    }
+  }
+}
+
+.right-nav {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
