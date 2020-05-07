@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { HeaderComponent } from '../../components/header/header.component';
@@ -12,6 +13,6 @@ import { RoutingModule } from './task.routes';
 
 @NgModule({
   declarations: [TaskComponent, HeaderComponent],
-  imports: [CommonModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule],
 })
 export class TaskModule {}
