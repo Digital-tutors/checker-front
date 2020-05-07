@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,8 +12,10 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { TaskComponent } from './task.component';
 import { RoutingModule } from './task.routes';
 
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+
 @NgModule({
   declarations: [TaskComponent, HeaderComponent],
-  imports: [CommonModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule],
+  imports: [CommonModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MonacoEditorModule, FormsModule],
 })
 export class TaskModule {}

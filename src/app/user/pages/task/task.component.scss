@@ -2,12 +2,13 @@
   padding: 0;
   display: grid;
   max-width: 1200px;
-  margin: 60px auto 0;
+  margin: 40px auto 0;
   grid-column-gap: 30px;
   grid-template-columns: repeat(2, 1fr);
 }
 
 .task-info {
+  padding: 20px;
   width: 100%;
 
   h1.title {
@@ -50,5 +51,13 @@
 
   .example-code {
     margin-bottom: 10px;
+  }
+}
+
+.task-code {
+  padding: 20px;
+
+  ngx-monaco-editor {
+    height: 100%;
   }
 }
