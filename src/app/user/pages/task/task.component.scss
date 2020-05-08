@@ -2,13 +2,18 @@
   padding: 0;
   display: grid;
   max-width: 1200px;
-  margin: 60px auto 0;
-  grid-column-gap: 30px;
+  margin: 40px auto 0;
+  grid-gap: 30px;
   grid-template-columns: repeat(2, 1fr);
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .task-info {
-  width: 100%;
+  padding: 20px;
+  width: calc(100% - 40px);
 
   h1.title {
     margin-top: 20px;
@@ -50,5 +55,31 @@
 
   .example-code {
     margin-bottom: 10px;
+  }
+}
+
+.task-code {
+  padding: 20px;
+
+  .header-code {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    button {
+      height: 40px;
+    }
+  }
+
+  mat-form-field {
+
+  }
+
+  ngx-monaco-editor {
+    height: 500px;
+
+    .monaco-editor {
+      padding-top: 20px;
+    }
   }
 }

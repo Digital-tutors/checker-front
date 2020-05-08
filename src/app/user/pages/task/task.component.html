@@ -1,5 +1,3 @@
-<app-header></app-header>
-
 <section class="two-column">
   <section class="task-info">
     <a class="arrow-back" mat-stroked-button href="https://www.google.com/">
@@ -52,8 +50,24 @@
 
   </section>
 
-  <section class="task-code">
-    <p>task info works!</p>
+  <section class="task-code"
+           [formGroup]="codeForm">
+
+    <div class="header-code">
+      <mat-form-field>
+        <mat-label>Выберите язык</mat-label>
+        <mat-select [value]="editorOptions.language" (selectionChange)="selectLanguage($event.value)">
+          <mat-option value="cpp">C/C++</mat-option>
+          <mat-option value="python">Python</mat-option>
+          <mat-option value="kotlin">Kotlin</mat-option>
+          <mat-option value="php">PHP</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" (click)="sendCode()">Отправить</button>
+    </div>
+
+    <ngx-monaco-editor [options]="editorOptions"
+                       formControlName="code"></ngx-monaco-editor>
   </section>
 </section>
-
