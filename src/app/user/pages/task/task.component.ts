@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { flatMap, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskControllerService } from '@swagger/api/taskController.service';
 import { TaskVO } from '@swagger/model/taskVO';
@@ -28,13 +28,15 @@ export class TaskComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setForm();
 
-    this.route.paramMap.subscribe(params => {
-      this.taskId = params.get('taskId');
-    });
-
-    this.taskControllerService.getTaskByIdUsingGET(this.taskId).subscribe(task => (this.task = task));
-
-    console.log(this.task);
+    this.route.paramMap
+      .pipe(
+        tap(params => {
+          this.taskId = params.get('taskId');
+        }),
+        flatMap(params => this.taskControllerService.getTaskByIdUsingGET(params.get('taskId'))),
+        takeUntil(this.ngOnDestroy$),
+      )
+      .subscribe(task => (this.task = task));
   }
 
   ngOnDestroy(): void {
