@@ -9,6 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Options } from './options';
+import { Test } from './test';
 import { TopicVO } from './topicVO';
 import { UserVO } from './userVO';
 
@@ -18,6 +20,8 @@ export interface TaskVO {
   description?: string;
   id?: string;
   level?: TaskVO.LevelEnum;
+  options?: Options;
+  tests?: Test;
   topicId?: TopicVO;
 }
 export namespace TaskVO {

@@ -12,6 +12,6 @@
 
 export interface Options {
   constructions?: Array<string>;
-  timeLimit?: string;
   memoryLimit?: string;
+  timeLimit?: string;
 }
