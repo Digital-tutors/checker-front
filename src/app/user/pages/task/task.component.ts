@@ -2,6 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { TaskControllerService } from '@swagger/api/taskController.service';
+import { TaskVO } from '@swagger/model/taskVO';
 
 @Component({
   selector: 'app-user-task',
@@ -10,16 +14,19 @@ import { Subject } from 'rxjs';
 })
 export class TaskComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
+  private task: TaskVO;
 
   public editorOptions = { theme: 'vs-dark', language: 'cpp' };
-  public code = 'function x() {\n\tconsole.log("Hello world!");\n}';
+  public code = '/*\n\tЭто мини-редактор VS Code.\n\tПисать код вы можете ниже или вместо комментария\n*/\n\n';
 
   public codeForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private taskControllerService: TaskControllerService) {}
 
   ngOnInit(): void {
     this.setForm();
+
+    this.taskControllerService.getTaskByIdUsingGET('').pipe(tap(task => (this.task = task)));
   }
 
   ngOnDestroy(): void {

@@ -9,15 +9,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { HeaderComponent } from '../../components/header/header.component';
-
 import { TaskComponent } from './task.component';
 import { RoutingModule } from './task.routes';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
-  declarations: [TaskComponent, HeaderComponent],
+  declarations: [TaskComponent],
   imports: [
     CommonModule,
     RoutingModule,
