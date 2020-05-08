@@ -13,6 +13,7 @@ import { RoutingModule } from './task.routes';
 
 @NgModule({
   declarations: [TaskComponent, HeaderComponent],
+  exports: [HeaderComponent],
   imports: [CommonModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule],
 })
 export class TaskModule {}
