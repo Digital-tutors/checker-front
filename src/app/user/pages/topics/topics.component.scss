@@ -1,87 +1,70 @@
-.topic-cards-grid {
-  padding: 0;
+@import '~@angular/material/theming';
+@include mat-core();
+
+.topic-cards {
   display: grid;
   max-width: 1200px;
   margin: 40px auto 0;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  grid-gap: 1em;
-}
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
 
-.topic-card-item {
-  background: #fff;
-  margin: 30px auto;
-  height: 180px;
-  width: 240px;
-  border-radius: 7px;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.145);
-  cursor: pointer;
-  transition: 0.4s;
-  border-bottom: 6px solid #4253af;
-  a {
-    text-decoration: none;
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+  }
 
-    p {
-      color: #000000;
+  @media only screen and (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+
+
+  mat-card {
+    border-bottom: 5px solid #fff;
+    transition: 1s;
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 30px auto 44px;
+    grid-row-gap: 20px;
+
+    &:hover {
+      border-bottom: 5px solid #536DFE;
+      transition: 1s;
     }
   }
 
-}
-
-.topic-card-item:hover {
-  transform: scale(1.03);
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.145);
-  color: inherit;
-}
-
-.card-content {
-  min-height: 100%;
-  margin: 1em;
-  position: relative;
-}
-
-.card-content-link {
-  min-height: 100%;
-}
-
-.card-header {
-  font-weight: 700;
-}
-
-.card-body {
-  text-overflow: ellipsis;
-}
-.card-footer {
-  height: 33%;
-  position: absolute;
-  bottom: 0;
-  line-height: 0.4em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.card-label {
-  z-index: 5;
-  padding: 2px 4px;
-  color: #fff;
-  border-radius: 4px;
-  background-color: #4253af;
-  font-weight: 700;
-  white-space: nowrap;
-  box-shadow: 0 2px 0 0 rgba(0,0,0,.2);
-  position: absolute;
-  margin-left: 80%;
-  max-height: 1.5em;
-  top: -5%;
-}
-
-@media (max-width: 680px) {
-  .topic-cards-grid {
-    display: flex;
-    flex-direction: column;
+  mat-card-title {
+    line-height: 30px;
+    margin-bottom: 0;
   }
 
-  .topic-card-item {
-    margin-bottom: 2em;
+  .example-card {
+    padding: 30px 30px;
+  }
+
+  mat-card-subtitle {
+    margin: 0 0 25px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    div {
+      display: inline-flex;
+
+      b {
+        display: inline-flex;
+        padding-right: 8px;
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 0;
+    margin-right: 0;
+
+    span {
+      color: rgba(0,0,0,.54);
+    }
   }
 }
