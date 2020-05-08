@@ -17,7 +17,7 @@
   <mat-card class="topic-info">
     <h2 class="topic-info-title">{{topic.title}}</h2>
     <p  class="topic-info-description">{{topic.description}}</p>
-    <p class="topic-info-success"><strong>Доступ: </strong>{{topic.description}}</p>
+    <p class="topic-info-success"><strong>Доступ: </strong>{{topic.access}}</p>
     <p class="topic-info-author"><strong>Автор: </strong>{{topic.author}}</p>
     <p class="topic-info-follow" *ngIf="topic.isFollow; else disallow">Подписан</p>
     <ng-template #disallow><p class="topic-info-follow">Не подписан</p> </ng-template>
