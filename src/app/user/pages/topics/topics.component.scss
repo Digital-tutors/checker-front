@@ -1,5 +1,8 @@
 .topic-cards-grid {
+  padding: 0;
   display: grid;
+  max-width: 1200px;
+  margin: 40px auto 0;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-gap: 1em;
 }

@@ -92,22 +92,14 @@ export class UserControllerService {
   /**
    * getUserByToken
    *
-   * @param authorization Authorization
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getUserByTokenUsingGET(authorization: string, observe?: 'body', reportProgress?: boolean): Observable<UserVO>;
-  public getUserByTokenUsingGET(authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserVO>>;
-  public getUserByTokenUsingGET(authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserVO>>;
-  public getUserByTokenUsingGET(authorization: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (authorization === null || authorization === undefined) {
-      throw new Error('Required parameter authorization was null or undefined when calling getUserByTokenUsingGET.');
-    }
-
+  public getUserByTokenUsingGET(observe?: 'body', reportProgress?: boolean): Observable<UserVO>;
+  public getUserByTokenUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserVO>>;
+  public getUserByTokenUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserVO>>;
+  public getUserByTokenUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     let headers = this.defaultHeaders;
-    if (authorization !== undefined && authorization !== null) {
-      headers = headers.set('Authorization', String(authorization));
-    }
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = ['*/*'];

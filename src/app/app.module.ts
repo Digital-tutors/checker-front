@@ -17,6 +17,8 @@ import { AuthInterceptor } from '@share/interceptors/auth.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+
 export function GetApiConfiguration() {
   return new Configuration({
     apiKeys: {},
@@ -35,6 +37,7 @@ export function GetApiConfiguration() {
     }),
     ApiModule.forRoot(GetApiConfiguration),
     BrowserAnimationsModule,
+    MonacoEditorModule.forRoot(),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
