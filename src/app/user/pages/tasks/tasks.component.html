@@ -9,17 +9,19 @@
       <mat-card-content>
         <p class="task-item-description">{{t.description}}</p>
         <p class="task-item-author">Автор: {{t.author}}</p>
-        <mat-icon class="task-item-complete" aria-hidden="false">check_circle_outline</mat-icon>
+        <mat-icon class="task-item-complete" aria-hidden="false" *ngIf="t.isComplete">check_circle_outline</mat-icon>
       </mat-card-content>
     </mat-card>
   </div>
 
   <mat-card class="topic-info">
-    <h2 class="topic-info-title">Title Topic</h2>
-    <p  class="topic-info-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores at dolorum eos error fugiat ipsam laboriosam minus mollitia quo voluptatem! Alias atque commodi facere illum iste magni nam quisquam similique?</p>
-    <p class="topic-info-success"><strong>Доступ:</strong> Публичный</p>
-    <p class="topic-info-author"><strong>Автор:</strong> Ivanov</p>
-    <p  class="topic-info-follow">Подписан</p>
+    <h2 class="topic-info-title">{{topic.title}}</h2>
+    <p  class="topic-info-description">{{topic.description}}</p>
+    <p class="topic-info-success"><strong>Доступ: </strong>{{topic.description}}</p>
+    <p class="topic-info-author"><strong>Автор: </strong>{{topic.author}}</p>
+    <p class="topic-info-follow" *ngIf="topic.isFollow; else disallow">Подписан</p>
+    <ng-template #disallow><p class="topic-info-follow">Не подписан</p> </ng-template>
+
   </mat-card>
 
 </section>
