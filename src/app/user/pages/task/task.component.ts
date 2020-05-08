@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -14,6 +15,7 @@ import { TaskVO } from '@swagger/model/taskVO';
 })
 export class TaskComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
+  private taskId: string;
   private task: TaskVO;
 
   public editorOptions = { theme: 'vs-dark', language: 'cpp' };
@@ -21,12 +23,18 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   public codeForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private taskControllerService: TaskControllerService) {}
+  constructor(private fb: FormBuilder, private taskControllerService: TaskControllerService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.setForm();
 
-    this.taskControllerService.getTaskByIdUsingGET('').pipe(tap(task => (this.task = task)));
+    this.route.paramMap.subscribe(params => {
+      this.taskId = params.get('taskId');
+    });
+
+    this.taskControllerService.getTaskByIdUsingGET(this.taskId).subscribe(task => (this.task = task));
+
+    console.log(this.task);
   }
 
   ngOnDestroy(): void {
