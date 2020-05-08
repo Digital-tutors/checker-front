@@ -1,28 +1,22 @@
-<section class="two-column">
+<section class="two-column" *ngIf="task">
   <section class="task-info">
-    <a class="arrow-back" mat-stroked-button href="https://www.google.com/">
+    <a class="arrow-back" mat-stroked-button [routerLink]="'/user/topics/' + topicId">
       <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
       <span>Назад</span>
     </a>
     <h1 class="title">Среднее арифметическое нескольких чисел</h1>
     <ul class="task-info-desc">
-      <li><b>Тема:</b> Easy Coding</li>
-      <li><b>Уровень сложности:</b> Легкий</li>
-      <li><b>Время выполнения:</b> 10 с.</li>
-      <li><b>Память:</b> 1 Мб</li>
+      <li><b>Тема:</b> {{task.topicId.title}}</li>
+      <li><b>Уровень сложности:</b> {{task.level}}</li>
+      <li><b>Время выполнения:</b> {{task.options.timeLimit}} мс.</li>
+      <li><b>Память:</b> {{task.options.memoryLimit}} Кб</li>
     </ul>
     <h3>Описание</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus posuere volutpat dolor sed rhoncus. Vivamus
-      elementum augue metus, nec maximus purus mollis eget. In eu purus at metus aliquam condimentum sit amet vel sem.
-      Mauris faucibus dapibus tellus. In vulputate vel mauris ac fermentum. Praesent consectetur elit malesuada lacus
-      eleifend volutpat. Integer ullamcorper venenatis feugiat. Sed feugiat justo nibh, sit amet sodales dui ultrices a.
-      Sed tempor nec dui nec consequat. Etiam ultricies odio at nisi sollicitudin varius nec nec sem.</p>
+    <p>{{task.description}}</p>
 
     <h3>Запрещенные конструкции</h3>
     <ul>
-      <li>if</li>
-      <li>while</li>
-      <li>for</li>
+      <li *ngFor="let c of task.options.constructions">{{c}}</li>
     </ul>
 
     <div class="task-table">
@@ -30,23 +24,14 @@
       <h3>Выходные данные</h3>
     </div>
 
-    <div class="task-table">
-      <p>3<br>
-        4<br>
-        5</p>
+    <div class="task-table" *ngFor="let test of task.tests.input; let i = index">
+      <p>{{test}}</p>
 
-      <p>6.0</p>
+      <p>{{task.tests.output[i]}}</p>
     </div>
 
     <mat-divider class="example-code"></mat-divider>
 
-    <div class="task-table">
-      <p>3<br>
-        3<br>
-        4</p>
-
-      <p>5.0</p>
-    </div>
 
   </section>
 
@@ -64,7 +49,8 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-flat-button color="primary" (click)="sendCode()">Отправить</button>
+      <button *ngIf="!spinner" mat-flat-button color="primary" (click)="sendCode()">Отправить</button>
+      <mat-spinner *ngIf="spinner" [strokeWidth]="3" [diameter]="30"></mat-spinner>
     </div>
 
     <ngx-monaco-editor [options]="editorOptions"
