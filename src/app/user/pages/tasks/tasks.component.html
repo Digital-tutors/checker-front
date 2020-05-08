@@ -1,1 +1,25 @@
-<p>tasks works!</p>
+<section class="contain-tasks">
+  <div class="task-list">
+    <mat-card class="task-item"
+         *ngFor="let t of tasks"
+    >
+      <mat-card-title>
+        <h6 class="task-item-title">{{t.title}}</h6>
+      </mat-card-title>
+      <mat-card-content>
+        <p class="task-item-description">{{t.description}}</p>
+        <p class="task-item-author">Автор: {{t.author}}</p>
+        <mat-icon class="task-item-complete" aria-hidden="false">check_circle_outline</mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="topic-info">
+    <h2 class="topic-info-title">Title Topic</h2>
+    <p  class="topic-info-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores at dolorum eos error fugiat ipsam laboriosam minus mollitia quo voluptatem! Alias atque commodi facere illum iste magni nam quisquam similique?</p>
+    <p class="topic-info-success"><strong>Доступ:</strong> Публичный</p>
+    <p class="topic-info-author"><strong>Автор:</strong> Ivanov</p>
+    <p  class="topic-info-follow">Подписан</p>
+  </mat-card>
+
+</section>

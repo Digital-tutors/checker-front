@@ -1,0 +1,65 @@
+.contain-tasks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: Roboto, Arial, sans-serif;
+  padding: 30px;
+  margin-top: 50px;
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    .task-item {
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 5px;
+      border: 0.5px solid transparent;
+      &-title {
+        font-size: 15px;
+        font-weight: 500;
+      }
+      &-description {
+        font-size: 13px;
+      }
+      &-author {
+        font-size: 12px;
+      }
+      &-complete {
+        color: forestgreen;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+      &:hover {
+        box-shadow: none;
+        border: 0.5px solid #E0E0E0;
+      }
+    }
+  }
+
+  .topic-info {
+    width: 100%;
+    margin-left: 50px;
+    border: none;
+    box-shadow: none;
+    &-title {
+      font-size: 40px;
+    }
+    &-description {
+      width: 80%;
+    }
+    &-follow {
+      color: gray;
+    }
+    &-author {
+      //color: gray;
+    }
+    &-success {
+      //color: gray;
+    }
+  }
+
+}
