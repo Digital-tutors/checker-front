@@ -1,21 +1,22 @@
 <section class="contain-tasks">
-  <section class="task-info">
+  <section class="task-info" *ngIf="topic">
     <div class="tasks-header">
       <a class="arrow-back" mat-stroked-button [routerLink]="'/user/topics/'">
         <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
         <span>Назад</span>
       </a>
-      <button mat-flat-button color="primary">Подписаться</button>
-      <button mat-flat-button disabled>Подписан</button>
+      <button *ngIf="spinner == 0" mat-flat-button color="primary" (click)="subscribe()">Подписаться</button>
+      <mat-spinner *ngIf="spinner == 1" [strokeWidth]="3" [diameter]="30"></mat-spinner>
+      <button *ngIf="spinner == 2" mat-flat-button disabled>Подписан</button>
     </div>
-    <h1 class="title"><b>Тема:</b> Среднее арифметическое нескольких чисел</h1>
+    <h1 class="title"><b>Тема:</b> {{topic.title}}</h1>
     <ul class="task-info-desc">
-      <li><b>Доступ:</b> 1</li>
-      <li><b>Уровень сложности:</b> 2</li>
+      <li><b>Автор:</b> {{topic.authorId?.firstName == null ? topic.authorId?.email : topic.authorId?.firstName + ' ' + topic.authorId?.lastName}}</li>
+      <li><b>Доступ:</b> {{topic.accessType == 'PUBLIC' ? 'Публичный' : 'Приватный'}}</li>
     </ul>
   </section>
 
-  <div class="task-list">
+  <div class="task-list" *ngIf="tasks">
     <mat-card class="example-card" *ngFor="let task of tasks">
       <mat-card-subtitle>
         <div>
