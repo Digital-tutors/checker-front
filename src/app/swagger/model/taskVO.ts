@@ -16,12 +16,14 @@ import { UserVO } from './userVO';
 
 export interface TaskVO {
   authorId?: UserVO;
+  complete: boolean;
   contributors?: Array<UserVO>;
   description?: string;
   id?: string;
   level?: TaskVO.LevelEnum;
   options?: Options;
   tests?: Test;
+  title?: string;
   topicId?: TopicVO;
 }
 export namespace TaskVO {

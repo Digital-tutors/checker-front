@@ -20,6 +20,7 @@ export interface TaskUpdateRq {
   description?: string;
   options?: Options;
   tests?: Test;
+  title?: string;
 }
 export namespace TaskUpdateRq {
   export type LevelEnum = 'JUNIOR' | 'MIDDLE' | 'SENIOR';

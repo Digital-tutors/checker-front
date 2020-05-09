@@ -22,6 +22,7 @@ export interface TaskAdminVO {
   level?: TaskAdminVO.LevelEnum;
   options?: Options;
   tests?: Test;
+  title?: string;
   topicId?: TopicVO;
 }
 export namespace TaskAdminVO {

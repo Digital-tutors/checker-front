@@ -1,10 +1,13 @@
 <section class="two-column" *ngIf="task">
   <section class="task-info">
-    <a class="arrow-back" mat-stroked-button [routerLink]="'/user/topics/' + topicId + '/tasks'">
-      <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
-      <span>Назад</span>
-    </a>
-    <h1 class="title">Среднее арифметическое нескольких чисел</h1>
+    <div class="info-header">
+      <a class="arrow-back" mat-stroked-button [routerLink]="'/user/topics/' + topicId + '/tasks'">
+        <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
+        <span>Назад</span>
+      </a>
+      <span class="complete">Выполнено</span>
+    </div>
+    <h1 class="title">{{task.title}}</h1>
     <ul class="task-info-desc">
       <li><b>Тема:</b> {{task.topicId.title}}</li>
       <li><b>Уровень сложности:</b> {{task.level}}</li>

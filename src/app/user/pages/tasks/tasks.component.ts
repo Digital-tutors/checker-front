@@ -53,7 +53,7 @@ export class TasksComponent implements OnInit, OnDestroy {
       )
       .subscribe(([topic, user]) => {
         this.topic = topic;
-        this.spinner = this.topic.followers.filter(value => value.id === user.id).length > 0 ? SubscribeStatus.SUBSCRIBED : SubscribeStatus.NOT_SUBSCRIBED;
+        this.spinner = this.topic.subscribe ? SubscribeStatus.SUBSCRIBED : SubscribeStatus.NOT_SUBSCRIBED;
       });
   }
 

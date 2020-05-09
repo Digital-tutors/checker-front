@@ -5,7 +5,7 @@
       <mat-card-subtitle>
         <div>
           <b>Автор:</b>
-          {{topic.authorId?.firstName == null ? topic.authorId?.email : topic.authorId?.firstName + ' ' + topic.authorId?.lastName}}
+          {{topic.authorId?.firstName == null ? topic.authorId?.email : topic.authorId?.lastName + ' ' + topic.authorId?.firstName}}
         </div>
 
         <div>
@@ -15,7 +15,7 @@
       </mat-card-subtitle>
       <mat-card-title>{{topic.title}}</mat-card-title>
       <mat-card-actions>
-        <span>Подписан</span>
+        <span>{{topic.subscribe ? 'Подписан' : ''}}</span>
         <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topic.id + '/tasks'">Перейти</button>
       </mat-card-actions>
     </mat-card>
