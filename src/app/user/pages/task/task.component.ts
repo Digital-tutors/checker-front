@@ -2,13 +2,18 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { Subject } from 'rxjs';
-import { flatMap, takeUntil, tap } from 'rxjs/operators';
+import { Select } from '@ngxs/store';
+
+import { Observable, Subject } from 'rxjs';
+import { filter, first, flatMap, map, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskControllerService } from '@swagger/api/taskController.service';
 import { TaskResultsControllerService } from '@swagger/api/taskResultsController.service';
 import { TaskResultsCreateRq } from '@swagger/model/taskResultsCreateRq';
 import { TaskVO } from '@swagger/model/taskVO';
+import { UserVO } from '@swagger/model/userVO';
+
+import { AppState } from '@store/app.state';
 
 @Component({
   selector: 'app-user-task',
@@ -18,9 +23,13 @@ import { TaskVO } from '@swagger/model/taskVO';
 export class TaskComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
   private taskId: string;
-  topicId: string;
-  task: TaskVO;
-  spinner = false;
+
+  @Select(AppState.user)
+  public user$: Observable<UserVO>;
+
+  public topicId: string;
+  public task: TaskVO;
+  public spinner = false;
 
   public editorOptions = { theme: 'vs-dark', language: 'cpp' };
   public code = '/*\n\tЭто мини-редактор VS Code.\n\tПисать код вы можете ниже или вместо комментария\n*/\n\n';
@@ -66,20 +75,26 @@ export class TaskComponent implements OnInit, OnDestroy {
   public sendCode(): void {
     this.spinner = true;
 
-    const taskResults: TaskResultsCreateRq = {
-      taskId: {
-        id: this.taskId,
-      },
-      userId: {
-        id: '5eb45214ea2ee10742104e1f',
-      },
-      language: this.editorOptions.language,
-      sourceCode: this.getHandledCode(),
-    };
-
-    this.taskResultsControllerService.saveDecisionUsingPOST(taskResults).subscribe(_ => {
-      this.spinner = false;
-    });
+    this.user$
+      .pipe(
+        filter(user => !!user),
+        first(),
+        map(user => ({
+          taskId: {
+            id: this.taskId,
+          },
+          userId: {
+            id: user.id,
+          },
+          language: this.editorOptions.language,
+          sourceCode: this.getHandledCode(),
+        })),
+        flatMap((taskResults: TaskResultsCreateRq) => this.taskResultsControllerService.saveDecisionUsingPOST(taskResults)),
+        takeUntil(this.ngOnDestroy$),
+      )
+      .subscribe(() => {
+        this.spinner = false;
+      });
   }
 
   public selectLanguage(language: string): void {
