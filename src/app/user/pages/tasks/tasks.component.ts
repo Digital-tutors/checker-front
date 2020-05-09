@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Select } from '@ngxs/store';
 
-import { forkJoin, Observable, Subject } from 'rxjs';
+import { combineLatest, forkJoin, Observable, Subject } from 'rxjs';
 import { filter, first, flatMap, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskControllerService } from '@swagger/api/taskController.service';
@@ -46,7 +46,7 @@ export class TasksComponent implements OnInit, OnDestroy {
         }),
         flatMap(params => this.taskControllerService.getTasksByTopicIdUsingGET(params.get('id'))),
         tap(tasks => (this.tasks = tasks)),
-        flatMap(() => forkJoin([this.topicControllerService.getTopicByIdUsingGET(this.topicId), this.user$])),
+        flatMap(() => combineLatest(this.topicControllerService.getTopicByIdUsingGET(this.topicId), this.user$)),
         filter(([topic, user]) => !!topic && !!user),
         first(),
         takeUntil(this.ngOnDestroy$),
