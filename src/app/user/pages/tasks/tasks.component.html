@@ -16,29 +16,27 @@
   </section>
 
   <div class="task-list">
-    <mat-card class="example-card" *ngFor="let topic of tasks">
+    <mat-card class="example-card" *ngFor="let task of tasks">
       <mat-card-subtitle>
         <div>
           <b>Автор:</b>
-          {{topic.author}}
+          {{task.authorId?.firstName == null ? task.authorId?.email : task.authorId?.firstName + ' ' + task.authorId?.lastName}}
         </div>
 
         <div>
           <b>Сложность:</b>
-          JUNIOR
+          {{task.level}}
         </div>
       </mat-card-subtitle>
-      <mat-card-title>{{topic.title}}</mat-card-title>
+      <mat-card-title>Ждем тутл</mat-card-title>
       <mat-card-content>
         <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-          bred for hunting.
+          {{task.description}}
         </p>
       </mat-card-content>
       <mat-card-actions>
         <span>Выполнено</span>
-        <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topic.id + '/tasks'">Перейти</button>
+        <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topicId + '/tasks/' + task.id">Перейти</button>
       </mat-card-actions>
     </mat-card>
   </div>

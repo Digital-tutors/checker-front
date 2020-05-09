@@ -1,88 +1,38 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-// tslint:disable-next-line:class-name
-export interface task {
-  id?: number;
-  author: string;
-  title: string;
-  description: string;
-  isComplete: boolean;
-}
+import { Subject } from 'rxjs';
+import { flatMap, takeUntil, tap } from 'rxjs/operators';
 
-// tslint:disable-next-line:class-name
-export interface topic {
-  id?: number;
-  title: string;
-  author: string;
-  access: string;
-  description: string;
-  isFollow: boolean;
-}
+import { TaskControllerService } from '@swagger/api/taskController.service';
+import { TaskResultsControllerService } from '@swagger/api/taskResultsController.service';
+import { TaskVO } from '@swagger/model/taskVO';
 
 @Component({
   selector: 'app-user-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
 })
-export class TasksComponent implements OnInit {
-  topic: topic = {
-    title: 'title topic',
-    author: 'Ivanov',
-    access: 'Пулбичный',
-    description:
-      'Lorem ipsum dolor sit amet, ' +
-      'consectetur adipisicing elit. Asperiores at ' +
-      'dolorum eos error fugiat ipsam laboriosam minus ' +
-      'mollitia quo voluptatem! Alias atque commodi facere illum iste magni nam quisquam similique?',
-    isFollow: true,
-  };
+export class TasksComponent implements OnInit, OnDestroy {
+  private ngOnDestroy$: Subject<void> = new Subject();
+  topicId: string;
+  tasks: TaskVO[];
 
-  tasks: task[] = [
-    {
-      title: 'task1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
-      author: 'Ivanov',
-      isComplete: true,
-    },
-    {
-      title: 'task2',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
-      author: 'Ivanov',
-      isComplete: true,
-    },
-    {
-      title: 'task3',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
-      author: 'Ivanov',
-      isComplete: false,
-    },
-    {
-      title: 'task3',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
-      author: 'Ivanov',
-      isComplete: false,
-    },
-    {
-      title: 'task3',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
-      author: 'Ivanov',
-      isComplete: false,
-    },
-    {
-      title: 'task3',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
-      author: 'Ivanov',
-      isComplete: false,
-    },
-    {
-      title: 'task3',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
-      author: 'Ivanov',
-      isComplete: false,
-    },
-  ];
+  constructor(private taskControllerService: TaskControllerService, private route: ActivatedRoute) {}
 
-  constructor() {}
+  ngOnInit(): void {
+    this.route.paramMap
+      .pipe(
+        tap(params => {
+          this.topicId = params.get('id');
+        }),
+        flatMap(params => this.taskControllerService.getTasksByTopicIdUsingGET(params.get('id'))),
+        takeUntil(this.ngOnDestroy$),
+      )
+      .subscribe(tasks => (this.tasks = tasks));
+  }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.ngOnDestroy$.next();
+  }
 }
