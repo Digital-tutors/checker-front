@@ -1,20 +1,28 @@
 @import '~@angular/material/theming';
+
 @include mat-core();
 
 .topic-cards {
-  display: grid;
   max-width: 1200px;
   margin: 40px auto 0;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
   padding: 20px;
 
-  @media only screen and (max-width: 1000px) {
-    grid-template-columns: 1fr 1fr;
+  h1 {
+    margin-bottom: 20px;
   }
 
-  @media only screen and (max-width: 700px) {
-    grid-template-columns: 1fr;
+  .three-column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+
+    @media only screen and (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media only screen and (max-width: 700px) {
+      grid-template-columns: 1fr;
+    }
   }
 
 
@@ -64,7 +72,7 @@
     margin-right: 0;
 
     span {
-      color: rgba(0,0,0,.54);
+      color: rgba(0, 0, 0, .54);
     }
   }
 }

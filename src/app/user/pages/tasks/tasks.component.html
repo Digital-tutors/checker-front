@@ -1,26 +1,46 @@
 <section class="contain-tasks">
+  <section class="task-info">
+    <div class="tasks-header">
+      <a class="arrow-back" mat-stroked-button [routerLink]="'/user/topics/'">
+        <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
+        <span>Назад</span>
+      </a>
+      <button mat-flat-button color="primary">Подписаться</button>
+      <button mat-flat-button disabled>Подписан</button>
+    </div>
+    <h1 class="title"><b>Тема:</b> Среднее арифметическое нескольких чисел</h1>
+    <ul class="task-info-desc">
+      <li><b>Доступ:</b> 1</li>
+      <li><b>Уровень сложности:</b> 2</li>
+    </ul>
+  </section>
+
   <div class="task-list">
-    <mat-card class="task-item"
-         *ngFor="let t of tasks"
-    >
-      <mat-card-title>
-        <h6 class="task-item-title">{{t.title}}</h6>
-      </mat-card-title>
+    <mat-card class="example-card" *ngFor="let topic of tasks">
+      <mat-card-subtitle>
+        <div>
+          <b>Автор:</b>
+          {{topic.author}}
+        </div>
+
+        <div>
+          <b>Сложность:</b>
+          JUNIOR
+        </div>
+      </mat-card-subtitle>
+      <mat-card-title>{{topic.title}}</mat-card-title>
       <mat-card-content>
-        <p class="task-item-description">{{t.description}}</p>
-        <p class="task-item-author">Автор: {{t.author}}</p>
-        <mat-icon class="task-item-complete" aria-hidden="false" *ngIf="t.isComplete">check_circle_outline</mat-icon>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+          bred for hunting.
+        </p>
       </mat-card-content>
+      <mat-card-actions>
+        <span>Выполнено</span>
+        <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topic.id + '/tasks'">Перейти</button>
+      </mat-card-actions>
     </mat-card>
   </div>
-
-  <mat-card class="topic-info">
-    <h2 class="topic-info-title">{{topic.title}}</h2>
-    <p  class="topic-info-description">{{topic.description}}</p>
-    <p class="topic-info-success"><strong>Доступ: </strong>{{topic.access}}</p>
-    <p class="topic-info-author"><strong>Автор: </strong>{{topic.author}}</p>
-    <p class="topic-info-follow" *ngIf="topic.isFollow; else disallow">Подписан</p>
-    <ng-template #disallow><p class="topic-info-follow">Не подписан</p> </ng-template>
-  </mat-card>
 
 </section>

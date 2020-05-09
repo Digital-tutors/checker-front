@@ -56,6 +56,30 @@ export class TasksComponent implements OnInit {
       author: 'Ivanov',
       isComplete: false,
     },
+    {
+      title: 'task3',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
+      author: 'Ivanov',
+      isComplete: false,
+    },
+    {
+      title: 'task3',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
+      author: 'Ivanov',
+      isComplete: false,
+    },
+    {
+      title: 'task3',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
+      author: 'Ivanov',
+      isComplete: false,
+    },
+    {
+      title: 'task3',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, vitae?',
+      author: 'Ivanov',
+      isComplete: false,
+    },
   ];
 
   constructor() {}
