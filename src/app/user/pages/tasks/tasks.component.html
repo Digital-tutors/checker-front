@@ -7,7 +7,10 @@
       </a>
       <button *ngIf="spinner == 0" mat-flat-button color="primary" (click)="subscribe()">Подписаться</button>
       <mat-spinner *ngIf="spinner == 1" [strokeWidth]="3" [diameter]="30"></mat-spinner>
-      <button *ngIf="spinner == 2" mat-flat-button disabled>Подписан</button>
+      <div class="subscribe" *ngIf="spinner == 2">
+        <button mat-button disabled>Вы подписаны</button>
+        <button mat-flat-button color="primary" (click)="unSubscribe()">Отписаться</button>
+      </div>
     </div>
     <h1 class="title"><b>Тема:</b> {{topic.title}}</h1>
     <ul class="task-info-desc">
