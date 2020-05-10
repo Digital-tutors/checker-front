@@ -124,6 +124,36 @@ export class TaskResultsControllerService {
   }
 
   /**
+   * getDecisionsByUser
+   *
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getDecisionsByUserUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultsVO>>;
+  public getDecisionsByUserUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultsVO>>>;
+  public getDecisionsByUserUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultsVO>>>;
+  public getDecisionsByUserUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<Array<TaskResultsVO>>('get', `${this.basePath}/user/decisions`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * getDecisions
    *
    * @param page page
@@ -203,25 +233,15 @@ export class TaskResultsControllerService {
    * getTasksByUserAndTask
    *
    * @param task task
-   * @param user user
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTasksByUserAndTaskUsingGET(task: string, user: string, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultsVO>>;
-  public getTasksByUserAndTaskUsingGET(
-    task: string,
-    user: string,
-    observe?: 'response',
-    reportProgress?: boolean,
-  ): Observable<HttpResponse<Array<TaskResultsVO>>>;
-  public getTasksByUserAndTaskUsingGET(task: string, user: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultsVO>>>;
-  public getTasksByUserAndTaskUsingGET(task: string, user: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getTasksByUserAndTaskUsingGET(task: string, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultsVO>>;
+  public getTasksByUserAndTaskUsingGET(task: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultsVO>>>;
+  public getTasksByUserAndTaskUsingGET(task: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultsVO>>>;
+  public getTasksByUserAndTaskUsingGET(task: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (task === null || task === undefined) {
       throw new Error('Required parameter task was null or undefined when calling getTasksByUserAndTaskUsingGET.');
-    }
-
-    if (user === null || user === undefined) {
-      throw new Error('Required parameter user was null or undefined when calling getTasksByUserAndTaskUsingGET.');
     }
 
     let headers = this.defaultHeaders;
@@ -236,16 +256,12 @@ export class TaskResultsControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<Array<TaskResultsVO>>(
-      'get',
-      `${this.basePath}/user/${encodeURIComponent(String(user))}/task/${encodeURIComponent(String(task))}/decisions`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      },
-    );
+    return this.httpClient.request<Array<TaskResultsVO>>('get', `${this.basePath}/task/${encodeURIComponent(String(task))}/decisions`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
   }
 
   /**

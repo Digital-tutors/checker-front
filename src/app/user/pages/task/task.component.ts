@@ -4,32 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Select } from '@ngxs/store';
 
-import { Observable, Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { filter, first, flatMap, map, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskControllerService } from '@swagger/api/taskController.service';
 import { TaskResultsControllerService } from '@swagger/api/taskResultsController.service';
 import { TaskResultsCreateRq } from '@swagger/model/taskResultsCreateRq';
+import { TaskResultsVO } from '@swagger/model/taskResultsVO';
 import { TaskVO } from '@swagger/model/taskVO';
 import { UserVO } from '@swagger/model/userVO';
 
 import { AppState } from '@store/app.state';
-
-export interface ScoreTable {
-  index: number;
-  taskNumber: number;
-  attempt: number;
-  language: string;
-  messageOut: string;
-  timeUsage: string;
-  memoryUsage: string;
-}
-
-const USER_SCORE_DATA: ScoreTable[] = [
-  { index: 1, taskNumber: 1, attempt: 1, language: 'python', messageOut: 'Compilation error', timeUsage: '184ms', memoryUsage: '10mb' },
-  { index: 2, taskNumber: 1, attempt: 2, language: 'python', messageOut: 'Compilation error', timeUsage: '184ms', memoryUsage: '10mb' },
-  { index: 3, taskNumber: 1, attempt: 3, language: 'python', messageOut: 'Compilation error', timeUsage: '184ms', memoryUsage: '10mb' },
-];
 
 @Component({
   selector: 'app-user-task',
@@ -40,8 +25,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
   private taskId: string;
 
-  displayedColumns: string[] = ['index', 'taskNumber', 'attempt', 'language', 'messageOut', 'timeUsage', 'memoryUsage'];
-  dataSource = USER_SCORE_DATA;
+  public displayedColumns: string[] = ['taskNumber', 'attempt', 'language', 'messageOut', 'timeUsage', 'memoryUsage', 'status'];
 
   @Select(AppState.user)
   public user$: Observable<UserVO>;
@@ -49,6 +33,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   public topicId: string;
   public task: TaskVO;
   public spinner = false;
+  public taskResults: TaskResultsVO[];
 
   public editorOptions = { theme: 'vs-dark', language: 'cpp' };
   public code = '/*\n\tЭто мини-редактор VS Code.\n\tПисать код вы можете ниже или вместо комментария\n*/\n\n';
@@ -72,9 +57,11 @@ export class TaskComponent implements OnInit, OnDestroy {
           this.topicId = params.get('id');
         }),
         flatMap(params => this.taskControllerService.getTaskByIdUsingGET(params.get('taskId'))),
+        tap(task => (this.task = task)),
+        flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId)),
         takeUntil(this.ngOnDestroy$),
       )
-      .subscribe(task => (this.task = task));
+      .subscribe(taskResults => (this.taskResults = taskResults));
   }
 
   ngOnDestroy(): void {
