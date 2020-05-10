@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -19,7 +19,7 @@ import { environment } from '@environments/environment';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
   public form: FormGroup;
@@ -30,6 +30,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.setForm();
+  }
+
+  ngOnDestroy(): void {
+    this.ngOnDestroy$.next();
   }
 
   private setForm(): void {
