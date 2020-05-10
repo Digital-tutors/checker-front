@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { TaskComponent } from './task.component';
@@ -29,6 +30,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     MatOptionModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatTableModule,
   ],
 })
 export class TaskModule {}
