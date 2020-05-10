@@ -1,23 +1,29 @@
 <section class="login">
-  <div class="login-form">
+  <form class="login-form"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()">
     <mat-card class="example-card">
       <mat-card-header>
         <mat-card-title>Вход</mat-card-title>
+        <mat-card-subtitle *ngIf="error">Неверные данные для входа</mat-card-subtitle>
       </mat-card-header>
 
       <form>
         <mat-form-field appearance="fill">
           <mat-label>Почта</mat-label>
-          <input matInput>
+          <input formControlName="email" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Пароль</mat-label>
-          <input matInput>
+          <input formControlName="password" matInput>
         </mat-form-field>
       </form>
 
-      <button mat-flat-button color="primary">Войти</button>
+      <button type="submit"
+              mat-flat-button
+              color="primary"
+              [disabled]="form.invalid">Войти</button>
 
     </mat-card>
 
@@ -28,5 +34,5 @@
         In varius dolor at finibus euismod. Aenean blandit quam nulla, nec auctor dui maximus ut. Interdum et malesuada
         fames ac ante ipsum primis in faucibus.</p>
     </section>
-  </div>
+  </form>
 </section>
