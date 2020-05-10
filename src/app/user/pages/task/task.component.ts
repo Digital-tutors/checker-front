@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Select } from '@ngxs/store';
 
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { filter, first, flatMap, map, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskControllerService } from '@swagger/api/taskController.service';
