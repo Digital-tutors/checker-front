@@ -1,17 +1,12 @@
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MyTopicsComponent } from './my-topics/my-topics.component';
-import { TopicsComponent } from './topics.component';
+import { ProfileComponent } from './profile.component';
 
 const routes: Routes = [
   {
-    path: 'my',
-    component: MyTopicsComponent,
-  },
-  {
     path: '',
-    component: TopicsComponent,
+    component: ProfileComponent,
   },
 ];
 

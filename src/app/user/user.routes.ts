@@ -9,8 +9,12 @@ const routes: Routes = [
     component: WrapperComponent,
     children: [
       {
-        path: 'topics',
+        path: 'profile',
         pathMatch: 'full',
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule),
+      },
+      {
+        path: 'topics',
         loadChildren: () => import('./pages/topics/topics.module').then(m => m.TopicsModule),
       },
       {
