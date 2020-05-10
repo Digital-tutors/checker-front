@@ -1,10 +1,10 @@
-<div class="profile">
+<div class="profile"
+     *ngIf="user$ | async as user">
   <h1>Профиль</h1>
 
   <mat-card class="example-card">
-    <h2>Иванов Иван Иваныч</h2>
-    <p><b>Почта:</b> test@test.ru</p>
-    <p><b>Роль:</b> Юзер</p>
-    <p><b>Дата регистрации:</b> когда-то там</p>
+    <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+    <p><b>Почта:</b> {{ user.email }}</p>
+    <p><b>Роль:</b> {{ user.role }}</p>
   </mat-card>
 </div>
