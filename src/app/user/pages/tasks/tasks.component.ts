@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Select } from '@ngxs/store';
 
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { filter, first, flatMap, takeUntil, tap } from 'rxjs/operators';
+import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
+import { catchError, filter, first, flatMap, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskControllerService } from '@swagger/api/taskController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
@@ -35,6 +35,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   public topic: TopicVO;
   public tasks: TaskVO[];
   public spinner = SubscribeStatus.NOT_SUBSCRIBED;
+  public error: boolean;
 
   constructor(private taskControllerService: TaskControllerService, private topicControllerService: TopicControllerService, private route: ActivatedRoute) {}
 
@@ -49,6 +50,10 @@ export class TasksComponent implements OnInit, OnDestroy {
         flatMap(() => combineLatest(this.topicControllerService.getTopicByIdUsingGET(this.topicId), this.user$)),
         filter(([topic, user]) => !!topic && !!user),
         first(),
+        catchError(() => {
+          this.error = true;
+          return EMPTY;
+        }),
         takeUntil(this.ngOnDestroy$),
       )
       .subscribe(([topic, user]) => {

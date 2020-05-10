@@ -1,4 +1,8 @@
-<section class="contain-tasks">
+<div class="error" *ngIf="error">
+  У вас нет доступа к этой странице
+</div>
+
+<section class="contain-tasks" *ngIf="!error">
   <section class="task-info" *ngIf="topic">
     <div class="tasks-header">
       <a class="arrow-back" mat-stroked-button [routerLink]="'/user/topics/'">
