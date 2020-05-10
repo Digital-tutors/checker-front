@@ -15,7 +15,6 @@ const routes: Routes = [
       },
       {
         path: 'topics',
-        pathMatch: 'full',
         loadChildren: () => import('./pages/topics/topics.module').then(m => m.TopicsModule),
       },
       {

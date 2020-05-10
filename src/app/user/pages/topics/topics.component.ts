@@ -9,7 +9,7 @@ import { PageTopicVO } from '@swagger/model/pageTopicVO';
   styleUrls: ['./topics.component.scss'],
 })
 export class TopicsComponent implements OnInit {
-  topics: PageTopicVO;
+  public topics: PageTopicVO;
 
   constructor(private topicControllerService: TopicControllerService) {}
 
