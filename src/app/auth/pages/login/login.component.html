@@ -1,24 +1,26 @@
 <section class="login">
   <form class="login-form"
-        [formGroup]="form"
         (ngSubmit)="onSubmit()">
-    <mat-card class="example-card">
+    <mat-card class="example-card"
+              [formGroup]="form">
       <mat-card-header>
         <mat-card-title>Вход</mat-card-title>
         <mat-card-subtitle *ngIf="error">Неверные данные для входа</mat-card-subtitle>
       </mat-card-header>
 
-      <form>
+      <div>
+
         <mat-form-field appearance="fill">
           <mat-label>Почта</mat-label>
-          <input formControlName="email" matInput>
+          <input type="email" formControlName="email" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Пароль</mat-label>
-          <input formControlName="password" matInput>
+          <input type="password" formControlName="password" matInput>
         </mat-form-field>
-      </form>
+
+      </div>
 
       <button type="submit"
               mat-flat-button
