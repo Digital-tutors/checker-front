@@ -46,10 +46,10 @@ export class LoginComponent implements OnInit {
           ...this.form.value,
         })
         .pipe(
-          flatMap((user: UserVO) => this.store.dispatch(new User.Set(user))),
           tap((user: UserVO) => {
             localStorage.setItem(environment.token, user.token);
           }),
+          flatMap((user: UserVO) => this.store.dispatch(new User.Set(user))),
           flatMap(() => from(this.router.navigateByUrl('/user/topics'))),
           catchError(() => {
             this.error = true;
