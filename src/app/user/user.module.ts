@@ -10,7 +10,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { RoutingModule } from './user.routes';
-
 @NgModule({
   declarations: [LayoutComponent, WrapperComponent, HeaderComponent],
   imports: [ShareModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule],

@@ -15,6 +15,22 @@ import { UserVO } from '@swagger/model/userVO';
 
 import { AppState } from '@store/app.state';
 
+export interface ScoreTable {
+  index: number;
+  taskNumber: number;
+  attempt: number;
+  language: string;
+  messageOut: string;
+  timeUsage: string;
+  memoryUsage: string;
+}
+
+const USER_SCORE_DATA: ScoreTable[] = [
+  { index: 1, taskNumber: 1, attempt: 1, language: 'python', messageOut: 'Compilation error', timeUsage: '184ms', memoryUsage: '10mb' },
+  { index: 2, taskNumber: 1, attempt: 2, language: 'python', messageOut: 'Compilation error', timeUsage: '184ms', memoryUsage: '10mb' },
+  { index: 3, taskNumber: 1, attempt: 3, language: 'python', messageOut: 'Compilation error', timeUsage: '184ms', memoryUsage: '10mb' },
+];
+
 @Component({
   selector: 'app-user-task',
   templateUrl: './task.component.html',
@@ -23,6 +39,9 @@ import { AppState } from '@store/app.state';
 export class TaskComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
   private taskId: string;
+
+  displayedColumns: string[] = ['index', 'taskNumber', 'attempt', 'language', 'messageOut', 'timeUsage', 'memoryUsage'];
+  dataSource = USER_SCORE_DATA;
 
   @Select(AppState.user)
   public user$: Observable<UserVO>;

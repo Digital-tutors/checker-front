@@ -11,6 +11,12 @@
   }
 }
 
+.task-results-table {
+  table {
+    max-width: 1200px;
+    width: 100%;
+  }
+}
 .task-info {
   padding: 20px;
   width: calc(100% - 40px);
