@@ -15,7 +15,7 @@
       </mat-card-subtitle>
       <mat-card-title>{{topic.title}}</mat-card-title>
       <mat-card-actions>
-        <span>{{topic.subscribe ? 'Подписан' : ''}}</span>
+        <span>{{topic.subscribe ? 'Вы подписаны' : ''}}</span>
         <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topic.id + '/tasks'">Перейти</button>
       </mat-card-actions>
     </mat-card>
