@@ -34,13 +34,13 @@
 
         <div>
           <b>Сложность:</b>
-          {{task.level}}
+          {{task.level == 'JUNIOR' ? 'Легкий' : task.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}
         </div>
       </mat-card-subtitle>
       <mat-card-title>{{task.title}}</mat-card-title>
       <mat-card-content>
         <p>
-          {{task.description.substring(0,250)}}...
+          {{task.description.substring(0,140)}}...
         </p>
       </mat-card-content>
       <mat-card-actions>

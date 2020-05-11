@@ -6,7 +6,7 @@
     <mat-card class="example-card">
       <h2>{{ user.firstName }} {{ user.lastName }}</h2>
       <p><b>Почта:</b> {{ user.email }}</p>
-      <p><b>Роль:</b> {{ user.role }}</p>
+      <p><b>Роль:</b> {{ user.role == 'ROLE_STUDENT' ? 'Студент' : user.role == 'ROLE_TEACHER' ? 'Преподаватель' : 'Администратор' }}</p>
     </mat-card>
   </div>
 

@@ -5,20 +5,20 @@
         <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
         <span>Назад</span>
       </a>
-      <span class="complete">Выполнено</span>
+      <span class="complete">{{task.complete ? 'Выполнено' : ''}}</span>
     </div>
     <h1 class="title">{{task.title}}</h1>
     <ul class="task-info-desc">
       <li><b>Тема:</b> {{task.topicId.title}}</li>
-      <li><b>Уровень сложности:</b> {{task.level}}</li>
-      <li><b>Время выполнения:</b> {{task.options.timeLimit}} мс.</li>
-      <li><b>Память:</b> {{task.options.memoryLimit}} Кб</li>
+      <li><b>Уровень сложности:</b> {{task.level == 'JUNIOR' ? 'Легкий' : task.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}</li>
+      <li><b>Время выполнения:</b> {{task.options.timeLimit}} с.</li>
+      <li><b>Память:</b> {{task.options.memoryLimit}} Mб</li>
     </ul>
     <h3>Описание</h3>
     <p>{{task.description}}</p>
 
-    <h3>Запрещенные конструкции</h3>
-    <ul>
+    <h3 *ngIf="task.options.constructions.length > 0">Запрещенные конструкции</h3>
+    <ul *ngIf="task.options.constructions.length > 0">
       <li *ngFor="let c of task.options.constructions">{{c}}</li>
     </ul>
 
