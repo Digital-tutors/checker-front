@@ -2,8 +2,6 @@
   max-width: 1200px;
   margin: 40px auto 0;
   padding: 20px;
-  display: grid;
-  grid-template-columns: 320px auto;
   grid-gap: 30px;
 
   @media only screen and (max-width: 1000px) {
@@ -12,7 +10,7 @@
 
   .example-card {
     padding: 30px 30px;
-    max-width: 320px;
+    max-width: 250px;
   }
 
   .complete {
@@ -25,6 +23,8 @@
   }
 
   .task-results-table {
+    margin-top: 30px;
+
     table {
       width: 100%;
 
