@@ -1,0 +1,129 @@
+.error {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 20px;
+}
+
+.contain-tasks {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 30px;
+
+  .task-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    width: 100%;
+
+    @media only screen and (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media only screen and (max-width: 700px) {
+      grid-template-columns: 1fr;
+    }
+
+    mat-card {
+      border-bottom: 5px solid #fff;
+      transition: 1s;
+      cursor: pointer;
+      display: grid;
+      grid-template-rows: 30px auto 1fr 44px;
+      grid-gap: 20px;
+
+      &:hover {
+        border-bottom: 5px solid #536DFE;
+        transition: 1s;
+      }
+    }
+
+    mat-card-content {
+      margin: 0;
+    }
+
+    mat-card-title {
+      line-height: 30px;
+      margin-bottom: 0;
+    }
+
+    .example-card {
+      padding: 30px 30px;
+    }
+
+    mat-card-subtitle {
+      margin: 0 0 25px 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      div {
+        display: inline-flex;
+
+        b {
+          display: inline-flex;
+          padding-right: 8px;
+        }
+      }
+    }
+
+    mat-card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 0;
+      margin-right: 0;
+
+      span {
+        color: rgba(0, 0, 0, .54);
+      }
+    }
+  }
+
+  .task-info {
+
+    .tasks-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .arrow-back {
+      display: inline-flex;
+      align-items: center;
+
+      span {
+        padding-left: 5px;
+        padding-right: 7px;
+      }
+    }
+
+    h1.title {
+      margin-top: 40px;
+    }
+
+    .task-info-desc {
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
+      margin: 0 0 15px 0;
+      padding: 0;
+
+      li {
+        list-style: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contain-tasks {
+    flex-direction: column;
+  }
+  .topic-info {
+    margin-top: 20px;
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+}

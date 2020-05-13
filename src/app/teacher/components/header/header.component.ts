@@ -14,11 +14,11 @@ import { AppState } from '@store/app.state';
 import { environment } from '@environments/environment';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-header-teacher',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnDestroy {
+export class TeacherHeaderComponent implements OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
   @Select(AppState.user)

@@ -14,6 +14,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/topics/topics.module').then(m => m.TopicsModule),
       },
       {
+        path: 'topics/:id',
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/topic/topic.module').then(m => m.TopicModule),
+      },
+      {
         path: 'topics/:id/add-task',
         pathMatch: 'full',
         loadChildren: () => import('./pages/add-task/add-task.module').then(m => m.AddTaskModule),

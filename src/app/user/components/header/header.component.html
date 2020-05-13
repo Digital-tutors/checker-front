@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="user$ | async as user">
   <mat-toolbar-row class="example-spacer">
     <span>Цифровой тьютор</span>
     <nav>
@@ -9,6 +9,7 @@
       </ul>
     </nav>
     <div class="right-nav">
+      <a mat-flat-button routerLink="/teacher/topics" *ngIf="user.role == 'ROLE_TEACHER'" class="right" routerLinkActive="active">Админ-панель</a>
       <mat-icon class="example-icon" aria-hidden="false" aria-label="Профиль" routerLink="/user/profile">person</mat-icon>
       <mat-icon (click)="logout()" class="example-icon" aria-hidden="false" aria-label="Выход">logout</mat-icon>
     </div>

@@ -1,0 +1,48 @@
+<div class="error" *ngIf="error">
+  Доступ запрещен, но Вы пытались :)
+</div>
+
+<section class="contain-tasks" *ngIf="!error">
+  <section class="task-info" *ngIf="topic">
+    <div class="tasks-header">
+      <a class="arrow-back" mat-stroked-button [routerLink]="'/teacher/topics'">
+        <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
+        <span>Назад</span>
+      </a>
+      <button mat-flat-button color="primary">Редактировать тему</button>
+    </div>
+    <h1 class="title"><b>Тема:</b> {{topic.title}}</h1>
+    <ul class="task-info-desc">
+      <li><b>Автор:</b> {{topic.authorId?.firstName == null ? topic.authorId?.email : topic.authorId?.lastName + ' ' + topic.authorId?.firstName}}</li>
+      <li><b>Доступ:</b> {{topic.accessType == 'PUBLIC' ? 'Публичный' : 'Приватный'}}</li>
+    </ul>
+  </section>
+
+  <p *ngIf="tasks?.length == 0">Задания к данной теме находятся в разработке</p>
+  <div class="task-list" *ngIf="tasks">
+    <mat-card class="example-card" *ngFor="let task of tasks">
+      <mat-card-subtitle>
+        <div>
+          <b>Автор:</b>
+          {{task.authorId?.firstName == null ? task.authorId?.email : task.authorId?.firstName + ' ' + task.authorId?.lastName}}
+        </div>
+
+        <div>
+          <b>Сложность:</b>
+          {{task.level == 'JUNIOR' ? 'Легкий' : task.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}
+        </div>
+      </mat-card-subtitle>
+      <mat-card-title>{{task.title}}</mat-card-title>
+      <mat-card-content>
+        <p>
+          {{task.description.substring(0,140)}}...
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <span>{{task.complete ? 'Выполнено' : ''}}</span>
+        <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topicId + '/tasks/' + task.id">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+</section>
