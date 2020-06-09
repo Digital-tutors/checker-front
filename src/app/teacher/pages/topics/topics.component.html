@@ -19,5 +19,10 @@
         <button mat-stroked-button color="primary" [routerLink]="'/teacher/topic/' + topic.id">Перейти</button>
       </mat-card-actions>
     </mat-card>
+
+    <mat-card class="add" [routerLink]="'/teacher/topics/add'">
+      <mat-icon class="example-icon" aria-hidden="false" aria-label="Добавление" color="primary">add</mat-icon>
+      <p>Добавить новую тему</p>
+    </mat-card>
   </div>
 </div>
