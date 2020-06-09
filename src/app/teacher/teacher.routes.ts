@@ -10,21 +10,21 @@ const routes: Routes = [
     children: [
       {
         path: 'topics',
-        pathMatch: 'full',
+        pathMatch: 'prefix',
         loadChildren: () => import('./pages/topics/topics.module').then(m => m.TopicsModule),
       },
       {
-        path: 'topics/:id',
+        path: 'topic/:id',
         pathMatch: 'full',
         loadChildren: () => import('./pages/topic/topic.module').then(m => m.TopicModule),
       },
       {
-        path: 'topics/:id/add-task',
+        path: 'topic/:id/add-task',
         pathMatch: 'full',
         loadChildren: () => import('./pages/add-task/add-task.module').then(m => m.AddTaskModule),
       },
       {
-        path: 'topics/:id/students',
+        path: 'topic/:id/students',
         pathMatch: 'full',
         loadChildren: () => import('./pages/students/students.module').then(m => m.StudentsModule),
       },
