@@ -96,10 +96,13 @@ export class TaskComponent implements OnInit, OnDestroy {
           sourceCode: this.getHandledCode(),
         })),
         flatMap((taskResults: TaskResultsCreateRq) => this.taskResultsControllerService.saveDecisionUsingPOST(taskResults)),
+        tap(() => {}),
+        flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId)),
         takeUntil(this.ngOnDestroy$),
       )
-      .subscribe(() => {
+      .subscribe(taskResults => {
         this.spinner = false;
+        this.taskResults = taskResults;
       });
   }
 
