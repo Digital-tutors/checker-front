@@ -1,0 +1,55 @@
+<section class="two-column" *ngIf="peerTask">
+  <section class="task-info">
+    <div class="info-header">
+      <a class="arrow-back" mat-stroked-button [routerLink]="'/user/topics/' + topicId + '/tasks/peer'">
+        <mat-icon class="green-color" aria-hidden="false" aria-label="Example heart icon">chevron_left</mat-icon>
+        <span>Назад</span>
+      </a>
+      <span class="complete">{{peerTask.complete ? 'Выполнено' : ''}}</span>
+    </div>
+    <h1 class="title">{{peerTask.title}}</h1>
+    <ul class="task-info-desc">
+      <li><b>Тема:</b> {{peerTask.topicId.title}}</li>
+      <li><b>Уровень сложности:</b> {{peerTask.level == 'JUNIOR' ? 'Легкий' : peerTask.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}</li>
+    </ul>
+    <h3>Описание</h3>
+    <p>{{peerTask.description}}</p>
+
+    <h3 *ngIf="peerTask.options.constructions.length > 0">Запрещенные конструкции</h3>
+    <ul *ngIf="peerTask.options.constructions.length > 0">
+      <li *ngFor="let c of peerTask.options.constructions">{{c}}</li>
+    </ul>
+
+    <div class="task-table">
+      <h3>Входные данные</h3>
+      <h3>Выходные данные</h3>
+    </div>
+
+    <mat-divider class="example-code"></mat-divider>
+
+
+  </section>
+
+  <section class="task-code"
+           [formGroup]="codeForm">
+
+    <div class="header-code">
+      <mat-form-field>
+        <mat-label>Выберите язык</mat-label>
+        <mat-select [value]="editorOptions.language" (selectionChange)="selectLanguage($event.value)">
+          <mat-option value="cpp">C++</mat-option>
+          <mat-option value="python">Python</mat-option>
+          <!--          <mat-option value="kotlin">Kotlin</mat-option>-->
+          <mat-option value="csharp">C#</mat-option>
+          <!--          <mat-option value="php">PHP</mat-option>-->
+        </mat-select>
+      </mat-form-field>
+
+      <button *ngIf="!spinner" mat-flat-button color="primary" (click)="sendCode()">Отправить</button>
+      <mat-spinner *ngIf="spinner" [strokeWidth]="3" [diameter]="30"></mat-spinner>
+    </div>
+
+    <ngx-monaco-editor [options]="editorOptions"
+                       formControlName="code"></ngx-monaco-editor>
+  </section>
+</section>

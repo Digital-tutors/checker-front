@@ -6,8 +6,10 @@ import { Select } from '@ngxs/store';
 import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, filter, first, flatMap, takeUntil, tap } from 'rxjs/operators';
 
+import { PeerTaskControllerService } from '@swagger/api/peerTaskController.service';
 import { TaskControllerService } from '@swagger/api/taskController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
+import { PeerTaskVO } from '@swagger/model/peerTaskVO';
 import { TaskVO } from '@swagger/model/taskVO';
 import { TopicVO } from '@swagger/model/topicVO';
 import { UserVO } from '@swagger/model/userVO';
@@ -34,10 +36,16 @@ export class TasksComponent implements OnInit, OnDestroy {
   public topicId: string;
   public topic: TopicVO;
   public tasks: TaskVO[];
+  public peerTasks: PeerTaskVO[];
   public spinner = SubscribeStatus.NOT_SUBSCRIBED;
   public error: boolean;
 
-  constructor(private taskControllerService: TaskControllerService, private topicControllerService: TopicControllerService, private route: ActivatedRoute) {}
+  constructor(
+    private taskControllerService: TaskControllerService,
+    private topicControllerService: TopicControllerService,
+    private peerTaskControllerService: PeerTaskControllerService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap
@@ -47,8 +55,11 @@ export class TasksComponent implements OnInit, OnDestroy {
         }),
         flatMap(params => this.taskControllerService.getTasksByTopicIdUsingGET(params.get('id'))),
         tap(tasks => (this.tasks = tasks)),
+        flatMap(() => this.peerTaskControllerService.getPeerTasksByTopicIdUsingGET(this.topicId)),
+        tap(peerTasks => (this.peerTasks = peerTasks)),
         flatMap(() => combineLatest(this.topicControllerService.getTopicByIdUsingGET(this.topicId), this.user$)),
         filter(([topic, user]) => !!topic && !!user),
+
         first(),
         catchError(() => {
           this.error = true;
