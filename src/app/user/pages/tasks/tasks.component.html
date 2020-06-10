@@ -23,7 +23,8 @@
     </ul>
   </section>
 
-  <p *ngIf="tasks?.length == 0">Задания к данной теме находятся в разработке</p>
+  <p *ngIf="tasks?.length == 0 && peerTasks?.length == 0">Задания к данной теме находятся в разработке</p>
+  <p *ngIf="tasks">Блок заданий с автоматической проверкой программ</p>
   <div class="task-list" *ngIf="tasks">
     <mat-card class="example-card" *ngFor="let task of tasks">
       <mat-card-subtitle>
@@ -46,6 +47,33 @@
       <mat-card-actions>
         <span>{{task.complete ? 'Выполнено' : ''}}</span>
         <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topicId + '/tasks/' + task.id">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <p *ngIf="peerTasks">Блок заданий класса Peer Review</p>
+  <div class="task-list" *ngIf="peerTasks">
+    <mat-card class="example-card" *ngFor="let task of peerTasks">
+      <mat-card-subtitle>
+        <div>
+          <b>Автор:</b>
+          {{task.authorId?.firstName == null ? task.authorId?.email : task.authorId?.firstName + ' ' + task.authorId?.lastName}}
+        </div>
+
+        <div>
+          <b>Сложность:</b>
+          {{task.level == 'JUNIOR' ? 'Легкий' : task.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}
+        </div>
+      </mat-card-subtitle>
+      <mat-card-title>{{task.title}}</mat-card-title>
+      <mat-card-content>
+        <p>
+          {{task.description.substring(0,140)}}...
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <span>{{task.complete ? 'Выполнено' : ''}}</span>
+        <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topicId + '/tasks/peer/' + task.id">Перейти</button>
       </mat-card-actions>
     </mat-card>
   </div>

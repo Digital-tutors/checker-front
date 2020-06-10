@@ -56,6 +56,8 @@ export class PeerTaskComponent implements OnInit, OnDestroy {
       }),
       flatMap(params => this.peerTaskControllerService.getPeerTaskByIdUsingGET(params.get('taskId'))),
       tap(task => (this.peerTask = task)),
+      flatMap(() => this.peerTaskControllerService.getTasksByUserAndTaskUsingGET(this.taskId)),
+      takeUntil(this.ngOnDestroy$),
     );
   }
 

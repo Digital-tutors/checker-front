@@ -6,7 +6,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./peer-review.component.scss'],
 })
 export class PeerReviewComponent implements OnInit {
-  constructor() {}
-
   ngOnInit(): void {}
 }

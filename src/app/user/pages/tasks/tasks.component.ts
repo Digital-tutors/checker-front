@@ -67,7 +67,7 @@ export class TasksComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.ngOnDestroy$),
       )
-      .subscribe(([topic, user]) => {
+      .subscribe(([topic, user]: any) => {
         this.topic = topic;
         this.spinner = this.topic.subscribe ? SubscribeStatus.SUBSCRIBED : SubscribeStatus.NOT_SUBSCRIBED;
       });
