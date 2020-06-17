@@ -9,7 +9,12 @@ import { filter, first, flatMap, map, takeUntil, tap } from 'rxjs/operators';
 
 import { PeerResultsControllerService } from '@swagger/api/peerResultsController.service';
 import { PeerTaskControllerService } from '@swagger/api/peerTaskController.service';
+import { PeerTaskSolutionControllerService } from '@swagger/api/peerTaskSolutionController.service';
+import { PeerTaskResultsVO } from '@swagger/model/peerTaskResultsVO';
+import { PeerTaskSolutionCreateRq } from '@swagger/model/peerTaskSolutionCreateRq';
+import { PeerTaskSolutionVO } from '@swagger/model/peerTaskSolutionVO';
 import { PeerTaskVO } from '@swagger/model/peerTaskVO';
+import { TaskResultsCreateRq } from '@swagger/model/taskResultsCreateRq';
 import { UserVO } from '@swagger/model/userVO';
 
 import { AppState } from '@store/app.state';
@@ -28,7 +33,9 @@ export class PeerTaskComponent implements OnInit, OnDestroy {
 
   public topicId: string;
   public peerTask: PeerTaskVO;
+  public peerTaskSolutions: PeerTaskSolutionVO[];
   public spinner = false;
+  public hasSolutionBeenSent = false;
 
   public codeForm: FormGroup;
 
@@ -38,7 +45,7 @@ export class PeerTaskComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private peerTaskControllerService: PeerTaskControllerService,
-    private peerTaskResultsControllerService: PeerResultsControllerService,
+    private peerTaskSolutionControllerService: PeerTaskSolutionControllerService,
     private route: ActivatedRoute,
   ) {}
 
@@ -49,16 +56,18 @@ export class PeerTaskComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setForm();
 
-    this.route.paramMap.pipe(
-      tap(params => {
-        this.peerTaskId = params.get('taskId');
-        this.topicId = params.get('id');
-      }),
-      flatMap(params => this.peerTaskControllerService.getPeerTaskByIdUsingGET(params.get('taskId'))),
-      tap(task => (this.peerTask = task)),
-      flatMap(() => this.peerTaskControllerService.getTasksByUserAndTaskUsingGET(this.taskId)),
-      takeUntil(this.ngOnDestroy$),
-    );
+    this.route.paramMap
+      .pipe(
+        tap(params => {
+          this.peerTaskId = params.get('peerTaskId');
+          this.topicId = params.get('id');
+        }),
+        flatMap(params => this.peerTaskControllerService.getPeerTaskByIdUsingGET(params.get('peerTaskId'))),
+        tap(task => (this.peerTask = task)),
+        flatMap(() => this.peerTaskSolutionControllerService.getPeerTaskSolutionsByUserAndTaskUsingGET(this.peerTaskId)),
+        takeUntil(this.ngOnDestroy$),
+      )
+      .subscribe(peerTaskSolutions => (this.peerTaskSolutions = peerTaskSolutions));
   }
 
   private setForm(): void {
@@ -74,5 +83,35 @@ export class PeerTaskComponent implements OnInit, OnDestroy {
     };
   }
 
-  public sendCode(): void {}
+  private getHandledCode(): string {
+    return this.codeForm.get('code').value.split('    ').join('\t');
+  }
+
+  public makeReview(): void {}
+
+  public sendSolution(): void {
+    this.spinner = true;
+
+    this.user$
+      .pipe(
+        filter(user => !!user),
+        first(),
+        map(user => ({
+          taskId: {
+            id: this.peerTaskId,
+          },
+          userId: {
+            id: user.id,
+          },
+          language: this.editorOptions.language,
+          sourceCode: this.getHandledCode(),
+        })),
+        flatMap((peerTaskSolution: PeerTaskSolutionCreateRq) => this.peerTaskSolutionControllerService.savePeerTaskSolutionUsingPOST(peerTaskSolution)),
+        takeUntil(this.ngOnDestroy$),
+      )
+      .subscribe(() => {
+        this.hasSolutionBeenSent = !this.hasSolutionBeenSent;
+        this.spinner = false;
+      });
+  }
 }

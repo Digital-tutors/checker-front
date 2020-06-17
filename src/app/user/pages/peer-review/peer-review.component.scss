@@ -1,0 +1,12 @@
+.two-column {
+  padding: 0;
+  display: grid;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  grid-gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+}

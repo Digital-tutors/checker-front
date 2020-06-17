@@ -53,9 +53,9 @@ export class TasksComponent implements OnInit, OnDestroy {
         tap(params => {
           this.topicId = params.get('id');
         }),
-        flatMap(params => this.taskControllerService.getTasksByTopicIdUsingGET(params.get('id'))),
+        flatMap(params => this.taskControllerService.getTasksByTopicIdUsingGET(this.topicId)),
         tap(tasks => (this.tasks = tasks)),
-        flatMap(() => this.peerTaskControllerService.getPeerTasksByTopicIdUsingGET(this.topicId)),
+        flatMap(params => this.peerTaskControllerService.getPeerTasksByTopicIdUsingGET(this.topicId)),
         tap(peerTasks => (this.peerTasks = peerTasks)),
         flatMap(() => combineLatest(this.topicControllerService.getTopicByIdUsingGET(this.topicId), this.user$)),
         filter(([topic, user]) => !!topic && !!user),

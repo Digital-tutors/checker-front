@@ -27,14 +27,18 @@
 
     <mat-divider class="example-code"></mat-divider>
 
-
+L
   </section>
 
-  <section class="task-code"
+  <section *ngIf="hasSolutionBeenSent" class="review-section">
+    <button mat-flat-button color="primary" [routerLink]="'/user/topics/' + topicId + '/tasks/peer/' + peerTask.id + '/review'" (click)="makeReview()">Рецензировать</button>
+  </section>
+
+  <section *ngIf="!hasSolutionBeenSent" class="task-code"
            [formGroup]="codeForm">
 
     <div class="header-code">
-      <mat-form-field>
+      <mat-form-field *ngIf="!hasSolutionBeenSent">
         <mat-label>Выберите язык</mat-label>
         <mat-select [value]="editorOptions.language" (selectionChange)="selectLanguage($event.value)">
           <mat-option value="cpp">C++</mat-option>
@@ -45,7 +49,7 @@
         </mat-select>
       </mat-form-field>
 
-      <button *ngIf="!spinner" mat-flat-button color="primary" (click)="sendCode()">Отправить</button>
+      <button *ngIf="!spinner && !hasSolutionBeenSent" mat-flat-button color="primary" (click)="sendSolution()">Отправить</button>
       <mat-spinner *ngIf="spinner" [strokeWidth]="3" [diameter]="30"></mat-spinner>
     </div>
 

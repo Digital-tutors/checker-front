@@ -95,6 +95,18 @@
   }
 }
 
+.review-section {
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+  align-items: center;
+
+  button {
+    height: 40px;
+  }
+}
+
 .task-code {
   padding: 20px;
 
