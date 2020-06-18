@@ -38,6 +38,35 @@
         border-bottom: 5px solid #536DFE;
         transition: 1s;
       }
+
+      &.add {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+
+        mat-icon {
+          font-size: 70px;
+          width: 70px;
+          height: 70px;
+          margin-bottom: 20px;
+        }
+
+        p {
+          font-size: 18px;
+        }
+
+        &:hover {
+          background: #536DFE;
+          color: #ffffff;
+
+          mat-icon {
+            color: #ffffff;
+            transition: 1s;
+          }
+        }
+      }
     }
 
     mat-card-content {
