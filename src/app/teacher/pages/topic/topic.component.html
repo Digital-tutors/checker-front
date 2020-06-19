@@ -43,14 +43,14 @@
       </mat-card-actions>
     </mat-card>
 
-    <mat-card class="add" [routerLink]="'/teacher/topics/add'"> <!-- TODO заменить на роут -->
+    <mat-card class="add" [routerLink]="'add-task'">
       <mat-icon class="example-icon" aria-hidden="false" aria-label="Добавление" color="primary">add</mat-icon>
       <p>Добавить новое задание</p>
     </mat-card>
   </div>
 
   <div class="task-list" *ngIf="!tasks">
-    <mat-card class="add" [routerLink]="'/teacher/topics/add'">
+    <mat-card class="add" [routerLink]="'add-task'">
       <mat-icon class="example-icon" aria-hidden="false" aria-label="Добавление" color="primary">add</mat-icon>
       <p>Добавить новое задание</p>
     </mat-card>

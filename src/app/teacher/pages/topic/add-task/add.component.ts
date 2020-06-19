@@ -8,16 +8,18 @@ import { catchError, flatMap, takeUntil, tap } from 'rxjs/operators';
 import { TopicControllerService } from '@swagger/api/topicController.service';
 
 @Component({
-  selector: 'app-add-topic',
+  selector: 'app-add-task',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
-export class AddTopicComponent implements OnInit, OnDestroy {
+export class AddTaskComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
   public form: FormGroup;
 
   public error: boolean;
+
+  public editorOptions = { theme: 'vs-dark', language: 'cpp' };
 
   constructor(private fb: FormBuilder, private topicControllerService: TopicControllerService, private router: Router) {}
 
@@ -28,7 +30,12 @@ export class AddTopicComponent implements OnInit, OnDestroy {
   private setForm(): void {
     this.form = this.fb.group({
       title: ['', [Validators.required, Validators.min(1), Validators.max(180)]],
-      accessType: ['', [Validators.required]],
+      level: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      timeLimit: ['', [Validators.required, Validators.max(8)]],
+      memoryLimit: ['', [Validators.required, Validators.max(5)]],
+      constructions: ['', [Validators.required]],
+      code: ['', [Validators.required]],
     });
   }
 

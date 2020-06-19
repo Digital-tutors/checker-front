@@ -15,13 +15,8 @@ const routes: Routes = [
       },
       {
         path: 'topic/:id',
-        pathMatch: 'full',
+        pathMatch: 'prefix',
         loadChildren: () => import('./pages/topic/topic.module').then(m => m.TopicModule),
-      },
-      {
-        path: 'topic/:id/add-task',
-        pathMatch: 'full',
-        loadChildren: () => import('./pages/add-task/add-task.module').then(m => m.AddTaskModule),
       },
       {
         path: 'topic/:id/students',
