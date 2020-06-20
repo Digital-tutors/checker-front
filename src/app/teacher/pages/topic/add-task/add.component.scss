@@ -57,13 +57,12 @@
       grid-column: 1 / 4;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items: center;
+      text-align: left;
 
       ngx-monaco-editor {
         height: 100px;
         width: 80%;
         display: flex;
-        align-self: center;
         justify-self: center;
 
         .monaco-editor {

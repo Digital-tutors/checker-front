@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { EMPTY, from, Subject } from 'rxjs';
@@ -35,7 +35,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       timeLimit: ['', [Validators.required, Validators.max(8)]],
       memoryLimit: ['', [Validators.required, Validators.max(5)]],
       constructions: ['', [Validators.required]],
-      code: ['', [Validators.required]],
+      codes: this.fb.array([this.createItem(), this.createItem(), this.createItem()]),
     });
   }
 
@@ -43,22 +43,22 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.ngOnDestroy$.next();
   }
 
+  get codes() {
+    return this.form.get('codes') as FormArray;
+  }
+
+  public createItem(): FormGroup {
+    return this.fb.group({
+      input: '',
+      output: '',
+    });
+  }
+
+  public addItem(): void {
+    this.codes.push(this.createItem());
+  }
+
   public onSubmit(): void {
-    if (this.form.valid) {
-      this.topicControllerService
-        .createTopicUsingPOST({
-          ...this.form.value,
-        })
-        .pipe(
-          catchError(() => {
-            this.error = true;
-            return EMPTY;
-          }),
-          takeUntil(this.ngOnDestroy$),
-        )
-        .subscribe(topic => {
-          from(this.router.navigateByUrl(`/teacher/topic/${topic.id}`));
-        });
-    }
+    console.log(this.form.value);
   }
 }

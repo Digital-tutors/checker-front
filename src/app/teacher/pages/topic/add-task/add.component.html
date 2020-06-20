@@ -45,31 +45,23 @@
         строчки. Минимальное количество тестируемых данных равно 3.</p>
     </div>
 
-    <div class="add-tests">
-      <span>Входные данные</span>
-      <span>Выходные данные</span>
+    <div class="add-tests" formArrayName="codes"
+         *ngFor="let item of codes.controls; let i = index;">
+      <span>Входные данные #{{i + 1}}</span>
+      <span>Выходные данные #{{i + 1}}</span>
 
-      <div class="add-test">
+      <div class="add-test" [formGroupName]="i">
         <ngx-monaco-editor [options]="editorOptions"
-                           formControlName="code"></ngx-monaco-editor>
+                           formControlName="input"></ngx-monaco-editor>
 
         <ngx-monaco-editor [options]="editorOptions"
-                           formControlName="code"></ngx-monaco-editor>
+                           formControlName="output"></ngx-monaco-editor>
       </div>
+
     </div>
 
-    <div class="add-tests">
-      <span>Входные данные</span>
-      <span>Выходные данные</span>
-
-      <div class="add-test">
-        <ngx-monaco-editor [options]="editorOptions"
-                           formControlName="code"></ngx-monaco-editor>
-
-        <ngx-monaco-editor [options]="editorOptions"
-                           formControlName="code"></ngx-monaco-editor>
-      </div>
-
+    <div class="topic-button">
+      <a mat-stroked-button color="primary" (click)="addItem()">Добавить данные для теста</a>
     </div>
 
     <div class="topic-button">
