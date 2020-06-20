@@ -34,6 +34,10 @@
     .topic-button {
       grid-column: 1 / 4;
       margin: 0 auto;
+
+      a {
+        margin: 0 10px;
+      }
     }
   }
 
