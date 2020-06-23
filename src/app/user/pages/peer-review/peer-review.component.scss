@@ -6,7 +6,50 @@
   grid-gap: 30px;
   grid-template-columns: repeat(2, 1fr);
 
+  .solution-info-section {
+    top: 0;
+    position: sticky;
+    height: 100vh;
+  }
+
+  .student-solution {
+    background: #f3f4f6;
+  }
+
+  .peer-review-section {
+
+
+    margin-bottom: 10px;
+
+    button {
+      margin-top: 10px;
+    }
+
+    .peer-review-info {
+      background: #edeef0;
+    }
+
+    .peer-review-process-block {
+
+      .peer-review-process {
+
+        .criterion-mat-slider {
+          width: 70%;
+          min-height: 3px;
+        }
+
+        .review-editor {
+          padding-bottom: 15px;
+        }
+      }
+
+    }
+  }
+
   @media only screen and (max-width: 1000px) {
     grid-template-columns: 1fr;
+    .solution-info-section {
+      position: relative;
+    }
   }
 }

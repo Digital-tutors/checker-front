@@ -1,9 +1,45 @@
 <section class="two-column">
   <section class="solution-info-section">
+    <p>Рецензия</p>
+    <div class="solution-description">
+      <p>Решение: {{peerTaskSolution.id}}</p>
+      <p>Решение: {{peerTaskSolution.language}}</p>
+    </div>
+    <div class="task-description">
+      <p [innerHTML]="peerTask.description"></p>
+    </div>
+    <p><b>Решение студента</b></p>
+    <div class="student-solution">
+      <p>{{peerTaskSolution.sourceCode}}</p>
+    </div>
 
   </section>
 
   <section class="peer-review-section">
-
+    <p>Итоговый балл за рецензию: {{finalGrade}}/{{maxGrade}}</p>
+    <div class="peer-review-info">
+      <div *ngIf="peerTask.criterions.length > 0">
+        <p *ngFor="let criterion of peerTask.criterions; let i = index">
+          Критерий №{{i + 1}}
+          <br/> {{criterion}}
+        </p>
+      </div>
+    </div>
+    <div class="peer-review-process-block" *ngIf="peerTask.criterions.length > 0">
+      <div class="peer-review-process" *ngFor="let criterion of peerTask.criterions; let i = index">
+        <p>{{i + 1}}.{{criterion}}</p>
+        <mat-slider (change)="countFinalGrade()" class="criterion-mat-slider" min="1" max="{{peerTask.maxGradesPerCriterions[i]}}" step="1" [(ngModel)]="gradesArray[i]" thumbLabel tickInterval="1"></mat-slider>
+        <p>Аргументация к оценке</p>
+        <angular-editor class="review-editor" id="editor{{i}}" formControlName="htmlContent{{i}}"
+                        [config]="editorConfig" required="true"></angular-editor>
+      </div>
+      <p>Общий комментарий к работе</p>
+      <angular-editor class="review-editor" id="editor" formControlName="htmlContent" [config]="editorConfig"
+                      required="true"></angular-editor>
+    </div>
+    <button mat-flat-button color="primary"
+            [routerLink]="'/user/topics/'"
+            (click)="sendReview()">Рецензировать
+    </button>
   </section>
 </section>

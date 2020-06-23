@@ -67,7 +67,11 @@ export class PeerTaskComponent implements OnInit, OnDestroy {
         flatMap(() => this.peerTaskSolutionControllerService.getPeerTaskSolutionsByUserAndTaskUsingGET(this.peerTaskId)),
         takeUntil(this.ngOnDestroy$),
       )
-      .subscribe(peerTaskSolutions => (this.peerTaskSolutions = peerTaskSolutions));
+      .subscribe(peerTaskSolutions => {
+        console.log(peerTaskSolutions);
+        if (peerTaskSolutions.length > 0) this.hasSolutionBeenSent = true;
+        this.peerTaskSolutions = peerTaskSolutions;
+      });
   }
 
   private setForm(): void {
@@ -110,7 +114,7 @@ export class PeerTaskComponent implements OnInit, OnDestroy {
         takeUntil(this.ngOnDestroy$),
       )
       .subscribe(() => {
-        this.hasSolutionBeenSent = !this.hasSolutionBeenSent;
+        this.hasSolutionBeenSent = true;
         this.spinner = false;
       });
   }
