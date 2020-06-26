@@ -126,13 +126,19 @@ export class TaskResultsControllerService {
   /**
    * getDecisionsByUser
    *
+   * @param page page
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getDecisionsByUserUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultsVO>>;
-  public getDecisionsByUserUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultsVO>>>;
-  public getDecisionsByUserUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultsVO>>>;
-  public getDecisionsByUserUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getDecisionsByUserUsingGET(page?: number, observe?: 'body', reportProgress?: boolean): Observable<PageTaskResultsVO>;
+  public getDecisionsByUserUsingGET(page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageTaskResultsVO>>;
+  public getDecisionsByUserUsingGET(page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageTaskResultsVO>>;
+  public getDecisionsByUserUsingGET(page?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+    if (page !== undefined && page !== null) {
+      queryParameters = queryParameters.set('page', <any>page);
+    }
+
     let headers = this.defaultHeaders;
 
     // to determine the Accept header
@@ -145,7 +151,8 @@ export class TaskResultsControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<Array<TaskResultsVO>>('get', `${this.basePath}/user/decisions`, {
+    return this.httpClient.request<PageTaskResultsVO>('get', `${this.basePath}/user/decisions`, {
+      params: queryParameters,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -233,15 +240,26 @@ export class TaskResultsControllerService {
    * getTasksByUserAndTask
    *
    * @param task task
+   * @param page page
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTasksByUserAndTaskUsingGET(task: string, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultsVO>>;
-  public getTasksByUserAndTaskUsingGET(task: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultsVO>>>;
-  public getTasksByUserAndTaskUsingGET(task: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultsVO>>>;
-  public getTasksByUserAndTaskUsingGET(task: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getTasksByUserAndTaskUsingGET(task: string, page?: number, observe?: 'body', reportProgress?: boolean): Observable<PageTaskResultsVO>;
+  public getTasksByUserAndTaskUsingGET(
+    task: string,
+    page?: number,
+    observe?: 'response',
+    reportProgress?: boolean,
+  ): Observable<HttpResponse<PageTaskResultsVO>>;
+  public getTasksByUserAndTaskUsingGET(task: string, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageTaskResultsVO>>;
+  public getTasksByUserAndTaskUsingGET(task: string, page?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (task === null || task === undefined) {
       throw new Error('Required parameter task was null or undefined when calling getTasksByUserAndTaskUsingGET.');
+    }
+
+    let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+    if (page !== undefined && page !== null) {
+      queryParameters = queryParameters.set('page', <any>page);
     }
 
     let headers = this.defaultHeaders;
@@ -256,7 +274,8 @@ export class TaskResultsControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<Array<TaskResultsVO>>('get', `${this.basePath}/task/${encodeURIComponent(String(task))}/decisions`, {
+    return this.httpClient.request<PageTaskResultsVO>('get', `${this.basePath}/task/${encodeURIComponent(String(task))}/decisions`, {
+      params: queryParameters,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -271,9 +290,9 @@ export class TaskResultsControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public saveDecisionUsingPOST(body: TaskResultsCreateRq, observe?: 'body', reportProgress?: boolean): Observable<TaskResultsVO>;
-  public saveDecisionUsingPOST(body: TaskResultsCreateRq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultsVO>>;
-  public saveDecisionUsingPOST(body: TaskResultsCreateRq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultsVO>>;
+  public saveDecisionUsingPOST(body: TaskResultsCreateRq, observe?: 'body', reportProgress?: boolean): Observable<any>;
+  public saveDecisionUsingPOST(body: TaskResultsCreateRq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+  public saveDecisionUsingPOST(body: TaskResultsCreateRq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
   public saveDecisionUsingPOST(body: TaskResultsCreateRq, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (body === null || body === undefined) {
       throw new Error('Required parameter body was null or undefined when calling saveDecisionUsingPOST.');
@@ -295,7 +314,7 @@ export class TaskResultsControllerService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.request<TaskResultsVO>('post', `${this.basePath}/decision`, {
+    return this.httpClient.request<any>('post', `${this.basePath}/decision`, {
       body: body,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
