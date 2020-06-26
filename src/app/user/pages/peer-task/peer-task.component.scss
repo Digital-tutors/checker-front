@@ -102,6 +102,12 @@
   margin-bottom: 30px;
   align-items: center;
 
+  .after-solution-completed {
+    button {
+      color: darkgreen;
+    }
+  }
+
   button {
     height: 40px;
   }

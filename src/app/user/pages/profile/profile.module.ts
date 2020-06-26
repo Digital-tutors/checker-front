@@ -7,8 +7,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -25,8 +27,10 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatPaginatorModule,
     MatListModule,
     MonacoEditorModule,
+    MatSortModule,
     ReactiveFormsModule,
     MatOptionModule,
     MatSelectModule,

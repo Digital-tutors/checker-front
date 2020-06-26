@@ -1,4 +1,11 @@
-<section class="two-column">
+
+<div class="no-solution-found" *ngIf="!peerTaskSolution">
+  <p>На данный момент отсутсвуют доступные для рецензирования решения. Попробуйте позже</p>
+  <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + peerTask.topicId.id + '/tasks/peer/' + peerTask.id">Назад</button>
+
+</div>
+
+<section class="two-column" *ngIf="peerTask && peerTaskSolution">
   <section class="solution-info-section">
     <p>Рецензия</p>
     <div class="solution-description">
@@ -25,20 +32,40 @@
         </p>
       </div>
     </div>
-    <div class="peer-review-process-block" *ngIf="peerTask.criterions.length > 0">
-      <div class="peer-review-process" *ngFor="let criterion of peerTask.criterions; let i = index">
-        <p>{{i + 1}}.{{criterion}}</p>
-        <mat-slider (change)="countFinalGrade()" class="criterion-mat-slider" min="1" max="{{peerTask.maxGradesPerCriterions[i]}}" step="1" [(ngModel)]="gradesArray[i]" thumbLabel tickInterval="1"></mat-slider>
+    <div class="peer-review-process-block" *ngIf="peerTask.criterions.length > 0" [formGroup]="criterionForm">
+
+      <div class="peer-review-process" formArrayName="criterions"
+           *ngFor="let item of criterions.controls; let i = index">
+
+        <p>{{i + 1}}.{{peerTask.criterions[i]}}</p>
+
+        <mat-slider (change)="countFinalGrade($event, i)" class="criterion-mat-slider" min="1"
+                    max="{{peerTask.maxGradesPerCriterions[i]}}" step="1"
+                    [value]="gradesPrimaryArray[i]" thumbLabel
+                    tickInterval="1">
+        </mat-slider>
+
         <p>Аргументация к оценке</p>
-        <angular-editor class="review-editor" id="editor{{i}}" formControlName="htmlContent{{i}}"
-                        [config]="editorConfig" required="true"></angular-editor>
+
+        <div class="review-editor-block" [formGroupName]="i">
+
+          <angular-editor class="review-editor" id="editor{{i}}"
+                          [config]="editorConfig" formControlName="criteria">
+          </angular-editor>
+
+        </div>
+
       </div>
+
       <p>Общий комментарий к работе</p>
-      <angular-editor class="review-editor" id="editor" formControlName="htmlContent" [config]="editorConfig"
-                      required="true"></angular-editor>
+
+      <angular-editor class="review-editor" id="editor{{peerTask.criterions.length}}"
+                      formControlName="summaryComment"
+                      [config]="editorConfig">
+      </angular-editor>
+
     </div>
     <button mat-flat-button color="primary"
-            [routerLink]="'/user/topics/'"
             (click)="sendReview()">Рецензировать
     </button>
   </section>
