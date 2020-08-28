@@ -130,6 +130,66 @@ export class TopicControllerService {
   }
 
   /**
+   * getMyTopics
+   *
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getMyTopicsUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<TopicVO>>;
+  public getMyTopicsUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TopicVO>>>;
+  public getMyTopicsUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TopicVO>>>;
+  public getMyTopicsUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<Array<TopicVO>>('get', `${this.basePath}/teacher/topics`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * getSubscribedTopics
+   *
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSubscribedTopicsUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<TopicVO>>;
+  public getSubscribedTopicsUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TopicVO>>>;
+  public getSubscribedTopicsUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TopicVO>>>;
+  public getSubscribedTopicsUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<Array<TopicVO>>('get', `${this.basePath}/user/topics`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * getTopicById
    *
    * @param id id
@@ -198,6 +258,81 @@ export class TopicControllerService {
 
     return this.httpClient.request<PageTopicVO>('get', `${this.basePath}/topics`, {
       params: queryParameters,
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * subscribeTopic
+   *
+   * @param id id
+   * @param user user
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public subscribeTopicUsingPOST(id: string, user: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+  public subscribeTopicUsingPOST(id: string, user: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+  public subscribeTopicUsingPOST(id: string, user: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+  public subscribeTopicUsingPOST(id: string, user: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling subscribeTopicUsingPOST.');
+    }
+
+    if (user === null || user === undefined) {
+      throw new Error('Required parameter user was null or undefined when calling subscribeTopicUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<any>('post', `${this.basePath}/topic/${encodeURIComponent(String(id))}/user/${encodeURIComponent(String(user))}`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * unSubscribeTopic
+   *
+   * @param id id
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public unSubscribeTopicUsingDELETE(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+  public unSubscribeTopicUsingDELETE(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+  public unSubscribeTopicUsingDELETE(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+  public unSubscribeTopicUsingDELETE(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling unSubscribeTopicUsingDELETE.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<any>('delete', `${this.basePath}/topic/${encodeURIComponent(String(id))}/user`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,

@@ -1,0 +1,79 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+.topic-cards {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 20px;
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .three-column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+
+    @media only screen and (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media only screen and (max-width: 700px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  mat-card {
+    border-bottom: 5px solid #fff;
+    transition: 1s;
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 30px auto 44px;
+    grid-row-gap: 20px;
+
+    &:hover {
+      border-bottom: 5px solid #536DFE;
+      transition: 1s;
+    }
+  }
+
+  mat-card-title {
+    line-height: 30px;
+    margin-bottom: 0;
+  }
+
+  .example-card {
+    padding: 30px 30px;
+  }
+
+  mat-card-subtitle {
+    margin: 0 0 25px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 10px;
+
+    div {
+      display: inline-flex;
+
+      b {
+        display: inline-flex;
+        padding-right: 8px;
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 0;
+    margin-right: 0;
+
+    span {
+      color: rgba(0, 0, 0, .54);
+    }
+  }
+}

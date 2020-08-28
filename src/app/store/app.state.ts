@@ -7,7 +7,9 @@ import { StateInterface } from '@store/state.interface';
 
 @State<StateInterface>({
   name: 'state',
-  defaults: {},
+  defaults: {
+    user: null,
+  },
 })
 export class AppState {
   @Selector()

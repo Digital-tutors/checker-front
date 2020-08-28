@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="example-spacer">
+    <span>Цифровой тьютор</span>
+    <nav>
+      <ul>
+        <li><a mat-button routerLink="/teacher/topics" routerLinkActive="active">Мои темы</a></li>
+        <li><a mat-button routerLink="/teacher/students" routerLinkActive="active">Студенты</a></li>
+      </ul>
+    </nav>
+    <div class="right-nav">
+      <a mat-flat-button routerLink="/teacher/topics/add" class="right" routerLinkActive="active">Добавить тему</a>
+      <mat-icon class="example-icon" aria-hidden="false" aria-label="Профиль" routerLink="/user/profile">person</mat-icon>
+      <mat-icon (click)="logout()" class="example-icon" aria-hidden="false" aria-label="Выход">logout</mat-icon>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

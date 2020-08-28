@@ -1,0 +1,72 @@
+<section class="wrapper">
+  <h1>Добавление нового задания</h1>
+  <mat-card-subtitle *ngIf="error">Неправильно заполнены поля ввода</mat-card-subtitle>
+
+  <form class="add-topic" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <mat-form-field class="add-title" hintLabel="Максимально 180 символов" appearance="fill">
+      <mat-label>Введите название задания</mat-label>
+      <input matInput #input formControlName="title" maxlength="180" placeholder="Программирование в среде СУБД">
+      <mat-hint align="end">{{input.value?.length || 0}}/180</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Выберите уровень сложности</mat-label>
+      <mat-select formControlName="level">
+        <mat-option value="JUNIOR">Легкий</mat-option>
+        <mat-option value="MIDDLE">Средний</mat-option>
+        <mat-option value="SENIOR">Сложный</mat-option>
+      </mat-select>
+      <mat-hint align="end">В дальнейшем уровень понадобится для подбора заданий</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="add-desc" appearance="fill">
+      <mat-label>Описание задачи</mat-label>
+      <textarea formControlName="description" matInput class="desc-width"></textarea>
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Максимально 8 секунд" appearance="fill">
+      <mat-label>Введите ограничение по времени выполнения (секунды)</mat-label>
+      <input matInput #input formControlName="timeLimit" placeholder="1">
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Максимально 256 Мб" appearance="fill">
+      <mat-label>Введите ограничение по используемой памяти (Мб)</mat-label>
+      <input matInput #input formControlName="memoryLimit" placeholder="256">
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Ввод только через запятую, без пробелов между конструкциями" appearance="fill">
+      <mat-label>Введите запрещенные конструкции через запятую</mat-label>
+      <input matInput #input formControlName="constructions" placeholder="if,for,while">
+    </mat-form-field>
+
+    <div class="title">
+      <h2>Добавление тестов</h2>
+      <p>При добавлении данных, по которым будет производиться проверка программного кода необходимо писать с новой
+        строчки. Минимальное количество тестируемых данных равно 3.</p>
+    </div>
+
+    <div class="add-tests" formArrayName="codes"
+         *ngFor="let item of codes.controls; let i = index;">
+      <span>Входные данные #{{i + 1}}</span>
+      <span>Выходные данные #{{i + 1}}</span>
+
+      <div class="add-test" [formGroupName]="i">
+        <ngx-monaco-editor [options]="editorOptions"
+                           formControlName="input"></ngx-monaco-editor>
+
+        <ngx-monaco-editor [options]="editorOptions"
+                           formControlName="output"></ngx-monaco-editor>
+      </div>
+
+    </div>
+
+    <div class="topic-button">
+      <a mat-stroked-button color="primary" (click)="addItem()">Добавить данные для теста</a>
+      <a mat-button color="warn" (click)="removeItem()">Удалить последние данные для теста</a>
+    </div>
+
+    <div class="topic-button">
+      <button [disabled]="form.invalid" mat-flat-button color="primary">Сохранить</button>
+    </div>
+  </form>
+</section>

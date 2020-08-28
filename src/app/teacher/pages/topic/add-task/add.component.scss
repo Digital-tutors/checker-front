@@ -1,0 +1,78 @@
+.wrapper {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 20px;
+
+  mat-card-subtitle {
+    text-align: center;
+    width: 100%;
+    display: block;
+  }
+
+  .add-topic {
+    margin: 40px auto 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+
+    .add-title {
+      grid-column: 1 / 3;
+    }
+
+    .add-desc {
+      grid-column: 1 / 4;
+
+      .desc-width {
+        min-height: 150px;
+      }
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .topic-button {
+      grid-column: 1 / 4;
+      margin: 0 auto;
+
+      a {
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .title {
+    grid-column: 1 / 4;
+
+    p {
+      line-height: 23px;
+    }
+  }
+
+  .add-tests {
+    grid-column: 1 / 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    width: 100%;
+    text-align: center;
+
+    .add-test {
+      grid-column: 1 / 4;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      text-align: left;
+
+      ngx-monaco-editor {
+        height: 100px;
+        width: 80%;
+        display: flex;
+        justify-self: center;
+
+        .monaco-editor {
+          padding-top: 20px;
+        }
+      }
+    }
+  }
+}

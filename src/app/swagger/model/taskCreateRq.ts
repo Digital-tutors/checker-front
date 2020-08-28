@@ -21,6 +21,7 @@ export interface TaskCreateRq {
   description?: string;
   options?: Options;
   tests?: Test;
+  title?: string;
 }
 export namespace TaskCreateRq {
   export type LevelEnum = 'JUNIOR' | 'MIDDLE' | 'SENIOR';

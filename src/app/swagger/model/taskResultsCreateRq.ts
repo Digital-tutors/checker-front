@@ -16,4 +16,13 @@ export interface TaskResultsCreateRq {
   userId?: EntityRefRq;
   language?: string;
   sourceCode?: string;
+  status?: TaskResultsCreateRq.StatusEnum;
+}
+export namespace TaskResultsCreateRq {
+  export type StatusEnum = 'NOT_CHECKING' | 'RUNNING' | 'COMPLETED';
+  export const StatusEnum = {
+    NOTCHECKING: 'NOT_CHECKING' as StatusEnum,
+    RUNNING: 'RUNNING' as StatusEnum,
+    COMPLETED: 'COMPLETED' as StatusEnum,
+  };
 }

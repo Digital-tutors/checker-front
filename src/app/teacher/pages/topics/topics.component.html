@@ -1,1 +1,28 @@
-<p>topics works!</p>
+<div class="topic-cards" *ngIf="topics">
+  <h1>Мои темы</h1>
+  <div class="three-column">
+    <mat-card class="example-card" *ngFor="let topic of topics">
+      <mat-card-subtitle>
+        <div>
+          <b>Автор:</b>
+          {{topic.authorId?.firstName == null ? topic.authorId?.email : topic.authorId?.lastName + ' ' + topic.authorId?.firstName}}
+        </div>
+
+        <div>
+          <b>Доступ:</b>
+          {{topic.accessType == 'PUBLIC' ? 'Публичный' : 'Приватный'}}
+        </div>
+      </mat-card-subtitle>
+      <mat-card-title>{{topic.title}}</mat-card-title>
+      <mat-card-actions>
+        <span>{{topic.subscribe ? 'Вы подписаны' : ''}}</span>
+        <button mat-stroked-button color="primary" [routerLink]="'/teacher/topic/' + topic.id">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="add" [routerLink]="'/teacher/topics/add'">
+      <mat-icon class="example-icon" aria-hidden="false" aria-label="Добавление" color="primary">add</mat-icon>
+      <p>Добавить новую тему</p>
+    </mat-card>
+  </div>
+</div>

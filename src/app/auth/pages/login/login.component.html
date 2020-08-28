@@ -1,1 +1,40 @@
-<p>login works!</p>
+<section class="login">
+  <form class="login-form"
+        (ngSubmit)="onSubmit()">
+    <mat-card class="example-card"
+              [formGroup]="form">
+      <mat-card-header>
+        <mat-card-title>Вход</mat-card-title>
+        <mat-card-subtitle *ngIf="error">Неверные данные для входа</mat-card-subtitle>
+      </mat-card-header>
+
+      <div>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Почта</mat-label>
+          <input type="email" formControlName="email" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Пароль</mat-label>
+          <input type="password" formControlName="password" matInput>
+        </mat-form-field>
+
+      </div>
+
+      <button type="submit"
+              mat-flat-button
+              color="primary"
+              [disabled]="form.invalid">Войти
+      </button>
+
+    </mat-card>
+
+    <section class="desc">
+      <h1>Цифровой тьютор<sup>Beta</sup></h1>
+      <p>Автопроверка программ предназначена для автоматического контроля выполнения практических заданий и лабораторных
+        работ на предоставленных преподавателем тестах. Реализован контроль заданного языка программирования, также
+        предоставляется возможность введения ограничений на используемые языковые конструкции.</p>
+    </section>
+  </form>
+</section>

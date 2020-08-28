@@ -122,6 +122,13 @@
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-9.0.7.tgz#b91219257ea40f34a79fd66f10860409f29f3e29"
   integrity sha512-74gY7onajmmnksy5E0/32bFv3B9NuWxV64kqD15YjGrh8AWe1BHt5enQI+rJ2tO8m2DKnwZsctis6k0Kcy+YKQ==
 
+"@angular/cdk@^9.2.2":
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-9.2.2.tgz#776be85aa55146f00dcd4909b81c67da47286c75"
+  integrity sha512-VNd+KuMN6cBcy4/8OyMxqYaxdjPP6IyCqIVijB2JREkc5Sg4VWmPgx2L3rHt/DzjsVBVRgx35uqOMymDezG3jQ==
+  optionalDependencies:
+    parse5 "^5.0.0"
+
 "@angular/cli@~9.0.1":
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-9.0.7.tgz#67df7b13fd750a8ac142b4ab8488439439385885"
@@ -190,6 +197,11 @@
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-9.0.7.tgz#c204467383ee5f194a73a365ea7c543c6900bb54"
   integrity sha512-IZG1kvw48JyFRy7bfMHqBixWrEHZmXmkP5DWsi5Tw6KusaczkMghI20BevCkodPcajXWHAUHNKyp1tlE3OnH0w==
+
+"@angular/material@^9.2.2":
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-9.2.2.tgz#53b2d8a62fe48b79127cdf43b3b8b082e4c3df27"
+  integrity sha512-gdQiMJ6PtW/5fd+0mglHFyzxULDCBGjn9RTET3sUq2rkc9+jBXr4OvnsUyBWSnqqv97XqotVDIx5JgE4/YX/Rw==
 
 "@angular/platform-browser-dynamic@~9.0.0":
   version "9.0.7"
@@ -6323,6 +6335,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+ngx-monaco-editor@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-monaco-editor/-/ngx-monaco-editor-9.0.0.tgz#bb69784606f549e369cee3f483ecf26bab2fcc97"
+  integrity sha512-fPXT3M8W920Vs0KPMX6iA7GJYjBRnl9naug9A7D2inPPzxQGtgPZrSEatIPf37a6ir9Ts+8fwt1bTkFzfTgIpQ==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
@@ -6920,6 +6937,11 @@ parse5@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-4.0.0.tgz#6d78656e3da8d78b4ec0b906f7c08ef1dfe3f608"
   integrity sha512-VrZ7eOd3T1Fk4XWNXMgiGBK/z0MG48BWG2uQNU4I72fkQuKUTZpl+u9k+CxEG0twMVzSmXEEz12z5Fnw1jIQFA==
+
+parse5@^5.0.0:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
+  integrity sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==
 
 parseqs@0.0.5:
   version "0.0.5"
