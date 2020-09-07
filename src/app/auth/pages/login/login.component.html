@@ -1,40 +1,39 @@
 <section class="login">
+  <a class="register-link" href="#">Регистрация
+    <i aria-hidden="false" aria-label="chevron_right" class="material-icons">chevron_right</i>
+  </a>
   <form class="login-form"
         (ngSubmit)="onSubmit()">
-    <mat-card class="example-card"
+    <div class="example-card"
               [formGroup]="form">
       <mat-card-header>
-        <mat-card-title>Вход</mat-card-title>
-        <mat-card-subtitle *ngIf="error">Неверные данные для входа</mat-card-subtitle>
+        <img src="/assets/tutorLogo.png"  alt=""/>
+        <p class="mat-card-subtitle-warning" *ngIf="error">Неверные данные для входа</p>
       </mat-card-header>
 
       <div>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Почта</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-label class="mat-label--styled">EMail</mat-label>
           <input type="email" formControlName="email" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Пароль</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-label class="mat-label--styled">Пароль</mat-label>
           <input type="password" formControlName="password" matInput>
         </mat-form-field>
 
       </div>
 
-      <button type="submit"
-              mat-flat-button
-              color="primary"
-              [disabled]="form.invalid">Войти
-      </button>
+      <div class="control-container">
+        <a href="#">Забыли пароль?</a>
+        <button type="submit"
+                mat-flat-button
+                color="primary"
+                [disabled]="form.invalid">Войти
+        </button>
+      </div>
 
-    </mat-card>
-
-    <section class="desc">
-      <h1>Цифровой тьютор<sup>Beta</sup></h1>
-      <p>Автопроверка программ предназначена для автоматического контроля выполнения практических заданий и лабораторных
-        работ на предоставленных преподавателем тестах. Реализован контроль заданного языка программирования, также
-        предоставляется возможность введения ограничений на используемые языковые конструкции.</p>
-    </section>
+    </div>
   </form>
 </section>
