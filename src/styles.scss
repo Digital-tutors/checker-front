@@ -1,4 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@include mat-core();
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #fafafa; }
+
+$tutor-primary: mat-palette($mat-teal, A700);
+$tutor-accent: mat-palette($mat-red, 500);
+$tutor-warn: mat-palette($mat-deep-orange);
+
+
+$tutor-app-theme: mat-light-theme($tutor-primary, $tutor-accent, $tutor-warn);
+
+@include angular-material-theme($tutor-app-theme);
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");

@@ -1,1 +1,19 @@
-<app-teacher-layout></app-teacher-layout>
+<mat-drawer-container>
+  <mat-drawer mode="side" opened class="drawer-content">
+    <div class="drawer-content--inner">
+      <div class="page-controls">
+        <button type="submit"
+                mat-flat-button
+                class="home-button"
+                color="primary">
+          <mat-icon aria-hidden="false" aria-label="">home</mat-icon>
+        </button>
+        <mat-icon aria-hidden="false" aria-label="">radio_button_unchecked</mat-icon>
+      </div>
+      <mat-icon aria-hidden="false" aria-label="">picture_in_picture_alt</mat-icon>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-teacher-layout></app-teacher-layout>
+  </mat-drawer-content>
+</mat-drawer-container>

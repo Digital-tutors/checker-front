@@ -1,8 +1,10 @@
-<div class="error" *ngIf="error">
-  Доступ запрещен, но Вы пытались :)
-</div>
+<!--<div class="error" *ngIf="error">-->
+<!--  Доступ запрещен, но Вы пытались :)-->
+<!--</div>-->
 
-<section class="contain-tasks" *ngIf="!error">
+<!--<section class="contain-tasks" *ngIf="!error">-->
+<section class="contain-tasks">
+  <h1>Список заданий</h1>
   <section class="task-info" *ngIf="topic">
     <div class="tasks-header">
       <a class="arrow-back" mat-stroked-button [routerLink]="'/teacher/topics'">

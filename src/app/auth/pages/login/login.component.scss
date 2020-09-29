@@ -5,12 +5,26 @@
   height: calc(100vh - 40px);
   width: calc(100% - 40px);
   padding: 20px;
+  background: #eff1f7;
+
+  .register-link {
+    position: absolute;
+    bottom: calc(100vh - 45px);
+    left: calc(90% - 10px);
+    text-transform: uppercase;
+    letter-spacing: 0.075rem;
+    text-decoration: none !important;
+
+    .material-icons {
+      position: relative;
+      top: 6px;
+      color: #00D996;
+    }
+  }
 
   .login-form {
-    display: grid;
-    border-radius: 4px;
-    grid-template-columns: minmax(320px, 400px) minmax(320px, 500px);
-    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    display: flex;
+    max-width: 400px;
 
     @media only screen and (max-width: 700px) {
       display: flex;
@@ -22,53 +36,69 @@
     }
   }
 
-  mat-card {
+  .example-card {
     border: 0;
     box-shadow: none;
     padding: 50px;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     mat-card-header {
-      margin-bottom: 20px;
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
 
-      .mat-card-header-text {
-        margin: 0 !important;
+      img {
+        width: 20px;
+        height: auto;
+        padding-bottom: 35px;
       }
 
-      mat-card-header {
-        font-size: 24px;
-        margin: 0 !important;
+      .mat-card-subtitle-warning {
+        color: #F44336;
       }
+    }
+
+    .mat-label--styled {
+      text-transform: uppercase;
     }
 
     form {
       display: flex;
       justify-content: center;
       flex-direction: column;
-    }
-  }
 
-  .desc {
-    background: #3f51b5;
-    padding: 50px;
-    margin: -30px 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    color: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-
-    h1 {
-      sup {
-        font-size: 14px;
-        display: inline-block;
-        padding-left: 10px;
-        font-style: italic;
-      }
     }
 
-    p {
-      text-align: justify;
+    button {
+      text-transform: uppercase;
+    }
+
+    .mat-button.mat-primary:matches([disabled]) {
+      color: #000000;
+    }
+
+    .mat-flat-button.mat-primary:not([disabled]) {
+      color: #ffffff;
+    }
+
+    a {
+      text-decoration: underline;
+      color: #000000 !important;
+    }
+
+    .control-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
     }
   }
 }
