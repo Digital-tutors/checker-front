@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { Select } from '@ngxs/store';
@@ -49,6 +50,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   public pageNumber = 0;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private fb: FormBuilder,
@@ -75,6 +77,7 @@ export class TaskComponent implements OnInit, OnDestroy {
         this.dataSource.data = taskResults.content;
         this.taskResults = taskResults;
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
   }
 
@@ -118,6 +121,7 @@ export class TaskComponent implements OnInit, OnDestroy {
         this.spinner = false;
         this.taskResults = taskResults;
         this.dataSource.data = taskResults.content;
+        this.dataSource.sort = this.sort;
       });
   }
 
@@ -141,6 +145,7 @@ export class TaskComponent implements OnInit, OnDestroy {
         this.dataSource.data = taskResults.content;
         this.taskResults = taskResults;
         this.pageNumber = event.pageIndex;
+        this.dataSource.sort = this.sort;
       });
   }
 }
