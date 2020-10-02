@@ -111,7 +111,7 @@ export class UserControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<UserVO>('get', `${this.basePath}/user/me`, {
+    return this.httpClient.request<UserVO>('get', `${this.basePath}/profile`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,

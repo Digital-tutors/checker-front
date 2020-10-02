@@ -11,7 +11,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
   },
-  "host": "localhost:8080",
+  "host": "164.90.237.175:8080",
   "basePath": "/",
   "tags": [
     {

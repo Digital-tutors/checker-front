@@ -14,11 +14,17 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const headers: any = {};
 
+    console.log('Token: ', token);
+
     if (token) {
       headers.Authorization = `Bearer ${token}`;
     }
 
+    console.log('Request Method: ', req.method);
+    console.log('Headers: ', headers);
+
     const authReq = req.clone({ setHeaders: { ...headers } });
+    console.log('AuthReq: ', authReq);
 
     return next.handle(authReq);
   }

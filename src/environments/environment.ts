@@ -6,7 +6,7 @@ import { EnvironmentInterface } from './environment.interface';
 
 export const environment: EnvironmentInterface = {
   production: false,
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'http://164.90.237.175:8080',
   token: 'apiToken',
 };
 

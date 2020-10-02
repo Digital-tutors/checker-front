@@ -151,7 +151,7 @@ export class TopicControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<Array<TopicVO>>('get', `${this.basePath}/teacher/topics`, {
+    return this.httpClient.request<Array<TopicVO>>('get', `${this.basePath}/topic/all?page=0`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -256,7 +256,7 @@ export class TopicControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<PageTopicVO>('get', `${this.basePath}/topics`, {
+    return this.httpClient.request<PageTopicVO>('get', `${this.basePath}/topic/all`, {
       params: queryParameters,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
