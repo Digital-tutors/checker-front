@@ -16,14 +16,13 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 
 import { Observable } from 'rxjs';
 
-import { UserDTO } from '../model/userDTO';
-import { UserDTORequestView } from '../model/userDTORequestView';
+import { LessonInteractionDTORequestView } from '../model/lessonInteractionDTORequestView';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
 
 @Injectable()
-export class UserControllerService {
+export class LessonInteractionControllerService {
   protected basePath = '//164.90.237.175:8080/';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
@@ -53,53 +52,18 @@ export class UserControllerService {
   }
 
   /**
-   * getProfile
+   * saveLessonInteraction
    *
+   * @param body interactionDTO
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProfileUsingGET(observe?: 'body', reportProgress?: boolean): Observable<UserDTO>;
-  public getProfileUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDTO>>;
-  public getProfileUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDTO>>;
-  public getProfileUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    let headers = this.defaultHeaders;
-
-    // authentication (Bearer) required
-    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
-      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
-    }
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<UserDTO>('get', `${this.basePath}/profile`, {
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * upsertUser
-   *
-   * @param body userDTO
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public upsertUserUsingPUT(body: UserDTORequestView, observe?: 'body', reportProgress?: boolean): Observable<UserDTO>;
-  public upsertUserUsingPUT(body: UserDTORequestView, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDTO>>;
-  public upsertUserUsingPUT(body: UserDTORequestView, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDTO>>;
-  public upsertUserUsingPUT(body: UserDTORequestView, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public saveLessonInteractionUsingPOST(body: LessonInteractionDTORequestView, observe?: 'body', reportProgress?: boolean): Observable<any>;
+  public saveLessonInteractionUsingPOST(body: LessonInteractionDTORequestView, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+  public saveLessonInteractionUsingPOST(body: LessonInteractionDTORequestView, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+  public saveLessonInteractionUsingPOST(body: LessonInteractionDTORequestView, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling upsertUserUsingPUT.');
+      throw new Error('Required parameter body was null or undefined when calling saveLessonInteractionUsingPOST.');
     }
 
     let headers = this.defaultHeaders;
@@ -123,7 +87,7 @@ export class UserControllerService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.request<UserDTO>('put', `${this.basePath}/user`, {
+    return this.httpClient.request<any>('post', `${this.basePath}/interaction/lesson`, {
       body: body,
       withCredentials: this.configuration.withCredentials,
       headers: headers,

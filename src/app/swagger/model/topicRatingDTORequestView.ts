@@ -9,8 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { RefVORequestView } from './refVORequestView';
 
-export interface UserCreateRq {
-  email: string;
-  password: string;
+export interface TopicRatingDTORequestView {
+  grade?: number;
+  ratedEntity?: RefVORequestView;
 }

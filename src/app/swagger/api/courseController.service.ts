@@ -16,15 +16,14 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 
 import { Observable } from 'rxjs';
 
-import { PageOfTopicDTO } from '../model/pageOfTopicDTO';
-import { TopicDTO } from '../model/topicDTO';
-import { TopicDTOShortResView } from '../model/topicDTOShortResView';
+import { CourseDTO } from '../model/courseDTO';
+import { PageOfCourseDTO } from '../model/pageOfCourseDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
 
 @Injectable()
-export class TopicControllerService {
+export class CourseControllerService {
   protected basePath = '//164.90.237.175:8080/';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
@@ -54,18 +53,18 @@ export class TopicControllerService {
   }
 
   /**
-   * getTopicById
+   * getCourseById
    *
    * @param id id
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<TopicDTO>;
-  public getTopicByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getCourseByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<CourseDTO>;
+  public getCourseByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CourseDTO>>;
+  public getCourseByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CourseDTO>>;
+  public getCourseByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling getTopicByIdUsingGET.');
+      throw new Error('Required parameter id was null or undefined when calling getCourseByIdUsingGET.');
     }
 
     let headers = this.defaultHeaders;
@@ -85,7 +84,7 @@ export class TopicControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<TopicDTO>('get', `${this.basePath}/topic/${encodeURIComponent(String(id))}`, {
+    return this.httpClient.request<CourseDTO>('get', `${this.basePath}/course/${encodeURIComponent(String(id))}`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -94,59 +93,19 @@ export class TopicControllerService {
   }
 
   /**
-   * getTopicsByCourseId
-   *
-   * @param courseId courseId
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getTopicsByCourseIdUsingGET(courseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<TopicDTOShortResView>>;
-  public getTopicsByCourseIdUsingGET(courseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TopicDTOShortResView>>>;
-  public getTopicsByCourseIdUsingGET(courseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TopicDTOShortResView>>>;
-  public getTopicsByCourseIdUsingGET(courseId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (courseId === null || courseId === undefined) {
-      throw new Error('Required parameter courseId was null or undefined when calling getTopicsByCourseIdUsingGET.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // authentication (Bearer) required
-    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
-      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
-    }
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<Array<TopicDTOShortResView>>('get', `${this.basePath}/topic/${encodeURIComponent(String(courseId))}/all`, {
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * getTopics
+   * getCourses
    *
    * @param page page
    * @param stage stage
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfTopicDTO>;
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfTopicDTO>>;
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfTopicDTO>>;
-  public getTopicsUsingGET(page: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getCoursesUsingGET(page: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfCourseDTO>;
+  public getCoursesUsingGET(page: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfCourseDTO>>;
+  public getCoursesUsingGET(page: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfCourseDTO>>;
+  public getCoursesUsingGET(page: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (page === null || page === undefined) {
-      throw new Error('Required parameter page was null or undefined when calling getTopicsUsingGET.');
+      throw new Error('Required parameter page was null or undefined when calling getCoursesUsingGET.');
     }
 
     let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
@@ -174,7 +133,7 @@ export class TopicControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<PageOfTopicDTO>('get', `${this.basePath}/topic/all`, {
+    return this.httpClient.request<PageOfCourseDTO>('get', `${this.basePath}/course/all`, {
       params: queryParameters,
       withCredentials: this.configuration.withCredentials,
       headers: headers,

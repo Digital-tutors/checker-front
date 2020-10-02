@@ -2,16 +2,41 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
-import { TaskControllerService } from './api/taskController.service';
-import { TaskResultsControllerService } from './api/taskResultsController.service';
+import { AuthControllerService } from './api/authController.service';
+import { CourseAdminControllerService } from './api/courseAdminController.service';
+import { CourseControllerService } from './api/courseController.service';
+import { CourseInteractionControllerService } from './api/courseInteractionController.service';
+import { CourseRatingControllerService } from './api/courseRatingController.service';
+import { LessonAdminControllerService } from './api/lessonAdminController.service';
+import { LessonControllerService } from './api/lessonController.service';
+import { LessonInteractionControllerService } from './api/lessonInteractionController.service';
+import { LessonRatingControllerService } from './api/lessonRatingController.service';
+import { TopicAdminControllerService } from './api/topicAdminController.service';
 import { TopicControllerService } from './api/topicController.service';
+import { TopicInteractionControllerService } from './api/topicInteractionController.service';
+import { TopicRatingControllerService } from './api/topicRatingController.service';
 import { UserControllerService } from './api/userController.service';
 
 @NgModule({
   imports: [],
   declarations: [],
   exports: [],
-  providers: [TaskControllerService, TaskResultsControllerService, TopicControllerService, UserControllerService],
+  providers: [
+    AuthControllerService,
+    CourseAdminControllerService,
+    CourseControllerService,
+    CourseInteractionControllerService,
+    CourseRatingControllerService,
+    LessonAdminControllerService,
+    LessonControllerService,
+    LessonInteractionControllerService,
+    LessonRatingControllerService,
+    TopicAdminControllerService,
+    TopicControllerService,
+    TopicInteractionControllerService,
+    TopicRatingControllerService,
+    UserControllerService,
+  ],
 })
 export class ApiModule {
   public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {

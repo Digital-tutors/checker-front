@@ -10,7 +10,12 @@
  * Do not edit the class manually.
  */
 
-export interface UserCreateRq {
-  email: string;
-  password: string;
+export interface UserDTO {
+  createdAt: number;
+  email?: string;
+  firstName?: string;
+  id?: number;
+  lastName?: string;
+  middleName?: string;
+  updatedAt: number;
 }

@@ -16,15 +16,15 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 
 import { Observable } from 'rxjs';
 
-import { PageOfTopicDTO } from '../model/pageOfTopicDTO';
-import { TopicDTO } from '../model/topicDTO';
-import { TopicDTOShortResView } from '../model/topicDTOShortResView';
+import { TokenVO } from '../model/tokenVO';
+import { UserCreateRq } from '../model/userCreateRq';
+import { UserLoginRq } from '../model/userLoginRq';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
 
 @Injectable()
-export class TopicControllerService {
+export class AuthControllerService {
   protected basePath = '//164.90.237.175:8080/';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
@@ -54,18 +54,18 @@ export class TopicControllerService {
   }
 
   /**
-   * getTopicById
+   * login
    *
-   * @param id id
+   * @param body userLoginRq
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<TopicDTO>;
-  public getTopicByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling getTopicByIdUsingGET.');
+  public loginUsingPOST(body: UserLoginRq, observe?: 'body', reportProgress?: boolean): Observable<TokenVO>;
+  public loginUsingPOST(body: UserLoginRq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TokenVO>>;
+  public loginUsingPOST(body: UserLoginRq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TokenVO>>;
+  public loginUsingPOST(body: UserLoginRq, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling loginUsingPOST.');
     }
 
     let headers = this.defaultHeaders;
@@ -83,9 +83,14 @@ export class TopicControllerService {
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = [];
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
 
-    return this.httpClient.request<TopicDTO>('get', `${this.basePath}/topic/${encodeURIComponent(String(id))}`, {
+    return this.httpClient.request<TokenVO>('post', `${this.basePath}/api/login`, {
+      body: body,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -94,18 +99,18 @@ export class TopicControllerService {
   }
 
   /**
-   * getTopicsByCourseId
+   * register
    *
-   * @param courseId courseId
+   * @param body userCreateRq
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicsByCourseIdUsingGET(courseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<TopicDTOShortResView>>;
-  public getTopicsByCourseIdUsingGET(courseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TopicDTOShortResView>>>;
-  public getTopicsByCourseIdUsingGET(courseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TopicDTOShortResView>>>;
-  public getTopicsByCourseIdUsingGET(courseId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (courseId === null || courseId === undefined) {
-      throw new Error('Required parameter courseId was null or undefined when calling getTopicsByCourseIdUsingGET.');
+  public registerUsingPOST(body: UserCreateRq, observe?: 'body', reportProgress?: boolean): Observable<TokenVO>;
+  public registerUsingPOST(body: UserCreateRq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TokenVO>>;
+  public registerUsingPOST(body: UserCreateRq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TokenVO>>;
+  public registerUsingPOST(body: UserCreateRq, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling registerUsingPOST.');
     }
 
     let headers = this.defaultHeaders;
@@ -123,9 +128,14 @@ export class TopicControllerService {
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = [];
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
 
-    return this.httpClient.request<Array<TopicDTOShortResView>>('get', `${this.basePath}/topic/${encodeURIComponent(String(courseId))}/all`, {
+    return this.httpClient.request<TokenVO>('post', `${this.basePath}/api/register`, {
+      body: body,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -134,27 +144,18 @@ export class TopicControllerService {
   }
 
   /**
-   * getTopics
+   * updateToken
    *
-   * @param page page
-   * @param stage stage
+   * @param body tokenRq
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfTopicDTO>;
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfTopicDTO>>;
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfTopicDTO>>;
-  public getTopicsUsingGET(page: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (page === null || page === undefined) {
-      throw new Error('Required parameter page was null or undefined when calling getTopicsUsingGET.');
-    }
-
-    let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
-    if (page !== undefined && page !== null) {
-      queryParameters = queryParameters.set('page', <any>page);
-    }
-    if (stage !== undefined && stage !== null) {
-      queryParameters = queryParameters.set('stage', <any>stage);
+  public updateTokenUsingPOST(body: TokenVO, observe?: 'body', reportProgress?: boolean): Observable<TokenVO>;
+  public updateTokenUsingPOST(body: TokenVO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TokenVO>>;
+  public updateTokenUsingPOST(body: TokenVO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TokenVO>>;
+  public updateTokenUsingPOST(body: TokenVO, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling updateTokenUsingPOST.');
     }
 
     let headers = this.defaultHeaders;
@@ -172,10 +173,14 @@ export class TopicControllerService {
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = [];
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
 
-    return this.httpClient.request<PageOfTopicDTO>('get', `${this.basePath}/topic/all`, {
-      params: queryParameters,
+    return this.httpClient.request<TokenVO>('post', `${this.basePath}/api/refresh`, {
+      body: body,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,

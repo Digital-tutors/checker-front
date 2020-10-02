@@ -10,7 +10,10 @@
  * Do not edit the class manually.
  */
 
-export interface UserCreateRq {
-  email: string;
-  password: string;
+export interface AuthorRefVO {
+  email?: string;
+  firstName?: string;
+  id?: number;
+  lastName?: string;
+  middleName?: string;
 }

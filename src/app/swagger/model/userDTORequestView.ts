@@ -10,7 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface UserCreateRq {
-  email: string;
-  password: string;
+export interface UserDTORequestView {
+  firstName?: string;
+  lastName?: string;
+  middleName?: string;
 }
