@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { EMPTY, from, Subject } from 'rxjs';
 import { catchError, flatMap, takeUntil, tap } from 'rxjs/operators';
 
-import { TopicControllerService } from '@swagger/api/topicController.service';
+import { TopicAdminControllerService } from '@swagger/api/topicAdminController.service';
 
 @Component({
   selector: 'app-add-topic',
@@ -19,7 +19,7 @@ export class AddTopicComponent implements OnInit, OnDestroy {
 
   public error: boolean;
 
-  constructor(private fb: FormBuilder, private topicControllerService: TopicControllerService, private router: Router) {}
+  constructor(private fb: FormBuilder, private topicAdminControllerService: TopicAdminControllerService, private router: Router) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -38,7 +38,7 @@ export class AddTopicComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (this.form.valid) {
-      this.topicControllerService
+      this.topicAdminControllerService
         .createTopicUsingPOST({
           ...this.form.value,
         })

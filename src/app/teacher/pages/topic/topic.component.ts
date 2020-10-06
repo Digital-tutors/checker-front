@@ -26,7 +26,7 @@ export class TopicComponent implements OnInit, OnDestroy {
   public user$: Observable<UserVO>;
 
   public topicId: string;
-  public topic: TopicVO;
+  public topic: any;
   public tasks: TaskVO[];
   public error: boolean;
 
@@ -49,7 +49,7 @@ export class TopicComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.ngOnDestroy$),
       )
-      .subscribe(([topic]) => {
+      .subscribe(topic => {
         this.topic = topic;
       });
   }

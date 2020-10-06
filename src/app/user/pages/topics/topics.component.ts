@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TopicControllerService } from '@swagger/api/topicController.service';
+import { PageOfTopicDTO } from '@swagger/model/pageOfTopicDTO';
 import { PageTopicVO } from '@swagger/model/pageTopicVO';
 
 @Component({
@@ -9,7 +10,7 @@ import { PageTopicVO } from '@swagger/model/pageTopicVO';
   styleUrls: ['./topics.component.scss'],
 })
 export class TopicsComponent implements OnInit {
-  public topics: PageTopicVO;
+  public topics: PageOfTopicDTO;
 
   constructor(private topicControllerService: TopicControllerService) {}
 

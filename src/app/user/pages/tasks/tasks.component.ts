@@ -31,7 +31,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   @Select(AppState.user)
   public user$: Observable<UserVO>;
 
-  public topicId: string;
+  public topicId: number | string;
   public topic: TopicVO;
   public tasks: TaskVO[];
   public spinner = SubscribeStatus.NOT_SUBSCRIBED;
@@ -57,8 +57,8 @@ export class TasksComponent implements OnInit, OnDestroy {
         takeUntil(this.ngOnDestroy$),
       )
       .subscribe(([topic, user]) => {
-        this.topic = topic;
-        this.spinner = this.topic.subscribe ? SubscribeStatus.SUBSCRIBED : SubscribeStatus.NOT_SUBSCRIBED;
+        // this.topic = topic;
+        // this.spinner = topic.subscribe ? SubscribeStatus.SUBSCRIBED : SubscribeStatus.NOT_SUBSCRIBED;
       });
   }
 
@@ -67,32 +67,34 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   subscribe() {
-    this.spinner = SubscribeStatus.LOAD;
-
-    this.user$
-      .pipe(
-        filter(user => !!user),
-        first(),
-        flatMap(user => this.topicControllerService.subscribeTopicUsingPOST(this.topicId, user.id)),
-        takeUntil(this.ngOnDestroy$),
-      )
-      .subscribe(() => {
-        this.spinner = SubscribeStatus.SUBSCRIBED;
-      });
+    // this.spinner = SubscribeStatus.LOAD;
+    //
+    // this.user$
+    //   .pipe(
+    //     filter(user => !!user),
+    //     first(),
+    //     flatMap(user => this.topicControllerService.subscribeTopicUsingPOST(this.topicId, user.id)),
+    //     takeUntil(this.ngOnDestroy$),
+    //   )
+    //   .subscribe(() => {
+    //     this.spinner = SubscribeStatus.SUBSCRIBED;
+    //   });
+    console.log('subscribe was called');
   }
 
   unSubscribe() {
-    this.spinner = SubscribeStatus.LOAD;
-
-    this.user$
-      .pipe(
-        filter(user => !!user),
-        first(),
-        flatMap(() => this.topicControllerService.unSubscribeTopicUsingDELETE(this.topicId)),
-        takeUntil(this.ngOnDestroy$),
-      )
-      .subscribe(() => {
-        this.spinner = SubscribeStatus.NOT_SUBSCRIBED;
-      });
+    // this.spinner = SubscribeStatus.LOAD;
+    //
+    // this.user$
+    //   .pipe(
+    //     filter(user => !!user),
+    //     first(),
+    //     flatMap(() => this.topicControllerService.unSubscribeTopicUsingDELETE(this.topicId)),
+    //     takeUntil(this.ngOnDestroy$),
+    //   )
+    //   .subscribe(() => {
+    //     this.spinner = SubscribeStatus.NOT_SUBSCRIBED;
+    //   });
+    console.log('unsubscribe was called');
   }
 }

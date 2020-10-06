@@ -21,6 +21,7 @@ import { UserDTORequestView } from '../model/userDTORequestView';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
+import { UserVO } from '@swagger/model/userVO';
 
 @Injectable()
 export class UserControllerService {
@@ -58,9 +59,9 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProfileUsingGET(observe?: 'body', reportProgress?: boolean): Observable<UserDTO>;
-  public getProfileUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDTO>>;
-  public getProfileUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDTO>>;
+  public getProfileUsingGET(observe?: 'body', reportProgress?: boolean): Observable<UserVO>;
+  public getProfileUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserVO>>;
+  public getProfileUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserVO>>;
   public getProfileUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     let headers = this.defaultHeaders;
 

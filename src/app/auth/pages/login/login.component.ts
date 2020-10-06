@@ -7,7 +7,7 @@ import { Store } from '@ngxs/store';
 import { EMPTY, from, Subject } from 'rxjs';
 import { catchError, flatMap, takeUntil, tap } from 'rxjs/operators';
 
-import { UserControllerService } from '@swagger/api/userController.service';
+import { AuthControllerService } from '@swagger/api/authController.service';
 import { UserVO } from '@swagger/model/userVO';
 
 import { User } from '@store/actions/user.actions';
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public error: boolean;
 
-  constructor(private fb: FormBuilder, private userControllerService: UserControllerService, private router: Router, private store: Store) {}
+  constructor(private fb: FormBuilder, private authControllerService: AuthControllerService, private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (this.form.valid) {
-      this.userControllerService
+      this.authControllerService
         .loginUsingPOST({
           ...this.form.value,
         })

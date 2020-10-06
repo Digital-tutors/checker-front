@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
+import { ShareModule } from '@share/share.module';
+
 import { AddTopicComponent } from './add/add.component';
 import { TopicsComponent } from './topics.component';
 import { RoutingModule } from './topics.routes';
@@ -25,6 +27,7 @@ import { RoutingModule } from './topics.routes';
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
+    ShareModule,
   ],
 })
 export class TopicsModule {}

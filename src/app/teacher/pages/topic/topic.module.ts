@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 
+import { ShareModule } from '@share/share.module';
+
 import { AddTaskComponent } from './add-task/add.component';
 import { TopicComponent } from './topic.component';
 import { RoutingModule } from './topic.routes';
@@ -30,6 +32,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MonacoEditorModule,
+    ShareModule,
   ],
 })
 export class TopicModule {}

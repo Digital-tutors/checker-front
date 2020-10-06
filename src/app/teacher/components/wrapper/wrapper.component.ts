@@ -37,7 +37,7 @@ export class WrapperComponent implements OnInit, OnDestroy {
       .pipe(
         first(),
         filter((user: UserVO) => !user),
-        flatMap(() => this.userControllerService.getUserByTokenUsingGET()),
+        flatMap(() => this.userControllerService.getProfileUsingGET()),
         flatMap((user: UserVO) => this.store.dispatch(new User.Set(user))),
         takeUntil(this.ngOnDestroy$),
       )

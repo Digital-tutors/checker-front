@@ -18,7 +18,7 @@ export interface TopicVO {
   createdDate?: string;
   followers?: Array<UserVO>;
   id?: string;
-  subscribe: boolean;
+  subscribe?: boolean;
   title?: string;
 }
 export namespace TopicVO {

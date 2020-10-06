@@ -6,6 +6,7 @@ import { Select } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
 
 import { TopicControllerService } from '@swagger/api/topicController.service';
+import { PageOfTopicDTO } from '@swagger/model/pageOfTopicDTO';
 import { TopicVO } from '@swagger/model/topicVO';
 import { UserVO } from '@swagger/model/userVO';
 
@@ -22,12 +23,12 @@ export class MyTopicsComponent implements OnInit, OnDestroy {
   @Select(AppState.user)
   public user$: Observable<UserVO>;
 
-  public topics: TopicVO[];
+  public topics: PageOfTopicDTO;
 
   constructor(private topicControllerService: TopicControllerService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.topicControllerService.getSubscribedTopicsUsingGET().subscribe(topics => (this.topics = topics));
+    this.topicControllerService.getTopicsUsingGET(0).subscribe(topics => (this.topics = topics));
   }
 
   ngOnDestroy(): void {

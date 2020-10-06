@@ -1,5 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
+import { UserDTO } from '@swagger/model/userDTO';
 import { UserVO } from '@swagger/model/userVO';
 
 import { User } from '@store/actions/user.actions';

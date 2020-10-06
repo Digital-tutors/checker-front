@@ -60,10 +60,10 @@ export class TopicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<TopicDTO>;
-  public getTopicByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getTopicByIdUsingGET(id: number | string, observe?: 'body', reportProgress?: boolean): Observable<TopicDTO>;
+  public getTopicByIdUsingGET(id: number | string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TopicDTO>>;
+  public getTopicByIdUsingGET(id: number | string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TopicDTO>>;
+  public getTopicByIdUsingGET(id: number | string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (id === null || id === undefined) {
       throw new Error('Required parameter id was null or undefined when calling getTopicByIdUsingGET.');
     }
