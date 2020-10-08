@@ -10,12 +10,10 @@ import { Select } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, first, flatMap, map, takeUntil, tap } from 'rxjs/operators';
 
-import { TaskControllerService } from '@swagger/api/taskController.service';
-import { TaskResultsControllerService } from '@swagger/api/taskResultsController.service';
+import { LessonControllerService } from '@swagger/api/lessonController.service';
+import { LessonDTO } from '@swagger/model/lessonDTO';
 import { PageTaskResultsVO } from '@swagger/model/pageTaskResultsVO';
-import { TaskResultsCreateRq } from '@swagger/model/taskResultsCreateRq';
 import { TaskResultsVO } from '@swagger/model/taskResultsVO';
-import { TaskVO } from '@swagger/model/taskVO';
 import { UserVO } from '@swagger/model/userVO';
 
 import { AppState } from '@store/app.state';
@@ -35,7 +33,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   public user$: Observable<UserVO>;
 
   public topicId: string;
-  public task: TaskVO;
+  public task: LessonDTO;
   public spinner = false;
   public taskResults: PageTaskResultsVO;
 
@@ -50,12 +48,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  constructor(
-    private fb: FormBuilder,
-    private taskControllerService: TaskControllerService,
-    private taskResultsControllerService: TaskResultsControllerService,
-    private route: ActivatedRoute,
-  ) {}
+  constructor(private fb: FormBuilder, private lessonControllerService: LessonControllerService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -66,15 +59,16 @@ export class TaskComponent implements OnInit, OnDestroy {
           this.taskId = params.get('taskId');
           this.topicId = params.get('id');
         }),
-        flatMap(params => this.taskControllerService.getTaskByIdUsingGET(params.get('taskId'))),
+        flatMap(params => this.lessonControllerService.getLessonByIdUsingGET(Number(params.get('taskId')))),
         tap(task => (this.task = task)),
-        flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId, this.pageNumber)),
+        // flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId, this.pageNumber)),
         takeUntil(this.ngOnDestroy$),
       )
       .subscribe(taskResults => {
-        this.dataSource.data = taskResults.content;
-        this.taskResults = taskResults;
-        this.dataSource.paginator = this.paginator;
+        // this.dataSource.data = taskResults.content;
+        // this.taskResults = taskResults;
+        // this.dataSource.paginator = this.paginator;
+        console.log('Не ну ты кекнутый конечно.');
       });
   }
 
@@ -109,15 +103,16 @@ export class TaskComponent implements OnInit, OnDestroy {
           language: this.editorOptions.language,
           sourceCode: this.getHandledCode(),
         })),
-        flatMap((taskResults: TaskResultsCreateRq) => this.taskResultsControllerService.saveDecisionUsingPOST(taskResults)),
+        // flatMap((taskResults: TaskResultsCreateRq) => this.taskResultsControllerService.saveDecisionUsingPOST(taskResults)),
         tap(() => {}),
-        flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId, this.pageNumber)),
+        // flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId, this.pageNumber)),
         takeUntil(this.ngOnDestroy$),
       )
       .subscribe(taskResults => {
-        this.spinner = false;
-        this.taskResults = taskResults;
-        this.dataSource.data = taskResults.content;
+        // this.spinner = false;
+        // this.taskResults = taskResults;
+        // this.dataSource.data = taskResults.content;
+        console.log('Ты совсем кекнутый!');
       });
   }
 
@@ -134,13 +129,14 @@ export class TaskComponent implements OnInit, OnDestroy {
         tap(params => {
           this.taskId = params.get('taskId');
         }),
-        flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId, event.pageIndex)),
+        // flatMap(() => this.taskResultsControllerService.getTasksByUserAndTaskUsingGET(this.taskId, event.pageIndex)),
         takeUntil(this.ngOnDestroy$),
       )
       .subscribe(taskResults => {
-        this.dataSource.data = taskResults.content;
-        this.taskResults = taskResults;
-        this.pageNumber = event.pageIndex;
+        // this.dataSource.data = taskResults.content;
+        // this.taskResults = taskResults;
+        // this.pageNumber = event.pageIndex;
+        console.log('Ну это уже совсем кек');
       });
   }
 }

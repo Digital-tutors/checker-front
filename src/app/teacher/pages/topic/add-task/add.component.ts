@@ -7,7 +7,7 @@ import { catchError, flatMap, takeUntil, tap } from 'rxjs/operators';
 
 import { TopicControllerService } from '@swagger/api/topicController.service';
 import ScrollbarVisibility = monaco.editor.ScrollbarVisibility;
-import { TaskControllerService } from '@swagger/api/taskController.service';
+import { LessonAdminControllerService } from '@swagger/api/lessonAdminController.service';
 import { TaskCreateRq } from '@swagger/model/taskCreateRq';
 
 @Component({
@@ -31,7 +31,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     language: 'cpp',
   };
 
-  constructor(private fb: FormBuilder, private taskControllerService: TaskControllerService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private fb: FormBuilder, private lessonAdminController: LessonAdminControllerService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -102,8 +102,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     };
 
     if (this.form.valid) {
-      this.taskControllerService
-        .createTaskUsingPOST(createTask)
+      this.lessonAdminController
+        .createLessonUsingPOST(createTask)
         .pipe(
           catchError(() => {
             this.error = true;

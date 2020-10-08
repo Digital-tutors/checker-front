@@ -15,8 +15,7 @@
     </div>
     <h1 class="title"><b>Тема:</b> {{topic.title}}</h1>
     <ul class="task-info-desc">
-      <li><b>Автор:</b> {{topic.authorId?.firstName == null ? topic.authorId?.email : topic.authorId?.lastName + ' ' + topic.authorId?.firstName}}</li>
-      <li><b>Доступ:</b> {{topic.accessType == 'PUBLIC' ? 'Публичный' : 'Приватный'}}</li>
+      <li><b>Автор:</b> {{topic.author && topic.author.firstName == null ? topic.author.email : topic.author.lastName + ' ' + topic.author.firstName}}</li>
     </ul>
   </section>
 
@@ -25,22 +24,16 @@
       <mat-card-subtitle>
         <div>
           <b>Автор:</b>
-          {{task.authorId?.firstName == null ? task.authorId?.email : task.authorId?.firstName + ' ' + task.authorId?.lastName}}
+          {{task.author.firstName == null ? task.author.email : task.author.firstName + ' ' + task.author.lastName}}
         </div>
 
         <div>
           <b>Сложность:</b>
-          {{task.level == 'JUNIOR' ? 'Легкий' : task.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}
+          {{task.level == 'EASY' ? 'Легкий' : task.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}
         </div>
       </mat-card-subtitle>
       <mat-card-title>{{task.title}}</mat-card-title>
-      <mat-card-content>
-        <p>
-          {{task.description.substring(0,140)}}...
-        </p>
-      </mat-card-content>
       <mat-card-actions>
-        <span>{{task.complete ? 'Выполнено' : ''}}</span>
         <button mat-stroked-button color="primary" [routerLink]="'/user/topics/' + topicId + '/tasks/' + task.id">Перейти</button>
       </mat-card-actions>
     </mat-card>

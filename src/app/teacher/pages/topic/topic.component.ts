@@ -6,8 +6,9 @@ import { Select } from '@ngxs/store';
 import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, filter, first, flatMap, takeUntil, tap } from 'rxjs/operators';
 
-import { TaskControllerService } from '@swagger/api/taskController.service';
+import { LessonControllerService } from '@swagger/api/lessonController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
+import { LessonDTOShortResView } from '@swagger/model/lessonDTOShortResView';
 import { TaskVO } from '@swagger/model/taskVO';
 import { TopicVO } from '@swagger/model/topicVO';
 import { UserVO } from '@swagger/model/userVO';
@@ -27,10 +28,14 @@ export class TopicComponent implements OnInit, OnDestroy {
 
   public topicId: string;
   public topic: any;
-  public tasks: TaskVO[];
+  public tasks: LessonDTOShortResView[];
   public error: boolean;
 
-  constructor(private taskControllerService: TaskControllerService, private topicControllerService: TopicControllerService, private route: ActivatedRoute) {}
+  constructor(
+    private lessonControllerService: LessonControllerService,
+    private topicControllerService: TopicControllerService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap
@@ -38,7 +43,7 @@ export class TopicComponent implements OnInit, OnDestroy {
         tap(params => {
           this.topicId = params.get('id');
         }),
-        flatMap(params => this.taskControllerService.getTasksByTopicIdUsingGET(params.get('id'))),
+        flatMap(params => this.lessonControllerService.getLessonByTopicIdUsingGET(Number(params.get('id')))),
         tap(tasks => (this.tasks = tasks)),
         flatMap(() => combineLatest(this.topicControllerService.getTopicByIdUsingGET(this.topicId))),
         filter(([topic]) => !!topic),

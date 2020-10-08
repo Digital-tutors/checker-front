@@ -18,7 +18,7 @@
     </div>
     <h1 class="title"><b>Тема:</b> {{topic.title}}</h1>
     <ul class="task-info-desc">
-      <li><b>Автор:</b> {{topic.authorId?.firstName == null ? topic.authorId?.email : topic.authorId?.lastName + ' ' + topic.authorId?.firstName}}</li>
+      <li><b>Автор:</b> {{topic.author.firstName == null ? topic.author.email : topic.author?.lastName + ' ' + topic.author.firstName}}</li>
       <li><b>Доступ:</b> {{topic.accessType == 'PUBLIC' ? 'Публичный' : 'Приватный'}}</li>
     </ul>
   </section>
@@ -29,7 +29,7 @@
       <mat-card-subtitle>
         <div>
           <b>Автор:</b>
-          {{task.authorId?.firstName == null ? task.authorId?.email : task.authorId?.firstName + ' ' + task.authorId?.lastName}}
+          {{task.author.firstName == null ? task.author.email : task.author.firstName + ' ' + task.author.lastName}}
         </div>
 
         <div>

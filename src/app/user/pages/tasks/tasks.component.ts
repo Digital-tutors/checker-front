@@ -6,7 +6,7 @@ import { Select } from '@ngxs/store';
 import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, filter, first, flatMap, takeUntil, tap } from 'rxjs/operators';
 
-import { TaskControllerService } from '@swagger/api/taskController.service';
+import { LessonControllerService } from '@swagger/api/lessonController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
 import { TaskVO } from '@swagger/model/taskVO';
 import { TopicVO } from '@swagger/model/topicVO';
@@ -32,12 +32,16 @@ export class TasksComponent implements OnInit, OnDestroy {
   public user$: Observable<UserVO>;
 
   public topicId: number | string;
-  public topic: TopicVO;
-  public tasks: TaskVO[];
+  public topic: any;
+  public tasks: any;
   public spinner = SubscribeStatus.NOT_SUBSCRIBED;
   public error: boolean;
 
-  constructor(private taskControllerService: TaskControllerService, private topicControllerService: TopicControllerService, private route: ActivatedRoute) {}
+  constructor(
+    private lessonControllerService: LessonControllerService,
+    private topicControllerService: TopicControllerService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap
@@ -45,7 +49,7 @@ export class TasksComponent implements OnInit, OnDestroy {
         tap(params => {
           this.topicId = params.get('id');
         }),
-        flatMap(params => this.taskControllerService.getTasksByTopicIdUsingGET(params.get('id'))),
+        flatMap(params => this.lessonControllerService.getLessonByTopicIdUsingGET(Number(params.get('id')))),
         tap(tasks => (this.tasks = tasks)),
         flatMap(() => combineLatest(this.topicControllerService.getTopicByIdUsingGET(this.topicId), this.user$)),
         filter(([topic, user]) => !!topic && !!user),

@@ -7,7 +7,6 @@ import { Observable, Subject } from 'rxjs';
 
 import { TopicControllerService } from '@swagger/api/topicController.service';
 import { PageOfTopicDTO } from '@swagger/model/pageOfTopicDTO';
-import { TopicVO } from '@swagger/model/topicVO';
 import { UserVO } from '@swagger/model/userVO';
 
 import { AppState } from '@store/app.state';
