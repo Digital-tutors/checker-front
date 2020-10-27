@@ -14,17 +14,29 @@ const routes: Routes = [
         loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule),
       },
       {
-        path: 'topics',
-        loadChildren: () => import('./pages/topics/topics.module').then(m => m.TopicsModule),
-      },
-      {
-        path: 'topics/:id/tasks',
+        path: 'courses',
         pathMatch: 'full',
-        loadChildren: () => import('./pages/tasks/tasks.module').then(m => m.TasksModule),
+        loadChildren: () => import('./pages/courses/courses.module').then(m => m.CoursesModule),
       },
       {
-        path: 'topics/:id/tasks/:taskId',
-        loadChildren: () => import('./pages/task/task.module').then(m => m.TaskModule),
+        path: 'courses/:courseId',
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/course-page/course-page.module').then(m => m.CoursePageModule),
+      },
+      {
+        path: 'courses/:courseId/topic/:topicId/lesson/:lessonId', // Занятие
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/test-page/test-page.module').then(m => m.TestPageModule),
+      },
+      {
+        path: 'courses/:courseId/topic/:topicId/test/:testId',
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/test-page/test-page.module').then(m => m.TestPageModule),
+      },
+      {
+        path: 'courses/:courseId/topic/:topicId/task/:taskId', // Практическое задание
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/test-page/test-page.module').then(m => m.TestPageModule),
       },
     ],
   },
