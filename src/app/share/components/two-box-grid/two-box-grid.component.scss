@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+:host(.center) {
+  align-items: center;
+}
+
+:host ::ng-deep {
+  > * {
+    width: 48% !important;
+  }
+}
