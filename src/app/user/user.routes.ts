@@ -26,7 +26,7 @@ const routes: Routes = [
       {
         path: 'courses/:courseId/topic/:topicId/lesson/:lessonId', // Занятие
         pathMatch: 'full',
-        loadChildren: () => import('./pages/test-page/test-page.module').then(m => m.TestPageModule),
+        loadChildren: () => import('./pages/lesson-page/lesson-page.module').then(m => m.LessonPageModule),
       },
       {
         path: 'courses/:courseId/topic/:topicId/test/:testId',

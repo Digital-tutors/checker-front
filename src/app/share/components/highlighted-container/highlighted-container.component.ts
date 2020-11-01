@@ -10,6 +10,8 @@ export class HighlightedContainerComponent implements OnInit {
   public neutral: boolean;
   @Input()
   public color: string;
+  @Input()
+  public bgColor: string;
 
   constructor(private elRef: ElementRef) {}
 

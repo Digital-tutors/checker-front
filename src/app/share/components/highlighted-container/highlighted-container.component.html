@@ -1,5 +1,5 @@
 <app-shadow-container class="highlighted-container" [class.neutral]="neutral">
-  <aside class="highlighted-container__line" [style.backgroundColor]="color"></aside>
+  <aside class="highlighted-container__line" [style.backgroundColor]="bgColor || color"></aside>
   <main class="highlighted-container__main">
     <ng-content></ng-content>
   </main>

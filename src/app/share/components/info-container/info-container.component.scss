@@ -2,7 +2,9 @@
 @import "../../../../colors";
 
 :host {
+  display: block;
   height: 100%;
+  background-color: white;
 }
 
 .info-container {
@@ -11,8 +13,8 @@
   padding: $space;
   flex-grow: 1;
   box-sizing: border-box;
-  background: white;
-  height: 100%;
+  background: inherit;
+  height: inherit;
 
   &.bottom {
     flex-direction: column-reverse;
@@ -24,5 +26,11 @@
 
   .text {
     margin-bottom: 0;
+    color: inherit;
+  }
+
+  .caption {
+    color: inherit;
+    opacity: 0.5;
   }
 }

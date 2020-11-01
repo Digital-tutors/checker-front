@@ -9,12 +9,13 @@ import { ShareModule } from '@share/share.module';
 
 import { AboutCourseSidebarComponent } from './components/about-course-sidebar/about-course-sidebar.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { LessonSidebarComponent } from './components/lesson-sidebar/lesson-sidebar.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { SidebarService } from './services/sidebar.service';
 import { RoutingModule } from './user.routes';
 
 @NgModule({
-  declarations: [LayoutComponent, WrapperComponent, AboutCourseSidebarComponent],
+  declarations: [LayoutComponent, WrapperComponent, AboutCourseSidebarComponent, LessonSidebarComponent],
   imports: [ShareModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule],
   exports: [],
   providers: [SidebarService],
