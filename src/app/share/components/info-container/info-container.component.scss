@@ -1,0 +1,23 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  padding: $space;
+  flex-grow: 1;
+  box-sizing: border-box;
+  background: white;
+
+  &--bottom {
+    flex-direction: column-reverse;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  .text {
+    margin-bottom: 0;
+  }
+}
