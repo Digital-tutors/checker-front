@@ -1,0 +1,39 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+:host ::ng-deep {
+  .shadow.card {
+    display: flex;
+    padding: 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+}
+
+:host(.neutral) ::ng-deep {
+  .shadow.card {
+    background: $block-gray;
+
+    .highlighted-container__line {
+      background: $block-gray !important;
+    }
+  }
+}
+
+.highlighted-container {
+  &__line {
+    width: 5px;
+    background: $block-green;
+    flex-shrink: 0;
+
+    &--red {
+      background: $block-red;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+}
