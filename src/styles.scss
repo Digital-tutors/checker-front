@@ -21,7 +21,7 @@ $tutor-app-theme: mat-light-theme($tutor-primary, $tutor-accent, $tutor-warn);
 .card {
   border-radius: 4px;
   background: white;
-  padding: ($space / 2) $space;
+  padding: $space;
 }
 
 .shadow {

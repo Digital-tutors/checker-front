@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 
+import { SidebarService } from '../../services/sidebar.service';
+
 import { coursesMock } from './courses.mock';
 
 @Component({
@@ -15,9 +17,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   public coursesMock = coursesMock;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private sidebarService: SidebarService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sidebarService.setSidebar(null);
+  }
 
   ngOnDestroy(): void {
     this.ngOnDestroy$.next();
