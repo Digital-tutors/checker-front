@@ -1,0 +1,30 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+.button {
+  padding: ($space / 2) ($space + $space / 2);
+  border-radius: 4px;
+  background: $button-green;
+  color: white !important;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.2s background ease-in-out, 0.2s color ease-in-out;
+}
+
+.bordered {
+  background: transparent;
+  border: 1px solid $button-green;
+  color: $text-paragraph !important;
+  text-transform: unset !important;
+  box-shadow: none;
+  cursor: pointer;
+  transition: 0.2s background ease-in-out, 0.2s color ease-in-out;
+  border-radius: 4px;
+  padding: ($space / 2) ($space + $space / 2);
+
+  &:hover {
+    background: $button-green;
+    color: white !important;
+  }
+}
