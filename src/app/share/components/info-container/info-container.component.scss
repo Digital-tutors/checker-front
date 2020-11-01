@@ -1,6 +1,10 @@
 @import "../../../../vars";
 @import "../../../../colors";
 
+:host {
+  height: 100%;
+}
+
 .info-container {
   display: flex;
   flex-direction: column;
@@ -8,12 +12,13 @@
   flex-grow: 1;
   box-sizing: border-box;
   background: white;
+  height: 100%;
 
-  &--bottom {
+  &.bottom {
     flex-direction: column-reverse;
   }
 
-  &--center {
+  &.center {
     justify-content: center;
   }
 
