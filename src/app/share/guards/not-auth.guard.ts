@@ -6,7 +6,7 @@ import { environment } from '@environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class UnAuthGuard implements CanActivate, CanActivateChild {
+export class NotAuthGuard implements CanActivate, CanActivateChild {
   constructor(private router: Router) {}
 
   private checkForAuth(): boolean {
