@@ -1,1 +1,27 @@
-<router-outlet></router-outlet>
+<mat-drawer-container>
+  <mat-drawer mode="side" opened class="drawer-content">
+    <div class="drawer-content--inner">
+      <div class="page-controls">
+        <button type="submit"
+                mat-flat-button
+                class="home-button"
+                color="primary"
+                routerLink="/user/topics">
+          <mat-icon aria-hidden="false" aria-label="">home</mat-icon>
+        </button>
+        <mat-icon aria-hidden="false" aria-label="">radio_button_unchecked</mat-icon>
+      </div>
+      <mat-icon aria-hidden="false" aria-label="">picture_in_picture_alt</mat-icon>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="app-content">
+      <main class="main">
+        <router-outlet></router-outlet>
+      </main>
+      <aside class="sibebar-content">
+        <ng-template #sidebar></ng-template>
+      </aside>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
