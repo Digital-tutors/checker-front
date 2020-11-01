@@ -1,9 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
+@import "vars";
+@import "colors";
 @include mat-core();
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #fafafa; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #ccc; }
 
 $tutor-primary: mat-palette($mat-teal, A700);
 $tutor-accent: mat-palette($mat-red, 500);
@@ -15,3 +17,76 @@ $tutor-app-theme: mat-light-theme($tutor-primary, $tutor-accent, $tutor-warn);
 @include angular-material-theme($tutor-app-theme);
 
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+.card {
+  border-radius: 4px;
+  background: white;
+  padding: ($space / 2) $space;
+}
+
+.shadow {
+  box-shadow: 0 6px 10px rgba(#000000, 0.03);
+}
+
+.caption {
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  color: $text-headline;
+  letter-spacing: 0.68px !important;
+}
+
+.caption--light {
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  letter-spacing: 0.68px !important;
+  color: $text-paragraph;
+  font-weight: 400 !important;
+}
+
+.button {
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 14px !important;
+  color: $text-headline;
+  letter-spacing: 0.47px !important;
+  cursor: pointer;
+}
+
+.link {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  color: $text-paragraph;
+  letter-spacing: 0.38px !important;
+}
+
+.text {
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  color: $text-paragraph;
+  letter-spacing: 0.26px !important;
+}
+
+.title {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  color: $text-headline;
+  letter-spacing: 0.98px !important;
+}
+
+.headline-1 {
+  font-weight: 700 !important;
+  font-size: 34px !important;
+  color: $text-headline;
+  letter-spacing: 1.07px !important;
+  margin-bottom: $space * 3 !important;
+}
+
+.headline-2 {
+  font-weight: 700 !important;
+  font-size: 24px !important;
+  color: $text-headline;
+  letter-spacing: 0.46px !important;
+  margin-bottom: $space * 3 !important;
+}

@@ -13,6 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
+import { ShareModule } from '@share/share.module';
+
 import { CoursesComponent } from './courses.component';
 import { RoutingModule } from './courses.routes';
 
@@ -35,6 +37,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
+    ShareModule,
   ],
 })
 export class CoursesModule {}

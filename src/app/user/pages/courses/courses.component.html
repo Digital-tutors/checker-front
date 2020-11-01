@@ -1,0 +1,11 @@
+<h1 class="headline-1">Список курсов</h1>
+
+<div class="courses">
+
+  <app-image-card *ngFor="let course of coursesMock"
+                  [image]="course.image"
+                  [sup]="course.sup"
+                  [title]="course.title"
+                  (click)="goToCourse(course.id)"></app-image-card>
+
+</div>
