@@ -1,0 +1,29 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+:host {
+  display: block;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+
+  &.active {
+    .rating__value {
+      color: $block-green;
+    }
+  }
+
+  &__value {
+    font-weight: 300 !important;
+    font-size: 29px !important;
+    letter-spacing: 0.23px !important;
+    margin-right: $space / 4;
+  }
+
+  &__caption {
+    display: block;
+    width: 50%;
+  }
+}
