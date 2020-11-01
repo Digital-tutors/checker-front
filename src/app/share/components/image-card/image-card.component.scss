@@ -1,0 +1,17 @@
+.image-card {
+  box-sizing: border-box;
+  max-width: 300px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 200px;
+  }
+
+  &__sup {
+
+  }
+}
