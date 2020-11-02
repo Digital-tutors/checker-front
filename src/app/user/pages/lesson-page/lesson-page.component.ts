@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
-import { LessonSidebarComponent } from '../../components/lesson-sidebar/lesson-sidebar.component';
+import { TopicSidebarComponent } from '../../components/topic-sidebar/topic-sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class LessonPageComponent implements OnInit, OnDestroy {
   constructor(private sidebarService: SidebarService) {}
 
   ngOnInit(): void {
-    this.sidebarService.setSidebar(LessonSidebarComponent);
+    this.sidebarService.setSidebar(TopicSidebarComponent);
   }
 
   ngOnDestroy(): void {

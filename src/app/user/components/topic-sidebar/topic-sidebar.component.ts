@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-about-course-sidebar',
-  templateUrl: './lesson-sidebar.component.html',
-  styleUrls: ['./lesson-sidebar.component.scss'],
+  selector: 'app-topic-sidebar',
+  templateUrl: './topic-sidebar.component.html',
+  styleUrls: ['./topic-sidebar.component.scss'],
 })
-export class LessonSidebarComponent implements OnInit {
+export class TopicSidebarComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
