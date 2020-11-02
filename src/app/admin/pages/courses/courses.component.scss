@@ -1,0 +1,15 @@
+@import "../../../../vars";
+
+.courses {
+  display: flex;
+  flex-wrap: wrap;
+
+  app-image-card {
+    display: block;
+    margin-right: $space;
+  }
+}
+
+.headline-1 {
+  margin-top: 0;
+}

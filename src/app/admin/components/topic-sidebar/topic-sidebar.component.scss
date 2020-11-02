@@ -1,0 +1,138 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+
+mat-icon {
+  color: $button-green;
+}
+
+header {
+  app-info-container {
+    background: $block-black;
+    height: auto;
+    color: white;
+    padding: $space;
+  }
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  color: white;
+}
+
+:host {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.lesson-sidebar {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
+
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
+    &--bottom {
+      top: unset;
+      bottom: 0;
+      margin-top: auto;
+    }
+  }
+
+  .subject {
+    background: $block-black;
+
+    app-info-container {
+      background: $block-black;
+      color: white;
+      padding: $space;
+    }
+
+    app-button {
+      color: white;
+    }
+
+    .container, .info-card {
+      padding: $space * 1.5;
+      cursor: pointer;
+    }
+
+    .info-card__wrapper {
+      &__title {
+        color: #7B7D7F !important;
+      }
+
+      &__text {
+        color: white !important;
+      }
+    }
+
+    &--next {
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-top: auto;
+
+      .info-card {
+        padding-top: $space * 2.5 !important;
+      }
+
+      .next {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        background: $block-green;
+      }
+    }
+  }
+
+  .content {
+    padding: $space * 1.5;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    &__nav {
+      display: flex;
+      align-items: center;
+      margin-bottom: $space;
+
+      &__item {
+        color: rgba($text-headline, 0.5);
+        cursor: pointer;
+
+        &:not(:last-child) {
+          margin-right: $space;
+        }
+
+        &--active {
+          color: $text-headline;
+        }
+      }
+    }
+
+    &__lessons {
+      app-highlighted-container {
+        display: block;
+        margin-bottom: $space;
+        cursor: pointer;
+      }
+
+      &__item {
+        margin-bottom: $space;
+        cursor: pointer;
+
+        .info-card {
+          background: #EFF1F7;
+        }
+      }
+    }
+  }
+}

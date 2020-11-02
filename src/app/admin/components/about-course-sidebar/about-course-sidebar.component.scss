@@ -1,0 +1,109 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+:host {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-course-sidebar {
+  padding: ($space * 1.5) ($space * 1.5) 0;
+  box-sizing: border-box;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  & > *:not(:last-child) {
+    margin-bottom: $space * 1.5;
+  }
+
+  .author {
+
+    &__person {
+      display: flex;
+      align-content: center;
+      padding-bottom: $space * 1.5;
+      margin-bottom: $space * 1.5;
+      border-bottom: 1px solid #EFF1F7;
+
+      &__avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        margin-right: $space;
+      }
+
+      &__info {
+        p {
+          margin: 0;
+        }
+      }
+    }
+
+    &__statistics {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .rubrics {
+
+    &__list {
+      display: flex;
+      flex-direction: row;
+      align-items: initial;
+      justify-content: initial;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      &__item {
+        display: inline-flex;
+        flex-wrap: wrap;
+        padding: ($space / 2) $space;
+        background: $block-gray;
+        border-radius: 4px;
+        margin-right: $space / 2;
+        margin-bottom: $space / 2;
+        cursor: pointer;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .info {
+    .two-box-grid:not(:last-child) {
+      margin-bottom: $space;
+    }
+  }
+
+  .footer {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #EFF1F7;
+    padding: $space 0;
+    background: white;
+
+    .button {
+      margin-right: $space;
+    }
+
+    &__caption {
+      font-size: 12px;
+      text-decoration: none;
+      margin: 0 0 0 $space;
+    }
+  }
+}
+
+app-two-box-grid:not(:last-of-type) {
+  margin-bottom: $space;
+}

@@ -1,0 +1,31 @@
+<main class="about-course-sidebar">
+  <header class="author">
+    <p class="title">Автор курса</p>
+    <div class="author__person">
+      <img class="author__person__avatar" src="assets/img/thumbnail_avatar.svg" alt="avatar" />
+      <aside class="author__person__info">
+        <p class="author__person__info__role caption--light">Преподаватель</p>
+        <p class="author__person__info__name headline-2">Комлева Н.В.</p>
+      </aside>
+    </div>
+    <app-two-box-grid [center]="true">
+      <app-rating value="4,9" caption="Рейтинг" [active]="true"></app-rating>
+      <app-rating value="20" caption="Количество курсов"></app-rating>
+    </app-two-box-grid>
+  </header>
+  <div class="info">
+    <p class="title">Информация о курсе</p>
+    <app-two-box-grid [center]="true">
+      <app-rating value="4,1" caption="Рейтинг курса"></app-rating>
+      <app-rating value="293" caption="Количество студентов"></app-rating>
+    </app-two-box-grid>
+    <app-two-box-grid [center]="true">
+      <app-rating value="13" caption="Количество тем"></app-rating>
+      <app-rating value="34" caption="Количество занятий"></app-rating>
+    </app-two-box-grid>
+  </div>
+  <footer class="footer">
+    <app-button (click)="startCourse()">Перейти</app-button>
+    <p class="footer__caption link">Перейти на страницу курса</p>
+  </footer>
+</main>
