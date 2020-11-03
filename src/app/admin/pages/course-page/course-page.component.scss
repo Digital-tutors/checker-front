@@ -1,133 +1,60 @@
 @import "../../../../vars";
-@import "../../../../colors";
+@import '../../../../colors';
 
-.headline--1, .headline--2 {
-  margin-bottom: $space * 2;
-}
-
-.two-box-grid {
-  align-items: flex-start;
-}
-
-.skills {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-
-  &__item {
-    display: flex;
-    align-items: center;
-
-    &:not(:last-child) {
-      margin-bottom: $space;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    mat-icon {
-      margin-right: $space;
-      color: $block-green;
-    }
-  }
-}
-
-.description {
+.admin-navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: $space * 3;
-}
 
-.lessons {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  & > .shadow-container {
+    padding: 0;
+  }
 
-  &__item {
-    position: relative;
+  &__list {
+    padding: 0 $space;
+    margin: 0;
+    list-style: none;
     display: flex;
     align-items: center;
-    overflow: visible;
-    margin-bottom: $space !important;
-    cursor: pointer;
 
-    &__line {
-      display: flex;
-      align-items: center;
-      overflow: scroll;
-      width: 100%;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
+    &__item {
+      position: relative;
+      padding: $space;
 
       a {
         text-decoration: none;
+        color: $text-paragraph;
       }
 
-      app-highlighted-container {
-        flex-shrink: 0;
-        height: 140px;
+      &:after {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: transparent;
+        border-radius: 8px;
+        transition: 0.2s background ease-in-out;
+      }
 
-        @media (min-width: 1281px) {
-          width: 32%;
-          margin-right: 2%;
+      &--active {
+        &:after {
+          background: $block-green;
         }
+      }
 
-        @media (max-width: 1280px) {
-          width: 48%;
-          margin-right: 2%;
+      &:hover {
+        &:after {
+          background: rgba($block-green, 0.8);
         }
       }
-    }
-
-    .icon {
-      position: absolute;
-      right: -40px;
-      z-index: 1000;
-      width: 30px;
-      height: 30px;
-
-      &__image {
-        width: 10px;
-      }
-    }
-
-  }
-}
-
-.text {
-  margin: 0;
-}
-
-.rubrics {
-
-  &__list {
-    display: flex;
-    flex-direction: row;
-    align-items: initial;
-    justify-content: initial;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-    margin: 0 0 $space 0;
-
-    &__item {
-      display: inline-flex;
-      flex-wrap: wrap;
-      padding: ($space / 2) $space;
-      background: $block-gray;
-      border-radius: 4px;
-      margin-right: $space / 2;
-      margin-bottom: $space / 2;
-      cursor: pointer;
-      font-size: 12px;
     }
   }
-}
 
-.card-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  .button {
+    background: #17191D;
+  }
 }

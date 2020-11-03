@@ -8,4 +8,6 @@ import { Component, Input } from '@angular/core';
 export class ButtonComponent {
   @Input()
   public bordered: boolean;
+  @Input()
+  public monochrome: boolean;
 }

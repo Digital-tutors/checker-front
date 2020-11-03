@@ -28,3 +28,18 @@
     color: white !important;
   }
 }
+
+.monochrome {
+  background: black;
+  color: white !important;
+  box-shadow: none;
+  cursor: pointer;
+  transition: 0.2s background ease-in-out, 0.2s color ease-in-out;
+  border-radius: 4px;
+  padding: ($space / 2) ($space + $space / 2);
+  text-transform: uppercase;
+
+  &:hover {
+    color: $button-green !important;
+  }
+}

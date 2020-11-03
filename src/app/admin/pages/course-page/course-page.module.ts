@@ -15,13 +15,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { ShareModule } from '@share/share.module';
 
+import { DescriptionComponent } from './components/description/description.component';
+import { ParticipantsComponent } from './components/participants/participants.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { TopicsTasksComponent } from './components/topics-tasks/topics-tasks.component';
 import { CoursePageComponent } from './course-page.component';
 import { RoutingModule } from './course-page.routes';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
-  declarations: [CoursePageComponent],
+  declarations: [CoursePageComponent, DescriptionComponent, TopicsTasksComponent, ParticipantsComponent, SettingsComponent],
   imports: [
     CommonModule,
     RoutingModule,
