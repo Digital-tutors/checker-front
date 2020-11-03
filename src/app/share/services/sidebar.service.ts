@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SidebarService {
   private readonly sidebarSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
 

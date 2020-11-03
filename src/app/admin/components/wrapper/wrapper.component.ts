@@ -12,7 +12,7 @@ import { User } from '@store/actions/user.actions';
 import { AppState } from '@store/app.state';
 
 @Component({
-  selector: 'app-user-wrapper',
+  selector: 'app-admin-wrapper',
   templateUrl: './wrapper.component.html',
   styleUrls: ['./wrapper.component.scss'],
 })

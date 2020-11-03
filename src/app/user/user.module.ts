@@ -12,13 +12,12 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { TopicSidebarComponent } from './components/topic-sidebar/topic-sidebar.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
-import { SidebarService } from './services/sidebar.service';
 import { RoutingModule } from './user.routes';
 
 @NgModule({
   declarations: [LayoutComponent, WrapperComponent, AboutCourseSidebarComponent, TopicSidebarComponent, QuizComponent],
   imports: [ShareModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule],
   exports: [],
-  providers: [SidebarService],
+  providers: [],
 })
 export class UserModule {}

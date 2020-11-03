@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
+import { SidebarService } from '../../../share/services/sidebar.service';
 import { TopicSidebarComponent } from '../../components/topic-sidebar/topic-sidebar.component';
-import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-user-profile',

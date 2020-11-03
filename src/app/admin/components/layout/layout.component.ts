@@ -2,10 +2,10 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, OnInit,
 
 import { delay } from 'rxjs/operators';
 
-import { SidebarService } from '../../services/sidebar.service';
+import { SidebarService } from '@share/services/sidebar.service';
 
 @Component({
-  selector: 'app-user-layout',
+  selector: 'app-admin-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })

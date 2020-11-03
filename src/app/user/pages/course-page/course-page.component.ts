@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 
+import { SidebarService } from '../../../share/services/sidebar.service';
 import { AboutCourseSidebarComponent } from '../../components/about-course-sidebar/about-course-sidebar.component';
-import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-user-profile',

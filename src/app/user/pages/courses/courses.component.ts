@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 
-import { SidebarService } from '../../services/sidebar.service';
+import { SidebarService } from '../../../share/services/sidebar.service';
 
 import { coursesMock } from './courses.mock';
 

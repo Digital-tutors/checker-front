@@ -18,8 +18,8 @@ import { UserVO } from '@swagger/model/userVO';
 
 import { AppState } from '@store/app.state';
 
+import { SidebarService } from '../../../share/services/sidebar.service';
 import { TopicSidebarComponent } from '../../components/topic-sidebar/topic-sidebar.component';
-import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-user-profile',
