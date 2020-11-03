@@ -10,9 +10,9 @@ import { LessonPageSidebarComponent } from '../../components/lesson-page-sidebar
   styleUrls: ['./lesson-page.component.scss'],
 })
 export class LessonPageComponent implements OnInit {
-  constructor(private SidebarService: SidebarService) {}
+  constructor(private sidebarService: SidebarService) {}
 
   ngOnInit(): void {
-    this.SidebarService.setSidebar(LessonPageSidebarComponent);
+    this.sidebarService.setSidebar(LessonPageSidebarComponent);
   }
 }
