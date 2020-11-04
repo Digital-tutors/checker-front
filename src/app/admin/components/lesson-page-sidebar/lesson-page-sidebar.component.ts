@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-lesson-page-sidebar',
@@ -6,7 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lesson-page-sidebar.component.scss'],
 })
 export class LessonPageSidebarComponent implements OnInit {
-  constructor() {}
+  public form: FormGroup;
 
-  ngOnInit(): void {}
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.setForm();
+  }
+
+  private setForm(): void {
+    this.form = this.fb.group({
+      title: [''],
+      level: [''],
+      isLevel1Enabled: [''],
+      isLevel2Enabled: [''],
+      isLevel3Enabled: [''],
+    });
+  }
 }

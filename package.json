@@ -15,7 +15,8 @@
     "lint:check": "eslint \"src/**/*.ts\" && tsc --noemit",
     "lint:fix": "eslint --fix \"src/**/*.ts\"",
     "format:check": "prettier --check src/**/*.ts",
-    "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\""
+    "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\"",
+    "postinstall": "ngcc"
   },
   "husky": {
     "hooks": {

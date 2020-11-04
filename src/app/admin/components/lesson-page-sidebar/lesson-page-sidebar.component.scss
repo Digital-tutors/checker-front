@@ -1,0 +1,10 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+section {
+  padding: $space--large / 2;
+
+  app-button {
+    text-transform: uppercase;
+  }
+}

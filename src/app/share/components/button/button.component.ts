@@ -10,4 +10,6 @@ export class ButtonComponent {
   public bordered: boolean;
   @Input()
   public monochrome: boolean;
+  @Input()
+  public alert: boolean;
 }

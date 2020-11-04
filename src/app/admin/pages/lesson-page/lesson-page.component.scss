@@ -1,0 +1,39 @@
+@import '../../../../vars';
+@import '../../../../colors';
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .headline-1 {
+    display: flex;
+    margin: 0 !important;
+  }
+}
+
+section {
+  padding-top: $space * 3;
+  background: transparent;
+
+  .headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+  mat-expansion-panel {
+    margin-bottom: $space * 2;
+    border-radius: 4px !important;
+  }
+
+  mat-divider {
+    margin-bottom: $space;
+  }
+}
