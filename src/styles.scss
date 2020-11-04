@@ -9,7 +9,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background:
 
 $tutor-primary: mat-palette($mat-teal, A700);
 $tutor-accent: mat-palette($mat-grey, 700);
-$tutor-warn: mat-palette($mat-deep-orange);
+$tutor-warn: mat-palette($mat-red);
 
 
 $tutor-app-theme: mat-light-theme($tutor-primary, $tutor-accent, $tutor-warn);
