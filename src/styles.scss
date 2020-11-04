@@ -8,7 +8,7 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #ccc; }
 
 $tutor-primary: mat-palette($mat-teal, A700);
-$tutor-accent: mat-palette($mat-red, 500);
+$tutor-accent: mat-palette($mat-grey, 700);
 $tutor-warn: mat-palette($mat-deep-orange);
 
 

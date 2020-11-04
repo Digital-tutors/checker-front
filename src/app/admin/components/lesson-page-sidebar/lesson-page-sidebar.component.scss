@@ -3,8 +3,53 @@
 
 section {
   padding: $space--large / 2;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+
+  header {
+    padding-bottom: $space;
+  }
 
   app-button {
     text-transform: uppercase;
+  }
+
+  .levels {
+    padding-top: $space;
+    display: flex;
+    flex-direction: column;
+  }
+
+  caption {
+    padding-top: $space / 2;
+    text-align: left;
+    margin-bottom: auto;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    justify-content: space-between;
+  }
+
+  mat-form-field{
+    width: 100%;
+  }
+
+  .levels {
+    * {
+      padding-bottom: $space;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .mat-slide-toggle-label  {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
   }
 }

@@ -9,7 +9,7 @@
         <input matInput formControlName="name">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field class="select">
       <mat-label>Уровень сложности</mat-label>
       <mat-select formControlName="level">
         <mat-option value="option">Лёгкий</mat-option>
@@ -18,21 +18,24 @@
       </mat-select>
     </mat-form-field>
 
-    <caption>Уровни подачи материала</caption>
-
-    <mat-slide-toggle>Уровень 1</mat-slide-toggle>
-    <mat-slide-toggle>Уровень 2</mat-slide-toggle>
-    <mat-slide-toggle>Уровень 3</mat-slide-toggle>
+    <div class="levels">
+      <caption class="title">Уровни подачи материала</caption>
+      <mat-slide-toggle labelPosition="before" class="text">Уровень 1</mat-slide-toggle>
+      <mat-slide-toggle labelPosition="before" class="text">Уровень 2</mat-slide-toggle>
+      <mat-slide-toggle labelPosition="before" class="text">Уровень 3</mat-slide-toggle>
+    </div>
   </form>
 
   <mat-divider></mat-divider>
 
-  <caption>
+  <caption class="caption">
     Уровни подачи материала необходимы для отображения информации в зависимости от знаний обучающегося
   </caption>
 
   <mat-divider></mat-divider>
 
-  <app-button [alert]="true">Назад</app-button>
-  <app-button >Сохранить</app-button>
+  <footer>
+    <app-button [alert]="true">Назад</app-button>
+    <app-button >Сохранить</app-button>
+  </footer>
 </section>
