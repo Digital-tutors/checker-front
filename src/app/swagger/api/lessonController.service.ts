@@ -25,7 +25,7 @@ import { Configuration } from '../configuration';
 
 @Injectable()
 export class LessonControllerService {
-  protected basePath = '//164.90.237.175:8080/';
+  protected basePath = '//localhost/';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
@@ -141,14 +141,10 @@ export class LessonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getLessonsUsingGET(page: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfLessonDTO>;
-  public getLessonsUsingGET(page: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfLessonDTO>>;
-  public getLessonsUsingGET(page: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfLessonDTO>>;
-  public getLessonsUsingGET(page: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (page === null || page === undefined) {
-      throw new Error('Required parameter page was null or undefined when calling getLessonsUsingGET.');
-    }
-
+  public getLessonsUsingGET(page?: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfLessonDTO>;
+  public getLessonsUsingGET(page?: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfLessonDTO>>;
+  public getLessonsUsingGET(page?: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfLessonDTO>>;
+  public getLessonsUsingGET(page?: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
     if (page !== undefined && page !== null) {
       queryParameters = queryParameters.set('page', <any>page);

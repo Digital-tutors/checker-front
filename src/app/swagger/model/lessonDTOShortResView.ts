@@ -13,6 +13,7 @@ import { AuthorRefVOShortResView } from './authorRefVOShortResView';
 
 export interface LessonDTOShortResView {
   author?: AuthorRefVOShortResView;
+  id?: number;
   level: LessonDTOShortResView.LevelEnum;
   status: LessonDTOShortResView.StatusEnum;
   title?: string;

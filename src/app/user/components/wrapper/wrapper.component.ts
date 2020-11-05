@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { filter, first, flatMap, takeUntil } from 'rxjs/operators';
 
 import { UserControllerService } from '@swagger/api/userController.service';
-import { UserVO } from '@swagger/model/userVO';
+import { UserDTO } from '@swagger/model/userDTO';
 
 import { User } from '@store/actions/user.actions';
 import { AppState } from '@store/app.state';
@@ -20,7 +20,7 @@ export class WrapperComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
   @Select(AppState.user)
-  public user$: Observable<UserVO>;
+  public user$: Observable<UserDTO>;
 
   constructor(private userControllerService: UserControllerService, private store: Store) {}
 
@@ -36,9 +36,9 @@ export class WrapperComponent implements OnInit, OnDestroy {
     this.user$
       .pipe(
         first(),
-        filter((user: UserVO) => !user),
+        filter((user: UserDTO) => !user),
         flatMap(() => this.userControllerService.getProfileUsingGET()),
-        flatMap((user: UserVO) => this.store.dispatch(new User.Set(user))),
+        flatMap((user: UserDTO) => this.store.dispatch(new User.Set(user))),
         takeUntil(this.ngOnDestroy$),
       )
       .subscribe();

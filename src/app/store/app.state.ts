@@ -1,8 +1,9 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
+import { CourseDTO } from '@swagger/model/courseDTO';
 import { UserDTO } from '@swagger/model/userDTO';
-import { UserVO } from '@swagger/model/userVO';
 
+import { Course } from '@store/actions/course.actions';
 import { User } from '@store/actions/user.actions';
 import { StateInterface } from '@store/state.interface';
 
@@ -10,12 +11,18 @@ import { StateInterface } from '@store/state.interface';
   name: 'state',
   defaults: {
     user: null,
+    course: null,
   },
 })
 export class AppState {
   @Selector()
-  public static user(state: StateInterface): UserVO {
+  public static user(state: StateInterface): UserDTO {
     return state.user;
+  }
+
+  @Selector()
+  public static course(state: StateInterface): CourseDTO {
+    return state.course;
   }
 
   @Action(User.Set)
@@ -23,6 +30,14 @@ export class AppState {
     ctx.setState({
       ...ctx.getState(),
       user: action.value,
+    });
+  }
+
+  @Action(Course.Set)
+  public setCourse(ctx: StateContext<StateInterface>, action: Course.Set): void {
+    ctx.setState({
+      ...ctx.getState(),
+      course: action.value,
     });
   }
 }

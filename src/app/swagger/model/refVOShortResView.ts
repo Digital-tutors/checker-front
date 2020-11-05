@@ -10,6 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface EntityRefRq {
-  id?: string;
+export interface RefVOShortResView {
+  id?: number;
 }

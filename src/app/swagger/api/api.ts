@@ -16,6 +16,10 @@ export * from './lessonInteractionController.service';
 import { LessonInteractionControllerService } from './lessonInteractionController.service';
 export * from './lessonRatingController.service';
 import { LessonRatingControllerService } from './lessonRatingController.service';
+export * from './roleRequestAdminController.service';
+import { RoleRequestAdminControllerService } from './roleRequestAdminController.service';
+export * from './roleRequestController.service';
+import { RoleRequestControllerService } from './roleRequestController.service';
 export * from './topicAdminController.service';
 import { TopicAdminControllerService } from './topicAdminController.service';
 export * from './topicController.service';
@@ -36,6 +40,8 @@ export const APIS = [
   LessonControllerService,
   LessonInteractionControllerService,
   LessonRatingControllerService,
+  RoleRequestAdminControllerService,
+  RoleRequestControllerService,
   TopicAdminControllerService,
   TopicControllerService,
   TopicInteractionControllerService,

@@ -1,124 +1,31 @@
-<h1 class="headline-1">Программирование на C/C++</h1>
-<app-two-box-grid class="description">
-  <app-shadow-container>
-    <p class="title">Описание курса</p>
-    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur, massa quis accumsan malesuada, est urna condimentum neque, in fermentum nunc nulla ac tortor. Cras nec rhoncus magna. Suspendisse non fringilla urna. Phasellus auctor, ex ac dignissim efficitur, diam ante varius nulla, eget auctor ex mauris a tellus. Pellentesque ut iaculis lectus. Aliquam eu risus enim. Mauris quis metus a augue facilisis dignissim. Duis nibh ipsum, cursus vel dictum dignissim, molestie vitae massa.</p>
-  </app-shadow-container>
-  <app-shadow-container>
-    <Title>Полученные знания</Title>
-    <ul class="skills">
-      <li class="skills__item">
-        <mat-icon>beenhere</mat-icon>
-        <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </li>
-      <li class="skills__item">
-        <mat-icon>beenhere</mat-icon>
-        <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </li>
-      <li class="skills__item">
-        <mat-icon>beenhere</mat-icon>
-        <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </li>
-    </ul>
-  </app-shadow-container>
-</app-two-box-grid>
+<section *ngIf="course$ | async as course">
+  <h1 class="headline-1">{{ course.title }}</h1>
+  <app-two-box-grid class="description">
+    <app-shadow-container>
+      <p class="title">Описание курса</p>
+      <p class="text">{{ course.description }}</p>
+    </app-shadow-container>
+    <app-shadow-container>
+      <Title>Полученные знания</Title>
+      <ul class="skills">
+        <li class="skills__item" *ngFor="let skill of course.skills">
+          <mat-icon>beenhere</mat-icon>
+          <p class="text">{{ skill }}</p>
+        </li>
+      </ul>
+    </app-shadow-container>
+  </app-two-box-grid>
+</section>
 <h2 class="headline-2">Темы и занятия курса</h2>
 <ul class="lessons">
-  <li class="lessons__item">
+  <li class="lessons__item" *ngFor="let item of (topicsWithLessons$ | async)">
     <div class="lessons__item__line">
       <app-highlighted-container neutral>
-        <app-info-container [bottom]="true" title="Тема" text="Программирование на языке говна"></app-info-container>
+        <app-info-container [bottom]="true" title="Тема" [text]="item.topic.title"></app-info-container>
       </app-highlighted-container>
-      <app-highlighted-container color="#00D996" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Как правильно какать"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Правильные техники отсоса"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToTest('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Тестирование" text="Тест по минету"></app-info-container>
-      </app-highlighted-container>
-    </div>
-  </li>
-  <li class="lessons__item">
-    <div class="lessons__item__line">
-      <app-highlighted-container neutral>
-        <app-info-container [bottom]="true" title="Тема" text="Программирование на языке говна"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#00D996" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Как правильно какать"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Правильные техники отсоса"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToTest('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Тестирование" text="Тест по минету"></app-info-container>
-      </app-highlighted-container>
-    </div>
-  </li>
-  <li class="lessons__item">
-    <div class="lessons__item__line">
-      <app-highlighted-container neutral>
-        <app-info-container [bottom]="true" title="Тема" text="Программирование на языке говна"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#00D996" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Как правильно какать"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Правильные техники отсоса"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToTest('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Тестирование" text="Тест по минету"></app-info-container>
-      </app-highlighted-container>
-    </div>
-  </li>
-  <li class="lessons__item">
-    <div class="lessons__item__line">
-      <app-highlighted-container neutral>
-        <app-info-container [bottom]="true" title="Тема" text="Программирование на языке говна"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#00D996" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Как правильно какать"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Правильные техники отсоса"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToTest('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Тестирование" text="Тест по минету"></app-info-container>
-      </app-highlighted-container>
-    </div>
-  </li>
-  <li class="lessons__item">
-    <div class="lessons__item__line">
-      <app-highlighted-container neutral>
-        <app-info-container [bottom]="true" title="Тема" text="Программирование на языке говна"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#00D996" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Как правильно какать"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Правильные техники отсоса"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToTest('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Тестирование" text="Тест по минету"></app-info-container>
-      </app-highlighted-container>
-    </div>
-  </li>
-  <li class="lessons__item">
-    <div class="lessons__item__line">
-      <app-highlighted-container neutral>
-        <app-info-container [bottom]="true" title="Тема" text="Программирование на языке говна"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#00D996" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Как правильно какать"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToLesson('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Занятие" text="Правильные техники отсоса"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#D9534F" (click)="redirectToTest('123123', '1231231')">
-        <app-info-container [bottom]="true" title="Тестирование" text="Тест по минету"></app-info-container>
+      <app-highlighted-container *ngFor="let lesson of item.lessons" color="#00D996" (click)="redirectToLesson(item.topic.id, lesson.id)">
+        <app-info-container [bottom]="true" title="Занятие" [text]="lesson.title"></app-info-container>
       </app-highlighted-container>
     </div>
   </li>
 </ul>
-

@@ -11,6 +11,8 @@ import { LessonAdminControllerService } from './api/lessonAdminController.servic
 import { LessonControllerService } from './api/lessonController.service';
 import { LessonInteractionControllerService } from './api/lessonInteractionController.service';
 import { LessonRatingControllerService } from './api/lessonRatingController.service';
+import { RoleRequestAdminControllerService } from './api/roleRequestAdminController.service';
+import { RoleRequestControllerService } from './api/roleRequestController.service';
 import { TopicAdminControllerService } from './api/topicAdminController.service';
 import { TopicControllerService } from './api/topicController.service';
 import { TopicInteractionControllerService } from './api/topicInteractionController.service';
@@ -31,6 +33,8 @@ import { UserControllerService } from './api/userController.service';
     LessonControllerService,
     LessonInteractionControllerService,
     LessonRatingControllerService,
+    RoleRequestAdminControllerService,
+    RoleRequestControllerService,
     TopicAdminControllerService,
     TopicControllerService,
     TopicInteractionControllerService,

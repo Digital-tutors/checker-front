@@ -6,7 +6,8 @@ import { NotAuthGuard } from '@share/guards/not-auth.guard';
 
 const routes: Routes = [
   {
-    path: 'auth',
+    path: '',
+    pathMatch: 'full',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
   },
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
   {

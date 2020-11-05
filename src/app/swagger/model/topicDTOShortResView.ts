@@ -10,9 +10,12 @@
  * Do not edit the class manually.
  */
 import { AuthorRefVOShortResView } from './authorRefVOShortResView';
+import { RefVOShortResView } from './refVOShortResView';
 
 export interface TopicDTOShortResView {
   author?: AuthorRefVOShortResView;
+  content: Array<RefVOShortResView>;
+  id?: number;
   level: TopicDTOShortResView.LevelEnum;
   status: TopicDTOShortResView.StatusEnum;
   title?: string;

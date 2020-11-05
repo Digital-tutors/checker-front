@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 
 import { EMPTY, from, Subject } from 'rxjs';
-import { catchError, flatMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, mergeMap, takeUntil, tap } from 'rxjs/operators';
 
 import { AuthControllerService } from '@swagger/api/authController.service';
-import { UserVO } from '@swagger/model/userVO';
+import { UserControllerService } from '@swagger/api/userController.service';
+import { TokenVO } from '@swagger/model/tokenVO';
+import { UserDTO } from '@swagger/model/userDTO';
 
 import { User } from '@store/actions/user.actions';
 
@@ -26,7 +28,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public error: boolean;
 
-  constructor(private fb: FormBuilder, private authControllerService: AuthControllerService, private router: Router, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private authControllerService: AuthControllerService,
+    private userControllerService: UserControllerService,
+    private router: Router,
+    private store: Store,
+  ) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -50,11 +58,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           ...this.form.value,
         })
         .pipe(
-          tap((user: UserVO) => {
-            localStorage.setItem(environment.token, user.token);
+          tap((data: TokenVO) => {
+            localStorage.setItem(environment.token, data.token);
           }),
-          flatMap((user: UserVO) => this.store.dispatch(new User.Set(user))),
-          flatMap(() => from(this.router.navigateByUrl('/user/topics'))),
+          mergeMap(() => this.userControllerService.getProfileUsingGET()),
+          mergeMap((user: UserDTO) => this.store.dispatch(new User.Set(user))),
+          mergeMap(() => from(this.router.navigateByUrl('/user/courses'))),
           catchError(() => {
             this.error = true;
             return EMPTY;

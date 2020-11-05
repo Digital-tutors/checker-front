@@ -25,7 +25,7 @@ import { Configuration } from '../configuration';
 
 @Injectable()
 export class TopicControllerService {
-  protected basePath = '//164.90.237.175:8080/';
+  protected basePath = '//localhost/';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
@@ -60,10 +60,10 @@ export class TopicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicByIdUsingGET(id: number | string, observe?: 'body', reportProgress?: boolean): Observable<TopicDTO>;
-  public getTopicByIdUsingGET(id: number | string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number | string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TopicDTO>>;
-  public getTopicByIdUsingGET(id: number | string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getTopicByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<TopicDTO>;
+  public getTopicByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TopicDTO>>;
+  public getTopicByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TopicDTO>>;
+  public getTopicByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (id === null || id === undefined) {
       throw new Error('Required parameter id was null or undefined when calling getTopicByIdUsingGET.');
     }
@@ -141,14 +141,10 @@ export class TopicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfTopicDTO>;
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfTopicDTO>>;
-  public getTopicsUsingGET(page: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfTopicDTO>>;
-  public getTopicsUsingGET(page: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (page === null || page === undefined) {
-      throw new Error('Required parameter page was null or undefined when calling getTopicsUsingGET.');
-    }
-
+  public getTopicsUsingGET(page?: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfTopicDTO>;
+  public getTopicsUsingGET(page?: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfTopicDTO>>;
+  public getTopicsUsingGET(page?: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfTopicDTO>>;
+  public getTopicsUsingGET(page?: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
     if (page !== undefined && page !== null) {
       queryParameters = queryParameters.set('page', <any>page);

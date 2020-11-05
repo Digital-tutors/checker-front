@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 import { Pageable } from './pageable';
+import { RoleRequestDTO } from './roleRequestDTO';
 import { Sort } from './sort';
-import { TaskResultsVO } from './taskResultsVO';
 
-export interface PageTaskResultsVO {
-  content?: Array<TaskResultsVO>;
+export interface PageOfRoleRequestDTO {
+  content?: Array<RoleRequestDTO>;
   empty?: boolean;
   first?: boolean;
   last?: boolean;
