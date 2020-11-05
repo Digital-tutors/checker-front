@@ -11,6 +11,7 @@ import { InfoContainerComponent } from './components/info-container/info-contain
 import { RatingComponent } from './components/rating/rating.component';
 import { ShadowContainerComponent } from './components/shadow-container/shadow-container.component';
 import { TwoBoxGridComponent } from './components/two-box-grid/two-box-grid.component';
+import { FioPipe } from './pipes/fio.pipe';
 
 const COMPONENTS: any[] = [
   ImageCardComponent,
@@ -22,11 +23,13 @@ const COMPONENTS: any[] = [
   HighlightedContainerComponent,
 ];
 
+const PIPES: any[] = [FioPipe];
+
 const MATERIAL_MODULES: any[] = [MatIconModule];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ...PIPES],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, ...MATERIAL_MODULES],
-  exports: [CommonModule, ReactiveFormsModule, FormsModule, ...COMPONENTS, ...MATERIAL_MODULES],
+  exports: [CommonModule, ReactiveFormsModule, FormsModule, ...COMPONENTS, ...MATERIAL_MODULES, ...PIPES],
 })
 export class ShareModule {}

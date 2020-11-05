@@ -9,7 +9,7 @@ export class RatingComponent {
   @Input()
   public active: boolean;
   @Input()
-  public value: string;
+  public value: string | number;
   @Input()
   public caption: string;
 }

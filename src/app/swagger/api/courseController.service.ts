@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 import { Observable } from 'rxjs';
 
 import { CourseDTO } from '../model/courseDTO';
+import { CourseStatDTO } from '../model/courseStatDTO';
 import { PageOfCourseDTO } from '../model/pageOfCourseDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
@@ -131,6 +132,46 @@ export class CourseControllerService {
 
     return this.httpClient.request<PageOfCourseDTO>('get', `${this.basePath}/course/all`, {
       params: queryParameters,
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * getStatisticsByCourse
+   *
+   * @param id id
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStatisticsByCourseUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<CourseStatDTO>;
+  public getStatisticsByCourseUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CourseStatDTO>>;
+  public getStatisticsByCourseUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CourseStatDTO>>;
+  public getStatisticsByCourseUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling getStatisticsByCourseUsingGET.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<CourseStatDTO>('get', `${this.basePath}/course/${encodeURIComponent(String(id))}/statistics`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,

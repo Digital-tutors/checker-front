@@ -20,6 +20,7 @@ export interface CourseDTO {
   keywords: Array<string>;
   skills: Array<string>;
   status: CourseDTO.StatusEnum;
+  subscribe: boolean;
   subtitle?: string;
   title?: string;
   updatedAt: number;

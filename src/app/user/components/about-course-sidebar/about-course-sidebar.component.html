@@ -1,42 +1,33 @@
-<main class="about-course-sidebar">
+<main class="about-course-sidebar" *ngIf="data$ | async as data">
   <header class="author">
     <p class="title">Автор курса</p>
     <div class="author__person">
-      <img class="author__person__avatar" src="assets/img/thumbnail_avatar.svg" alt="avatar" />
+<!--      <img class="author__person__avatar" src="assets/img/thumbnail_avatar.svg" alt="avatar" />-->
       <aside class="author__person__info">
         <p class="author__person__info__role caption--light">Преподаватель</p>
-        <p class="author__person__info__name headline-2">Комлева Н.В.</p>
+        <p class="author__person__info__name headline-2">{{ (data.authorWithStats.author | fio) || 'Фамилия И.О.' }}</p>
       </aside>
     </div>
     <app-two-box-grid [center]="true">
-      <app-rating value="4,9" caption="Рейтинг" [active]="true"></app-rating>
-      <app-rating value="20" caption="Количество курсов"></app-rating>
+      <app-rating [value]="data.authorWithStats.stats.rating" caption="Рейтинг" [active]="true"></app-rating>
+      <app-rating [value]="data.authorWithStats.stats.countOfCourses" caption="Количество курсов"></app-rating>
     </app-two-box-grid>
   </header>
   <div class="rubrics">
     <p class="title">Рубрики курса</p>
     <ul class="rubrics__list">
-      <li class="rubrics__list__item text">Информатика</li>
-      <li class="rubrics__list__item text">Массивы</li>
-      <li class="rubrics__list__item text">Программирование</li>
-      <li class="rubrics__list__item text">C/C++</li>
-      <li class="rubrics__list__item text">ООП</li>
-      <li class="rubrics__list__item text">Технологии</li>
+      <li class="rubrics__list__item text" *ngFor="let keyword of data.course.keywords">{{ keyword }}</li>
     </ul>
   </div>
   <div class="info">
     <p class="title">Cтатистика курса</p>
     <app-two-box-grid [center]="true">
-      <app-rating value="4,1" caption="Рейтинг курса"></app-rating>
-      <app-rating value="293" caption="Количество студентов"></app-rating>
+      <app-rating [value]="data.courseStats.rating" caption="Рейтинг курса"></app-rating>
+      <app-rating [value]="data.courseStats.countOfStudents" caption="Количество студентов"></app-rating>
     </app-two-box-grid>
     <app-two-box-grid [center]="true">
-      <app-rating value="13" caption="Количество тем"></app-rating>
-      <app-rating value="34" caption="Количество занятий"></app-rating>
+      <app-rating [value]="data.courseStats.topicsCount" caption="Количество тем"></app-rating>
+      <app-rating [value]="data.courseStats.countOfLessons" caption="Количество занятий"></app-rating>
     </app-two-box-grid>
   </div>
-  <footer class="footer">
-    <app-button (click)="startCourse()">Начать</app-button>
-    <p class="footer__caption link">Приступить к обучению</p>
-  </footer>
 </main>

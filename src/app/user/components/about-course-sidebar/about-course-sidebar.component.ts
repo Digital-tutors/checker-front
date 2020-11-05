@@ -3,11 +3,21 @@ import { Router } from '@angular/router';
 
 import { Select } from '@ngxs/store';
 
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map, mergeMap, takeWhile } from 'rxjs/operators';
 
+import { CourseControllerService } from '@swagger/api/courseController.service';
+import { CourseInteractionControllerService } from '@swagger/api/courseInteractionController.service';
+import { UserControllerService } from '@swagger/api/userController.service';
 import { CourseDTO } from '@swagger/model/courseDTO';
+import { CourseStatDTO } from '@swagger/model/courseStatDTO';
+import { TeacherStatDTO } from '@swagger/model/teacherStatDTO';
+import { UserDTO } from '@swagger/model/userDTO';
 
 import { AppState } from '@store/app.state';
+
+import { AuthorWithStatsInterface } from './interfaces/author-with-stats.interface';
+import { CourseAndDataInterface } from './interfaces/course-and-data.interface';
 
 @Component({
   selector: 'app-about-course-sidebar',
@@ -18,15 +28,69 @@ export class AboutCourseSidebarComponent implements OnInit {
   @Select(AppState.course)
   public course$: Observable<CourseDTO>;
 
-  constructor(private router: Router) {}
+  @Select(AppState.user)
+  public user$: Observable<UserDTO>;
+
+  public data$: Observable<CourseAndDataInterface>;
+
+  constructor(
+    private router: Router,
+    private courseInteractionController: CourseInteractionControllerService,
+    private courseControllerService: CourseControllerService,
+    private userControllerService: UserControllerService,
+  ) {}
 
   ngOnInit(): void {
-    this.getCourseAndData();
+    this.data$ = this.getCourseAndData();
+    this.startCourse();
   }
 
-  private getCourseAndData(): void {}
+  private getCourseStats(id: number): Observable<CourseStatDTO> {
+    return this.courseControllerService.getStatisticsByCourseUsingGET(id);
+  }
 
-  public startCourse(): void {
-    this.router.navigate([this.router.url, 'topic', 12312, 'lesson', 123123]);
+  private getAuthorInfo(id: number): Observable<AuthorWithStatsInterface> {
+    return this.userControllerService.getUserByIdUsingGET(id).pipe(
+      mergeMap((author: UserDTO) =>
+        this.userControllerService.getAuthorStatisticsByUserIdUsingGET(id).pipe(
+          map((stats: TeacherStatDTO) => ({
+            author,
+            stats,
+          })),
+        ),
+      ),
+    );
+  }
+
+  private getCourseAndData(): Observable<CourseAndDataInterface> {
+    return this.course$.pipe(
+      filter(course => !!course),
+      mergeMap((course: CourseDTO) =>
+        combineLatest([this.getAuthorInfo(course.author.id), this.getCourseStats(course.id)]).pipe(
+          map(([authorWithStats, courseStats]) => ({
+            course,
+            courseStats,
+            authorWithStats,
+          })),
+        ),
+      ),
+    );
+  }
+
+  private startCourse(): void {
+    combineLatest([this.user$, this.course$])
+      .pipe(
+        filter(([user, course]) => !!user && !!course),
+        takeWhile(([user, course]) => user.id === course.author.id && !course.subscribe),
+        mergeMap(([user, course]) =>
+          this.courseInteractionController.saveCourseInteractionUsingPOST({
+            interactionEntity: {
+              id: course.id,
+            },
+            status: 'STARTED',
+          }),
+        ),
+      )
+      .subscribe();
   }
 }

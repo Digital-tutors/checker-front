@@ -16,6 +16,7 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 
 import { Observable } from 'rxjs';
 
+import { TeacherStatDTO } from '../model/teacherStatDTO';
 import { UserDTO } from '../model/userDTO';
 import { UserDTORequestView } from '../model/userDTORequestView';
 
@@ -53,6 +54,46 @@ export class UserControllerService {
   }
 
   /**
+   * getAuthorStatisticsByUserId
+   *
+   * @param id id
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getAuthorStatisticsByUserIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<TeacherStatDTO>;
+  public getAuthorStatisticsByUserIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TeacherStatDTO>>;
+  public getAuthorStatisticsByUserIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TeacherStatDTO>>;
+  public getAuthorStatisticsByUserIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling getAuthorStatisticsByUserIdUsingGET.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<TeacherStatDTO>('get', `${this.basePath}/teacher/${encodeURIComponent(String(id))}/statistics`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * getProfile
    *
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -80,6 +121,46 @@ export class UserControllerService {
     const consumes: string[] = [];
 
     return this.httpClient.request<UserDTO>('get', `${this.basePath}/profile`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * getUserById
+   *
+   * @param id id
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getUserByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<UserDTO>;
+  public getUserByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDTO>>;
+  public getUserByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDTO>>;
+  public getUserByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling getUserByIdUsingGET.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<UserDTO>('get', `${this.basePath}/user/${encodeURIComponent(String(id))}`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
