@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
@@ -6,7 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-  constructor() {}
+  public form: FormGroup;
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {}
+  private setForm(): void {
+    this.form = this.fb.group({
+      studentEmail: [''],
+    });
+    console.log('setForm called');
+  }
+
+  ngOnInit(): void {
+    this.setForm();
+  }
 }

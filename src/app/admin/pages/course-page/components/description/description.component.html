@@ -4,14 +4,19 @@
       <p class="title">Описание курса</p>
       <mat-icon>create</mat-icon>
     </div>
-    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur, massa quis accumsan malesuada, est urna condimentum neque, in fermentum nunc nulla ac tortor. Cras nec rhoncus magna. Suspendisse non fringilla urna. Phasellus auctor, ex ac dignissim efficitur, diam ante varius nulla, eget auctor ex mauris a tellus. Pellentesque ut iaculis lectus. Aliquam eu risus enim. Mauris quis metus a augue facilisis dignissim. Duis nibh ipsum, cursus vel dictum dignissim, molestie vitae massa.</p>
+    <p class="text" contenteditable (input)="onDescriptionChange($event.target.innerHTML)">Lorem ipsum dolor sit amet,
+      consectetur adipiscing elit. Aenean consectetur, massa quis accumsan malesuada, est urna condimentum neque, in
+      fermentum nunc nulla ac tortor. Cras nec rhoncus magna. Suspendisse non fringilla urna. Phasellus auctor, ex ac
+      dignissim efficitur, diam ante varius nulla, eget auctor ex mauris a tellus. Pellentesque ut iaculis lectus.
+      Aliquam eu risus enim. Mauris quis metus a augue facilisis dignissim. Duis nibh ipsum, cursus vel dictum
+      dignissim, molestie vitae massa.</p>
   </app-shadow-container>
   <app-shadow-container>
     <div class="card-header">
       <p class="title">Полученные знания</p>
       <mat-icon>create</mat-icon>
     </div>
-    <ul class="skills">
+    <ul class="skills" contenteditable (input)="onKnowledgePointChange($event.target.innerHTML)">
       <li class="skills__item">
         <mat-icon>beenhere</mat-icon>
         <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -30,7 +35,7 @@
 <app-two-box-grid>
   <app-shadow-container class="rubrics">
     <p class="title">Рубрики курса</p>
-    <ul class="rubrics__list">
+    <ul class="rubrics__list" contenteditable (input)="onRubricChange($event.target.innerHTML)">
       <li class="rubrics__list__item text">Информатика</li>
       <li class="rubrics__list__item text">Массивы</li>
       <li class="rubrics__list__item text">Программирование</li>

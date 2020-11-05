@@ -1,1 +1,23 @@
-<p>topics-tasks works!</p>
+<section>
+    <div class="subject__left">
+      <app-shadow-container class="shadow-container">
+        <app-info-container class="info-container" center title="Тема" text="Название темы"
+                            [grey]="true"></app-info-container>
+      </app-shadow-container>
+    </div>
+    <div class="subject__right">
+      <app-shadow-container class="shadow-container">
+        <app-info-container center title="Занятие" text={lesson.title}></app-info-container>
+      </app-shadow-container>
+    </div>
+</section>
+
+<main class="subject__actions">
+  <div class="subject__actions__row">
+    <app-button class="button" [bordered]='true'>Добавить занятие</app-button>
+    <app-button class="button" [bordered]='true'>Добавить тест</app-button>
+  </div>
+  <div class="subject__actions__row">
+    <app-button class="button" [bordered]='true'>Добавить практ. занятие</app-button>
+  </div>
+</main>

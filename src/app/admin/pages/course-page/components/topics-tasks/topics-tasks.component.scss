@@ -1,0 +1,89 @@
+@import "../../../../../../vars";
+@import "../../../../../../colors";
+
+section {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: $space;
+  width: 100%;
+}
+
+.subject {
+  margin-bottom: $space * 3;
+
+  &__actions {
+    padding-top: $space;
+
+    &__row {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .button {
+      margin-right: $space;
+      margin-bottom: $space;
+    }
+  }
+
+  &__left, &__right {
+    & > .shadow-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 0;
+      cursor: pointer;
+      background: $block-gray;
+      margin-bottom: $space;
+      max-height: 150px;
+      min-width: 350px;
+
+      &:after {
+        display: block;
+        position: absolute;
+        background: rgba($block-green, 0.6);
+        width: $space * 2;
+        height: 3px;
+        content: '';
+        cursor: default;
+        pointer-events: none;
+      }
+
+      .shadow-container {
+        width: 100%;
+      }
+    }
+  }
+
+  &__left {
+    margin-right: 30px;
+
+    .shadow-container {
+
+      &:after {
+        right: -($space * 2);
+      }
+    }
+  }
+
+  &__right {
+    .shadow-container {
+      margin-bottom: $space * 2;
+      background: $background_white;
+
+      &:after {
+        bottom: -($space * 2);
+        width: 3px;
+        height: $space * 2;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+
+        &:after {
+          content: none;
+        }
+      }
+    }
+  }
+}

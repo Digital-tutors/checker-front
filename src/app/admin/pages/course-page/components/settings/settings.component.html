@@ -1,1 +1,13 @@
-<p>settings works!</p>
+<section>
+
+  <div class="settings">
+    <p class="title">Настройки курса</p>
+    <div class="invite-container" [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label class="">Поиск</mat-label>
+        <input type="email" formControlName="studentEmail" matInput>
+      </mat-form-field>
+      <app-button class="form-button" [bordered]="true">Отправить приглашение</app-button>
+    </div>
+  </div>
+</section>

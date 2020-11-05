@@ -17,6 +17,8 @@
     list-style: none;
     display: flex;
     align-items: center;
+    background: $background-white;
+    border-radius: 4px;
 
     &__item {
       position: relative;
@@ -25,6 +27,10 @@
       a {
         text-decoration: none;
         color: $text-paragraph;
+      }
+
+      p {
+        margin-bottom: 0 !important;
       }
 
       &:after {
