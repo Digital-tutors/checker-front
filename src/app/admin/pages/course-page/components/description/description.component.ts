@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,12 @@ export class DescriptionComponent implements OnInit {
     '      dignissim, molestie vitae massa.';
   rubric = '';
 
+  skills = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  ];
+
   descriptionControl = new FormControl();
 
   ngOnInit(): void {
@@ -27,7 +33,12 @@ export class DescriptionComponent implements OnInit {
   onDescriptionChange(description) {
     this.description = description;
   }
+
   onRubricChange(rubric) {
     this.rubric = rubric;
+  }
+
+  onAddSkill() {
+    this.skills.push('');
   }
 }
