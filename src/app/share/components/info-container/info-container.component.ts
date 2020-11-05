@@ -14,4 +14,6 @@ export class InfoContainerComponent {
   public title: string;
   @Input()
   public text: string;
+  @Input()
+  public grey: boolean;
 }
