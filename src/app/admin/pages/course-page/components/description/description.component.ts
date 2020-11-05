@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-description',
@@ -8,29 +9,25 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DescriptionComponent implements OnInit {
   constructor() {}
 
-  isDescriptionEditable: boolean;
+  description =
+    'Lorem ipsum dolor sit amet,\n' +
+    '      consectetur adipiscing elit. Aenean consectetur, massa quis accumsan malesuada, est urna condimentum neque, in\n' +
+    '      fermentum nunc nulla ac tortor. Cras nec rhoncus magna. Suspendisse non fringilla urna. Phasellus auctor, ex ac\n' +
+    '      dignissim efficitur, diam ante varius nulla, eget auctor ex mauris a tellus. Pellentesque ut iaculis lectus.\n' +
+    '      Aliquam eu risus enim. Mauris quis metus a augue facilisis dignissim. Duis nibh ipsum, cursus vel dictum\n' +
+    '      dignissim, molestie vitae massa.';
+  rubric = '';
 
-  @Input() description: string;
+  descriptionControl = new FormControl();
 
-  @Input() knowledgePoint: string;
-
-  @Input() rubric: string;
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.descriptionControl.setValue('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+  }
 
   onDescriptionChange(description) {
     this.description = description;
   }
-
-  onKnowledgePointChange(knowledgePoint) {
-    this.knowledgePoint = knowledgePoint;
-  }
-
   onRubricChange(rubric) {
     this.rubric = rubric;
-  }
-
-  setDescriptionEditable() {
-    this.isDescriptionEditable = !this.isDescriptionEditable;
   }
 }
