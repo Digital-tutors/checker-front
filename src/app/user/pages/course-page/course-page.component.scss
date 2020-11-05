@@ -23,7 +23,7 @@ app-shadow-container {
     align-items: center;
 
     &:not(:last-child) {
-      margin-bottom: $space;
+      margin-bottom: $space * 2;
     }
 
     p {
