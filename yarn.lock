@@ -937,6 +937,13 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
+"@ng-stack/contenteditable@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@ng-stack/contenteditable/-/contenteditable-1.1.1.tgz#43333baf40eeac472fda8396408f6579ce81aa5f"
+  integrity sha512-BIbrHOnO+EUpVd7R3EZQjDDZpM0L0T1CKTei40jpKHWr+7m8Sf4g5mRd9GTJcWx2OOCwC8w2H3cbeufUdhCOhg==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngtools/webpack@9.0.7":
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-9.0.7.tgz#2d9397544afcf503530eafc764c64d40a99fa070"
@@ -6335,12 +6342,10 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-ngx-monaco-editor@^10.0.0-beta.1:
-  version "10.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/ngx-monaco-editor/-/ngx-monaco-editor-10.0.0-beta.1.tgz#eb588862f18b7056bd5777658be22a69fe2e4b9c"
-  integrity sha512-U5p7YLhQB9yRnbQ8a/gq97PvAokwfot69In7wc4rkItD4ocTY/xvfaJXSAm2zQdm9MWRuwiis3iWb+CbVSaSLA==
-  dependencies:
-    tslib "^2.0.0"
+ngx-monaco-editor@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-monaco-editor/-/ngx-monaco-editor-9.0.0.tgz#bb69784606f549e369cee3f483ecf26bab2fcc97"
+  integrity sha512-fPXT3M8W920Vs0KPMX6iA7GJYjBRnl9naug9A7D2inPPzxQGtgPZrSEatIPf37a6ir9Ts+8fwt1bTkFzfTgIpQ==
 
 nice-try@^1.0.4:
   version "1.0.5"

@@ -16,6 +16,10 @@ const routes: Routes = [
         path: 'courses/:courseId/lessons/:lessonId',
         loadChildren: () => import('./pages/lesson-page/lesson-page.module').then(m => m.LessonPageModule),
       },
+      {
+        path: 'topic/:topicId/add-task',
+        loadChildren: () => import('./pages/task-page/task-page.module').then(m => m.TaskPageModule),
+      },
     ],
   },
 ];

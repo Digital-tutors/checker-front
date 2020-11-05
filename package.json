@@ -48,7 +48,7 @@
     "@angular/router": "~9.0.0",
     "@ng-stack/contenteditable": "^1.1.1",
     "@ngxs/store": "^3.6.2",
-    "ngx-monaco-editor": "^10.0.0-beta.1",
+    "ngx-monaco-editor": "^9.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

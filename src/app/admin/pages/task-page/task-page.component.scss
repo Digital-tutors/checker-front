@@ -1,0 +1,97 @@
+@import '../../../../vars';
+@import '../../../../colors';
+
+app-shadow-container {
+  background-color: white;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 20px;
+
+  .add-topic {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 40px auto 0 auto;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .name-and-diff {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .add-title {
+        flex-grow: 3;
+        max-width: 50%;
+        flex-basis: 1;
+      }
+
+      .difficulty {
+        flex-grow: 2;
+        flex-basis: 0;
+        max-width: 30%;
+      }
+    }
+
+    .restrictions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .item {
+        max-width: 30%;
+      }
+    }
+
+    .desc-width {
+      min-height: 150px;
+    }
+
+    .topic-button {
+      margin: 0 auto;
+      padding-top: $space;
+
+      a {
+        margin: 0 10px;
+      }
+    }
+
+    .tests {
+      padding-top: $space;
+    }
+  }
+
+  .add-tests {
+    grid-column: 1 / 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    width: 100%;
+    text-align: center;
+
+    .add-test {
+      grid-column: 1 / 4;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      text-align: left;
+
+      ngx-monaco-editor {
+        height: 100px;
+        width: 80%;
+        display: flex;
+        justify-self: center;
+
+        .monaco-editor {
+          padding-top: 20px;
+        }
+      }
+    }
+  }
+
+
+}
