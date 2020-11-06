@@ -1,6 +1,10 @@
 @import "../../../../vars";
 @import "../../../../colors";
 
+app-shadow-container {
+  background: white;
+}
+
 .test-page {
   header {
     display: flex;
@@ -19,6 +23,7 @@
       flex-grow: 1;
 
       app-shadow-container {
+        border-radius: 5px;
         margin-bottom: $space;
         .caption {
           padding-top: $space / 2;
@@ -29,6 +34,12 @@
           padding-bottom: $space / 2;
           padding-right: $space / 2;
         }
+      }
+
+      .disabled {
+        background: lightgray;
+        border-radius: 5px;
+        cursor: not-allowed;
       }
 
       .actions {
