@@ -1,12 +1,12 @@
 <main class="lesson-sidebar">
   <header class="sticky subject">
-    <div class="container">
-      <span class="icon-button">
+    <div class="container" *ngIf="previousTopic">
+      <span class="icon-button" (click)="navToPreviousTopic()">
         <mat-icon style="margin-right: 10px">expand_less</mat-icon>
         Предыдущая тема
       </span>
     </div>
-    <app-info-container title="Текущая тема" text="Программное обеспечение"></app-info-container>
+    <app-info-container *ngIf="currentTopic" title="Текущая тема" [text]="currentTopic.title"></app-info-container>
     <div class="colored-line"></div>
   </header>
   <div class="content">
@@ -15,22 +15,18 @@
       <span class="content__nav__item caption--light">Материалы</span>
     </nav>
     <div class="content__lessons">
-      <app-highlighted-container color="#00D996">
-        <app-info-container [center]="true" title="Занятие" text="Программное обеспечение"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#00D996">
-        <app-info-container [center]="true" title="Занятие" text="Программное обеспечение и информационные технологии"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container color="#00D996">
-        <app-info-container [center]="true" title="Тест" text="Why do you cum"></app-info-container>
-      </app-highlighted-container>
-      <app-highlighted-container bgColor="#00AD78">
-        <app-info-container [ngStyle]="{ backgroundColor: '#00AD78' }" [center]="true" title="Задача" text="Домой ребята домой"></app-info-container>
+      <app-highlighted-container *ngFor="let item of lessons"
+                                 color="#00D996"
+                                 [bgColor]="item.id === lesson?.id ? '#00AD78' : null">
+        <app-info-container [center]="true"
+                            title="Занятие"
+                            [text]="item.title"
+                            [class.active]="item.id === lesson?.id"></app-info-container>
       </app-highlighted-container>
     </div>
   </div>
-  <footer class="subject subject--next">
-    <app-info-container title="Следующая тема" text="Уроки по pornhub.com"></app-info-container>
+  <footer class="subject subject--next" *ngIf="nextTopic" (click)="navToNextTopic()">
+    <app-info-container title="Следующая тема" [text]="nextTopic.title"></app-info-container>
     <aside class="next">
       <mat-icon style="color:white;">expand_more</mat-icon>
     </aside>

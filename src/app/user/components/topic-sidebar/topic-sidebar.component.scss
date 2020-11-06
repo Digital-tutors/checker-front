@@ -6,6 +6,11 @@ mat-icon {
   color: $button-green;
 }
 
+.active {
+  background: #00AD78;
+  color: white;
+}
+
 header {
   app-info-container {
     background: $block-black;
