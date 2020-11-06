@@ -1,3 +1,4 @@
+import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: 'topic/:topicId/add-task',
         loadChildren: () => import('./pages/task-page/task-page.module').then(m => m.TaskPageModule),
+      },
+      {
+        path: 'topic/:topicId/test',
+        loadChildren: () => import('./pages/test-page/test-page.module').then(m => m.TestPageModule),
       },
     ],
   },

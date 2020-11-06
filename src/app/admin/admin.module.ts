@@ -18,6 +18,7 @@ import { AlertWindowComponent } from './components/alert-window/alert-window.com
 import { LayoutComponent } from './components/layout/layout.component';
 import { LessonPageSidebarComponent } from './components/lesson-page-sidebar/lesson-page-sidebar.component';
 import { AdminComponent } from './components/quiz/admin.component';
+import { TestPageSidebarComponent } from './components/test-page-sidebar/test-page-sidebar.component';
 import { TopicSidebarComponent } from './components/topic-sidebar/topic-sidebar.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { RoutingModule } from './admin.routes';
@@ -31,6 +32,7 @@ import { RoutingModule } from './admin.routes';
     AdminComponent,
     LessonPageSidebarComponent,
     AlertWindowComponent,
+    TestPageSidebarComponent,
   ],
   imports: [
     ShareModule,
