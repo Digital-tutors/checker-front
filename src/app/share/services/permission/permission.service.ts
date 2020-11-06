@@ -16,18 +16,16 @@ import { RoleRequestDTO } from '../../../swagger/model/roleRequestDTO';
   providedIn: 'root',
 })
 export class PermissionService {
-  // @Select(AppState.user)
-  // public readonly user$: Observable<UserDTO>;
+  constructor(private roleRequestControllerService: RoleRequestControllerService) {}
 
   public roles = {
-    USER: UserDTO.RoleEnum.USER,
-    STUDENT: UserDTO.RoleEnum.STUDENT,
-    TEACHER: UserDTO.RoleEnum.TEACHER,
-    ADMIN: UserDTO.RoleEnum.ADMIN,
-    SUPER_ADMIN: UserDTO.RoleEnum.SUPERADMIN,
+    USER: RoleRequestDTO.RequiredRoleEnum.USER,
+    TEACHER: RoleRequestDTO.RequiredRoleEnum.TEACHER,
+    ADMIN: RoleRequestDTO.RequiredRoleEnum.ADMIN,
+    SUPER_ADMIN: RoleRequestDTO.RequiredRoleEnum.SUPERADMIN,
   };
 
-  public hasRoles$(role: UserDTO.RoleEnum): Observable<boolean> {
-    return this.user$.pipe(map((user: UserDTO) => user && user.role === role));
+  public hasRoles$(role: RoleRequestDTO.RequiredRoleEnum): Observable<boolean> {
+    return this.roleRequestControllerService.requestAccessForRequiredRoleUsingPOST({ requiredRole: role });
   }
 }
