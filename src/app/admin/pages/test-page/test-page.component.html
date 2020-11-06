@@ -1,1 +1,64 @@
-<p>test-page works!</p>
+<section class="test-page">
+  <header>
+    <h1 class="headline-1">Добавление тестов</h1>
+    <app-button [alert]="true" (click)="openDialog()">Удалить занятие</app-button>
+  </header>
+
+  <section class="main">
+
+    <div class="edit-test">
+      <app-shadow-container>
+        <span class="title">Настройки теста</span>
+        <form [formGroup]="form">
+          <mat-form-field >
+            <mat-label>Текст вопроса</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field class="select">
+            <mat-label>Уровень сложности</mat-label>
+            <mat-select formControlName="level">
+              <mat-option value="option">Лёгкий</mat-option>
+              <mat-option value="option">Средний</mat-option>
+              <mat-option value="option">Сложный</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+
+      </app-shadow-container>
+    </div>
+
+    <div class="choose-test">
+      <app-shadow-container>
+        <span class="caption">
+          Выбор одного
+        </span>
+        <div class="text">
+          Программное обеспечение и информационные технологии
+        </div>
+      </app-shadow-container>
+
+      <app-shadow-container>
+        <span class="caption">
+          Выбор нескольких
+        </span>
+        <div class="text">
+          Программное обеспечение и информационные технологии
+        </div>
+      </app-shadow-container>
+
+      <app-shadow-container>
+        <span class="caption">
+          Выбор одного
+        </span>
+        <div class="text">
+          Программное обеспечение и информационные технологии
+        </div>
+      </app-shadow-container>
+
+      <div class="actions">
+        <button mat-stroked-button color="primary">Добавить тест</button>
+      </div>
+    </div>
+  </section>
+</section>
