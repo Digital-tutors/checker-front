@@ -5,7 +5,7 @@
 @include mat-core();
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #ccc; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #ebedf4; }
 
 $tutor-primary: mat-palette($mat-teal, A700);
 $tutor-accent: mat-palette($mat-grey, 700);
