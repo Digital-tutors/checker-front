@@ -16,14 +16,14 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 
 import { Observable } from 'rxjs';
 
-import { PageOfTaskDTO } from '../model/pageOfTaskDTO';
-import { TaskDTO } from '../model/taskDTO';
+import { PageOfUserDTO } from '../model/pageOfUserDTO';
+import { UserDTO } from '../model/userDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
 
 @Injectable()
-export class TaskControllerService {
+export class UserAdminControllerService {
   protected basePath = '//localhost/';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
@@ -53,18 +53,18 @@ export class TaskControllerService {
   }
 
   /**
-   * getTaskById
+   * getAllUsersByCourse
    *
    * @param id id
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTaskByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<TaskDTO>;
-  public getTaskByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskDTO>>;
-  public getTaskByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskDTO>>;
-  public getTaskByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getAllUsersByCourseUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<UserDTO>>;
+  public getAllUsersByCourseUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserDTO>>>;
+  public getAllUsersByCourseUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserDTO>>>;
+  public getAllUsersByCourseUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling getTaskByIdUsingGET.');
+      throw new Error('Required parameter id was null or undefined when calling getAllUsersByCourseUsingGET.');
     }
 
     let headers = this.defaultHeaders;
@@ -84,7 +84,7 @@ export class TaskControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<TaskDTO>('get', `${this.basePath}/task/${encodeURIComponent(String(id))}`, {
+    return this.httpClient.request<Array<UserDTO>>('get', `${this.basePath}/admin/user/${encodeURIComponent(String(id))}/users`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -93,64 +93,20 @@ export class TaskControllerService {
   }
 
   /**
-   * getTasksByTopicId
-   *
-   * @param id id
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getTasksByTopicIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskDTO>>;
-  public getTasksByTopicIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskDTO>>>;
-  public getTasksByTopicIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskDTO>>>;
-  public getTasksByTopicIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling getTasksByTopicIdUsingGET.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // authentication (Bearer) required
-    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
-      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
-    }
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<Array<TaskDTO>>('get', `${this.basePath}/task/topic/${encodeURIComponent(String(id))}/tasks`, {
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * getTasks
+   * getUsers
    *
    * @param page page
-   * @param stage stage
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTasksUsingGET(page?: number, stage?: string, observe?: 'body', reportProgress?: boolean): Observable<PageOfTaskDTO>;
-  public getTasksUsingGET(page?: number, stage?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfTaskDTO>>;
-  public getTasksUsingGET(page?: number, stage?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfTaskDTO>>;
-  public getTasksUsingGET(page?: number, stage?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getUsersUsingGET(page?: number, observe?: 'body', reportProgress?: boolean): Observable<PageOfUserDTO>;
+  public getUsersUsingGET(page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfUserDTO>>;
+  public getUsersUsingGET(page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfUserDTO>>;
+  public getUsersUsingGET(page?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
     if (page !== undefined && page !== null) {
       queryParameters = queryParameters.set('page', <any>page);
     }
-    if (stage !== undefined && stage !== null) {
-      queryParameters = queryParameters.set('stage', <any>stage);
-    }
 
     let headers = this.defaultHeaders;
 
@@ -169,7 +125,7 @@ export class TaskControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<PageOfTaskDTO>('get', `${this.basePath}/task/all`, {
+    return this.httpClient.request<PageOfUserDTO>('get', `${this.basePath}/admin/user/all`, {
       params: queryParameters,
       withCredentials: this.configuration.withCredentials,
       headers: headers,

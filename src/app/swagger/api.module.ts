@@ -22,6 +22,7 @@ import { TopicAdminControllerService } from './api/topicAdminController.service'
 import { TopicControllerService } from './api/topicController.service';
 import { TopicInteractionControllerService } from './api/topicInteractionController.service';
 import { TopicRatingControllerService } from './api/topicRatingController.service';
+import { UserAdminControllerService } from './api/userAdminController.service';
 import { UserControllerService } from './api/userController.service';
 
 @NgModule({
@@ -49,6 +50,7 @@ import { UserControllerService } from './api/userController.service';
     TopicControllerService,
     TopicInteractionControllerService,
     TopicRatingControllerService,
+    UserAdminControllerService,
     UserControllerService,
   ],
 })

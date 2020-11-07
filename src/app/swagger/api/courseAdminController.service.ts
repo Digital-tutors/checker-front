@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 
 import { CourseDTO } from '../model/courseDTO';
 import { CourseDTORequestView } from '../model/courseDTORequestView';
+import { PageOfCourseDTO } from '../model/pageOfCourseDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
@@ -130,6 +131,48 @@ export class CourseAdminControllerService {
     const consumes: string[] = [];
 
     return this.httpClient.request<any>('delete', `${this.basePath}/admin/course/${encodeURIComponent(String(id))}`, {
+      withCredentials: this.configuration.withCredentials,
+      headers: headers,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * getMyOwnCourses
+   *
+   * @param page page
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getMyOwnCoursesUsingGET(page?: number, observe?: 'body', reportProgress?: boolean): Observable<PageOfCourseDTO>;
+  public getMyOwnCoursesUsingGET(page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfCourseDTO>>;
+  public getMyOwnCoursesUsingGET(page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfCourseDTO>>;
+  public getMyOwnCoursesUsingGET(page?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+    if (page !== undefined && page !== null) {
+      queryParameters = queryParameters.set('page', <any>page);
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<PageOfCourseDTO>('get', `${this.basePath}/admin/course/own/all`, {
+      params: queryParameters,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
