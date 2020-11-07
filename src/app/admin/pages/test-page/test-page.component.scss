@@ -5,6 +5,10 @@ app-shadow-container {
   background: white;
 }
 
+mat-chip {
+  border-radius: 5px;
+}
+
 .test-page {
   header {
     display: flex;
@@ -20,11 +24,11 @@ app-shadow-container {
       display: flex;
       flex-direction: column;
       order: 1;
-      flex-grow: 1;
 
       app-shadow-container {
         border-radius: 5px;
         margin-bottom: $space;
+        height: auto;
         .caption {
           padding-top: $space / 2;
           padding-left: $space / 2;
@@ -53,6 +57,11 @@ app-shadow-container {
       flex-direction: column;
       flex-grow: 4;
       order: 2;
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 }
