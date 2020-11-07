@@ -3,11 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Select, Store } from '@ngxs/store';
 
-import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { first, map, mergeMap } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { CourseControllerService } from '@swagger/api/courseController.service';
 import { LessonControllerService } from '@swagger/api/lessonController.service';
+import { TaskControllerService } from '@swagger/api/taskController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
 import { CourseDTO } from '@swagger/model/courseDTO';
 import { TopicDTOShortResView } from '@swagger/model/topicDTOShortResView';
@@ -38,6 +39,7 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     private store: Store,
     private topicControllerService: TopicControllerService,
     private lessonControllerService: LessonControllerService,
+    private taskControllerService: TaskControllerService,
     private courseControllerService: CourseControllerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -65,10 +67,14 @@ export class CoursePageComponent implements OnInit, OnDestroy {
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest(
           topics.map(topic =>
-            this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id).pipe(
-              map(lessons => ({
+            combineLatest([
+              this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
+              this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
+            ]).pipe(
+              map(([lessons, tasks]) => ({
                 topic,
                 lessons,
+                tasks,
               })),
             ),
           ),
@@ -87,5 +93,9 @@ export class CoursePageComponent implements OnInit, OnDestroy {
 
   public redirectToTest(topicId: number, testId: number): void {
     this.router.navigate(['topic', topicId, 'test', testId], { relativeTo: this.activatedRoute });
+  }
+
+  public redirectToTask(topicId: number, taskId: number): void {
+    this.router.navigate(['topic', topicId, 'task', taskId], { relativeTo: this.activatedRoute });
   }
 }

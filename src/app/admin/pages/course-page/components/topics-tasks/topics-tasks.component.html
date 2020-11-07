@@ -1,23 +1,42 @@
-<section>
-    <div class="subject__left">
-      <app-shadow-container class="shadow-container">
-        <app-info-container class="info-container" center title="Тема" text="Название темы"
-                            [grey]="true"></app-info-container>
-      </app-shadow-container>
-    </div>
-    <div class="subject__right">
-      <app-shadow-container class="shadow-container">
-        <app-info-container center title="Занятие" text={lesson.title}></app-info-container>
-      </app-shadow-container>
-    </div>
-</section>
+<ul class="list" *ngIf="topicsWithLessons$ | async as data">
 
-<main class="subject__actions">
-  <div class="subject__actions__row">
-    <app-button class="button" [bordered]='true'>Добавить занятие</app-button>
-    <app-button class="button" [bordered]='true'>Добавить тест</app-button>
-  </div>
-  <div class="subject__actions__row">
-    <app-button class="button" [bordered]='true'>Добавить практ. занятие</app-button>
-  </div>
-</main>
+  <li class="list__item" *ngFor="let item of data">
+    <main>
+      <div class="subject__left">
+        <app-shadow-container class="shadow-container">
+          <app-info-container class="info-container"
+                              center
+                              title="Тема"
+                              [text]="item.topic.title"
+                              [grey]="true"></app-info-container>
+        </app-shadow-container>
+      </div>
+      <div class="subject__right">
+        <app-shadow-container *ngFor="let lesson of item.lessons"
+                              class="shadow-container">
+          <app-info-container center
+                              title="Занятие"
+                              [text]="lesson.title"></app-info-container>
+        </app-shadow-container>
+        <app-shadow-container *ngFor="let task of item.tasks"
+                              class="shadow-container">
+          <app-info-container center
+                              title="Задача"
+                              [text]="task.title"></app-info-container>
+        </app-shadow-container>
+      </div>
+    </main>
+
+    <aside class="subject__actions">
+      <div class="subject__actions__row">
+        <app-button class="button" [bordered]="true" (click)="addLesson(item.topic.id)">Добавить занятие</app-button>
+        <app-button class="button" [bordered]="true" (click)="addTask(item.topic.id)">Добавить практ. занятие</app-button>
+      </div>
+      <div class="subject__actions__row">
+      </div>
+    </aside>
+
+  </li>
+
+</ul>
+

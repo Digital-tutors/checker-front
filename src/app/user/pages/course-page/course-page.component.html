@@ -26,6 +26,9 @@
       <app-highlighted-container *ngFor="let lesson of item.lessons" color="#00D996" (click)="redirectToLesson(item.topic.id, lesson.id)">
         <app-info-container [bottom]="true" title="Занятие" [text]="lesson.title"></app-info-container>
       </app-highlighted-container>
+      <app-highlighted-container *ngFor="let task of item.tasks" color="#00D996" (click)="redirectToTask(item.topic.id, task.id)">
+        <app-info-container [bottom]="true" title="Задача" [text]="task.title"></app-info-container>
+      </app-highlighted-container>
     </div>
   </li>
 </ul>
