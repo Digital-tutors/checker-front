@@ -16,6 +16,7 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 
 import { Observable } from 'rxjs';
 
+import { PageOfTaskResultDTO } from '../model/pageOfTaskResultDTO';
 import { TaskDTO } from '../model/taskDTO';
 import { TaskDTORequestView } from '../model/taskDTORequestView';
 
@@ -175,6 +176,86 @@ export class TaskAdminControllerService {
       observe: observe,
       reportProgress: reportProgress,
     });
+  }
+
+  /**
+   * getDecisionsByCourseAndUser
+   *
+   * @param courseId courseId
+   * @param userId userId
+   * @param page page
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getDecisionsByCourseAndUserUsingGET(
+    courseId: number,
+    userId: number,
+    page?: number,
+    observe?: 'body',
+    reportProgress?: boolean,
+  ): Observable<PageOfTaskResultDTO>;
+  public getDecisionsByCourseAndUserUsingGET(
+    courseId: number,
+    userId: number,
+    page?: number,
+    observe?: 'response',
+    reportProgress?: boolean,
+  ): Observable<HttpResponse<PageOfTaskResultDTO>>;
+  public getDecisionsByCourseAndUserUsingGET(
+    courseId: number,
+    userId: number,
+    page?: number,
+    observe?: 'events',
+    reportProgress?: boolean,
+  ): Observable<HttpEvent<PageOfTaskResultDTO>>;
+  public getDecisionsByCourseAndUserUsingGET(
+    courseId: number,
+    userId: number,
+    page?: number,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+  ): Observable<any> {
+    if (courseId === null || courseId === undefined) {
+      throw new Error('Required parameter courseId was null or undefined when calling getDecisionsByCourseAndUserUsingGET.');
+    }
+
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter userId was null or undefined when calling getDecisionsByCourseAndUserUsingGET.');
+    }
+
+    let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+    if (page !== undefined && page !== null) {
+      queryParameters = queryParameters.set('page', <any>page);
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = ['*/*'];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.request<PageOfTaskResultDTO>(
+      'get',
+      `${this.basePath}/admin/task/user/${encodeURIComponent(String(userId))}/course/${encodeURIComponent(String(courseId))}/all`,
+      {
+        params: queryParameters,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**

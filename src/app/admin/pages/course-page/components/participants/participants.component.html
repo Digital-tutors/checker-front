@@ -1,51 +1,14 @@
 <app-shadow-container class="participants-container">
   <p class="title">Участники</p>
-  <div class="participants">
-    <div class="participant-container">
+  <div class="participants" *ngIf="students$ | async as students">
+    <div class="participant-container" *ngFor="let student of students">
       <div class="participant-container__inner">
-        <img src="favicon.ico" />
-        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                            [grey]="true" [noPadding]="true"></app-info-container>
-      </div>
-      <mat-icon>more_vert</mat-icon>
-    </div>
-    <div class="participant-container">
-      <div class="participant-container__inner">
-        <img src="favicon.ico" />
-        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                            [grey]="true" [noPadding]="true"></app-info-container>
-      </div>
-      <mat-icon>more_vert</mat-icon>
-    </div>
-    <div class="participant-container">
-      <div class="participant-container__inner">
-        <img src="favicon.ico" />
-        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                            [grey]="true" [noPadding]="true"></app-info-container>
-      </div>
-      <mat-icon>more_vert</mat-icon>
-    </div>
-    <div class="participant-container">
-      <div class="participant-container__inner">
-        <img src="favicon.ico" />
-        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                            [grey]="true" [noPadding]="true"></app-info-container>
-      </div>
-      <mat-icon>more_vert</mat-icon>
-    </div>
-    <div class="participant-container">
-      <div class="participant-container__inner">
-        <img src="favicon.ico" />
-        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                            [grey]="true" [noPadding]="true"></app-info-container>
-      </div>
-      <mat-icon>more_vert</mat-icon>
-    </div>
-    <div class="participant-container">
-      <div class="participant-container__inner">
-        <img src="favicon.ico" />
-        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                            [grey]="true" [noPadding]="true"></app-info-container>
+<!--        <img src="favicon.ico" />-->
+        <app-info-container center
+                            title="Студент"
+                            [text]="student | fio"
+                            [grey]="true"
+                            [noPadding]="true"></app-info-container>
       </div>
       <mat-icon>more_vert</mat-icon>
     </div>

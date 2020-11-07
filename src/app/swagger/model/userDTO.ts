@@ -17,5 +17,15 @@ export interface UserDTO {
   id?: number;
   lastName?: string;
   middleName?: string;
+  role: UserDTO.RoleEnum;
   updatedAt: number;
+}
+export namespace UserDTO {
+  export type RoleEnum = 'ROLE_ADMIN' | 'ROLE_SUPER_ADMIN' | 'ROLE_TEACHER' | 'ROLE_USER';
+  export const RoleEnum = {
+    ADMIN: 'ROLE_ADMIN' as RoleEnum,
+    SUPERADMIN: 'ROLE_SUPER_ADMIN' as RoleEnum,
+    TEACHER: 'ROLE_TEACHER' as RoleEnum,
+    USER: 'ROLE_USER' as RoleEnum,
+  };
 }

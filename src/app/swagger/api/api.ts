@@ -38,6 +38,8 @@ export * from './topicInteractionController.service';
 import { TopicInteractionControllerService } from './topicInteractionController.service';
 export * from './topicRatingController.service';
 import { TopicRatingControllerService } from './topicRatingController.service';
+export * from './userAdminController.service';
+import { UserAdminControllerService } from './userAdminController.service';
 export * from './userController.service';
 import { UserControllerService } from './userController.service';
 export const APIS = [
@@ -61,5 +63,6 @@ export const APIS = [
   TopicControllerService,
   TopicInteractionControllerService,
   TopicRatingControllerService,
+  UserAdminControllerService,
   UserControllerService,
 ];
