@@ -1,0 +1,112 @@
+.login {
+  display: grid;
+  grid-template-rows: 40px auto;
+  align-items: center;
+  height: calc(100vh - 40px);
+  width: calc(100% - 40px);
+  padding: 20px;
+  background: #eff1f7;
+
+  .register {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .register-link {
+    text-transform: uppercase;
+    letter-spacing: 0.075rem;
+    text-decoration: none !important;
+    display: grid;
+    grid-template-columns: auto 24px;
+    align-items: center;
+    width: 100px;
+    justify-content: flex-end;
+
+    .material-icons {
+      position: relative;
+      color: #00D996;
+    }
+  }
+
+  .login-form {
+    display: flex;
+    max-width: 400px;
+    margin: 0 auto;
+
+    @media only screen and (max-width: 700px) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .example-card {
+    border: 0;
+    box-shadow: none;
+    padding: 50px;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    mat-card-header {
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+
+      img {
+        width: 20px;
+        height: auto;
+        padding-bottom: 35px;
+      }
+
+      .mat-card-subtitle-warning {
+        color: #F44336;
+      }
+    }
+
+    .mat-label--styled {
+      text-transform: uppercase;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+    }
+
+    button {
+      text-transform: uppercase;
+    }
+
+    .mat-button.mat-primary:matches([disabled]) {
+      color: #000000;
+    }
+
+    .mat-flat-button.mat-primary:not([disabled]) {
+      color: #ffffff;
+    }
+
+    a {
+      text-decoration: underline;
+      color: #000000 !important;
+    }
+
+    .control-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
+}

@@ -1,13 +1,16 @@
 <section class="login">
-  <a class="register-link" href="#">Регистрация
-    <i aria-hidden="false" aria-label="chevron_right" class="material-icons">chevron_right</i>
-  </a>
+  <div class="register">
+    <a class="register-link" [routerLink]="'/auth/signup'">
+      <span>Регистрация</span>
+      <i aria-hidden="false" aria-label="chevron_right" class="material-icons">chevron_right</i>
+    </a>
+  </div>
   <form class="login-form"
         (ngSubmit)="onSubmit()">
     <div class="example-card"
-              [formGroup]="form">
+         [formGroup]="form">
       <mat-card-header>
-        <img src="/assets/tutorLogo.png"  alt=""/>
+        <img src="/assets/tutorLogo.png" alt=""/>
         <p class="mat-card-subtitle-warning" *ngIf="error">Неверные данные для входа</p>
       </mat-card-header>
 

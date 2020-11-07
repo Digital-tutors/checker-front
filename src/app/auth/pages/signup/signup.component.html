@@ -1,1 +1,42 @@
-<p>signup works!</p>
+<section class="login">
+  <div class="register">
+    <a class="register-link" [routerLink]="'/auth/login'">
+      <span>Войти</span>
+      <i aria-hidden="false" aria-label="chevron_right" class="material-icons">chevron_right</i>
+    </a>
+  </div>
+  <form class="login-form"
+        (ngSubmit)="onSubmit()">
+    <div class="example-card"
+         [formGroup]="form">
+      <mat-card-header>
+        <img src="/assets/tutorLogo.png"  alt=""/>
+        <p class="mat-card-subtitle-warning" *ngIf="error">Неверные данные для входа</p>
+      </mat-card-header>
+
+      <div>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="mat-label--styled">EMail</mat-label>
+          <input type="email" formControlName="email" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="mat-label--styled">Пароль</mat-label>
+          <input type="password" formControlName="password" matInput>
+        </mat-form-field>
+
+      </div>
+
+      <div class="control-container">
+        <div></div>
+        <button type="submit"
+                mat-flat-button
+                color="primary"
+                [disabled]="form.invalid">Зарегистрироваться
+        </button>
+      </div>
+
+    </div>
+  </form>
+</section>
