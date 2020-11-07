@@ -24,7 +24,6 @@ import { TopicsTasksComponent } from './components/topics-tasks/topics-tasks.com
 import { CoursePageComponent } from './course-page.component';
 import { RoutingModule } from './course-page.routes';
 
-import { ContenteditableModule } from '@ng-stack/contenteditable';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
@@ -47,7 +46,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     ShareModule,
     MatInputModule,
     MatFormFieldModule,
-    ContenteditableModule,
     FormsModule,
   ],
 })

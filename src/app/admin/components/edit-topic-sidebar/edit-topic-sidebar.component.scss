@@ -1,0 +1,62 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+:host {
+  display: flex;
+  flex-grow: 1;
+}
+
+app-button:not([bordered]) {
+  transform: scale(0.9);
+}
+
+mat-form-field {
+  margin-bottom: $space;
+}
+
+.admin-subject-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: $space * 2;
+  flex-grow: 1;
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+
+  .rubrics {
+    &__list {
+      display: flex;
+      flex-direction: row;
+      align-items: initial;
+      justify-content: initial;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      &:not(:empty) {
+        margin-bottom: $space / 2;
+      }
+
+      & > * {
+        margin-bottom: $space / 2;
+      }
+
+      &__item {
+        padding: ($space / 2) $space;
+        background: $block-gray;
+        border-radius: 4px;
+        margin-right: $space / 2;
+        cursor: pointer;
+        font-size: 12px;
+        max-width: 500px;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+    }
+  }
+}

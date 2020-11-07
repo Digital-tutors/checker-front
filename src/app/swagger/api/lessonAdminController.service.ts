@@ -176,7 +176,7 @@ export class LessonAdminControllerService {
 
     return this.httpClient.request<LessonDTO>(
       'put',
-      `${this.basePath}/admin/lesson/${encodeURIComponent(String(id))}/lesson/${encodeURIComponent(String(topicId))}`,
+      `${this.basePath}/admin/lesson/${encodeURIComponent(String(id))}/topic/${encodeURIComponent(String(topicId))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

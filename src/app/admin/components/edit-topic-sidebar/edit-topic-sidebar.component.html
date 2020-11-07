@@ -1,0 +1,34 @@
+<main class="admin-subject-sidebar course-sidebar-content" *ngIf="form">
+  <div class="admin-subject-sidebar__edit">
+    <h3 class="title">Редактирование темы</h3>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Название темы</mat-label>
+        <input formControlName="title" matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Уровень сложности</mat-label>
+        <mat-select formControlName="level">
+          <mat-option *ngFor="let level of levels" [value]="level">
+            {{ level | levelName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <div class="rubrics">
+      <p class="caption">Рубрики темы</p>
+      <ul class="rubrics__list">
+        <li *ngFor="let tagControl of tagsControls"
+            class="rubrics__list__item text"
+            contenteditable="true"
+            propValueAccessor="innerHTML"
+            [formControl]="tagControl"></li>
+      </ul>
+      <app-button [bordered]="true" (click)="onAddTag()">Добавить</app-button>
+    </div>
+  </div>
+  <footer class="footer">
+    <app-button [alert]="true">Отменить</app-button>
+    <app-button (click)="onSubmit()">Сохранить</app-button>
+  </footer>
+</main>

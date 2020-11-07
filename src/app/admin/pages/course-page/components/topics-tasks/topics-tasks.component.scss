@@ -14,20 +14,27 @@
   }
 }
 
+.shadow-container.active {
+  background: $background_white !important;
+}
+
 .subject {
   margin-bottom: $space * 3;
 
   &__actions {
     padding-top: $space;
+    max-width: 50%;
 
     &__row {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
     }
 
     .button {
       margin-right: $space;
       margin-bottom: $space;
+      flex-shrink: 0;
     }
   }
 
@@ -75,7 +82,10 @@
   &__right {
     .shadow-container {
       margin-bottom: $space * 2;
-      background: $background_white;
+
+      app-info-container {
+        background: inherit;
+      }
 
       &:after {
         bottom: -($space * 2);

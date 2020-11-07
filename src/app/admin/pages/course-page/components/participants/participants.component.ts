@@ -8,16 +8,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class ParticipantsComponent implements OnInit {
   public form: FormGroup;
+
   constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.setForm();
+  }
 
   private setForm(): void {
     this.form = this.fb.group({
       studentEmail: [''],
     });
-    console.log('setForm called');
-  }
-
-  ngOnInit(): void {
-    this.setForm();
   }
 }

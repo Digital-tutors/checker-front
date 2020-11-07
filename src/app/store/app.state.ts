@@ -2,10 +2,12 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 
 import { CourseDTO } from '@swagger/model/courseDTO';
 import { LessonDTO } from '@swagger/model/lessonDTO';
+import { TopicDTO } from '@swagger/model/topicDTO';
 import { UserDTO } from '@swagger/model/userDTO';
 
 import { Course } from '@store/actions/course.actions';
 import { Lesson } from '@store/actions/lesson.actions';
+import { Topic } from '@store/actions/topic.actions';
 import { User } from '@store/actions/user.actions';
 import { StateInterface } from '@store/state.interface';
 
@@ -34,6 +36,11 @@ export class AppState {
     return state.lesson;
   }
 
+  @Selector()
+  public static topic(state: StateInterface): TopicDTO {
+    return state.topic;
+  }
+
   @Action(User.Set)
   public setUser(ctx: StateContext<StateInterface>, action: User.Set): void {
     ctx.setState({
@@ -55,6 +62,14 @@ export class AppState {
     ctx.setState({
       ...ctx.getState(),
       lesson: action.value,
+    });
+  }
+
+  @Action(Topic.Set)
+  public setTopic(ctx: StateContext<StateInterface>, action: Topic.Set): void {
+    ctx.setState({
+      ...ctx.getState(),
+      topic: action.value,
     });
   }
 }

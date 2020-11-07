@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Select, Store } from '@ngxs/store';
 
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { map, mergeMap, repeatWhen, tap } from 'rxjs/operators';
+import { combineLatest, Observable, race, Subject } from 'rxjs';
+import { filter, map, mergeMap, repeatWhen } from 'rxjs/operators';
 
 import { CourseControllerService } from '@swagger/api/courseController.service';
 import { LessonAdminControllerService } from '@swagger/api/lessonAdminController.service';
 import { LessonControllerService } from '@swagger/api/lessonController.service';
 import { TaskAdminControllerService } from '@swagger/api/taskAdminController.service';
 import { TaskControllerService } from '@swagger/api/taskController.service';
+import { TopicAdminControllerService } from '@swagger/api/topicAdminController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
 import { CourseDTO } from '@swagger/model/courseDTO';
 import { LessonDTO } from '@swagger/model/lessonDTO';
@@ -18,9 +19,14 @@ import { TaskDTO } from '@swagger/model/taskDTO';
 import { TopicDTO } from '@swagger/model/topicDTO';
 import { TopicDTOShortResView } from '@swagger/model/topicDTOShortResView';
 
+import { Topic } from '@store/actions/topic.actions';
 import { AppState } from '@store/app.state';
 
+import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
 import { RouteParamsService } from '@share/services/route-params/route-params.service';
+import { SidebarService } from '@share/services/sidebar.service';
+
+import { EditTopicSidebarComponent } from '../../../../components/edit-topic-sidebar/edit-topic-sidebar.component';
 
 import { TopicWithPayloadInterface } from './interfaces/topic-with-payload.interface';
 
@@ -29,20 +35,27 @@ import { TopicWithPayloadInterface } from './interfaces/topic-with-payload.inter
   templateUrl: './topics-tasks.component.html',
   styleUrls: ['./topics-tasks.component.scss'],
 })
-export class TopicsTasksComponent implements OnInit {
+export class TopicsTasksComponent implements OnInit, OnDestroy {
   private replayFetch$: Subject<void> = new Subject();
 
   @Select(AppState.course)
   public course$: Observable<CourseDTO>;
 
+  @Select(AppState.topic)
+  public topic$: Observable<TopicDTO>;
+
+  public selectedTopic: TopicDTO;
+
   public topicsWithLessons$: Observable<TopicWithPayloadInterface[]>;
 
   constructor(
     private store: Store,
+    private sidebarService: SidebarService,
     private topicControllerService: TopicControllerService,
     private lessonControllerService: LessonControllerService,
     private taskControllerService: TaskControllerService,
     private courseControllerService: CourseControllerService,
+    private topicAdminControllerService: TopicAdminControllerService,
     private lessonAdminControllerService: LessonAdminControllerService,
     private taskAdminControllerService: TaskAdminControllerService,
     private router: Router,
@@ -52,6 +65,10 @@ export class TopicsTasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.setTopicsAndLessons();
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(new Topic.Set(null));
   }
 
   private setTopicsAndLessons(): void {
@@ -72,7 +89,7 @@ export class TopicsTasksComponent implements OnInit {
           ),
         ),
       ),
-      repeatWhen(() => this.replayFetch$.asObservable()),
+      repeatWhen(() => race([this.replayFetch$.asObservable(), this.topic$.pipe(filter((topic: TopicDTO) => !!topic))])),
     );
   }
 
@@ -96,5 +113,34 @@ export class TopicsTasksComponent implements OnInit {
       .subscribe(() => {
         this.replayFetch$.next();
       });
+  }
+
+  public addTopic(): void {
+    this.topicAdminControllerService
+      .createTopicUsingPOST({
+        title: 'Новая тема',
+      })
+      .pipe(
+        mergeMap((topic: TopicDTO) =>
+          this.topicAdminControllerService.linkWithCourseUsingPUT(+this.routeParamsService.routeParamsSnapshot().courseId, topic.id),
+        ),
+      )
+      .subscribe(() => {
+        this.replayFetch$.next();
+      });
+  }
+
+  public selectTopic(topic: TopicDTO | TopicDTOShortResView): void {
+    if (this.selectedTopic && this.selectedTopic.id === topic.id) {
+      this.selectedTopic = null;
+      this.store.dispatch(null);
+      this.sidebarService.setSidebar(AboutCourseSidebarComponent);
+    } else {
+      this.selectedTopic = topic as TopicDTO;
+      this.topicControllerService.getTopicByIdUsingGET(topic.id).subscribe((fullTopic: TopicDTO) => {
+        this.store.dispatch(new Topic.Set(fullTopic));
+        this.sidebarService.setSidebar(EditTopicSidebarComponent);
+      });
+    }
   }
 }
