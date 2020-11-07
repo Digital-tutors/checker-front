@@ -1,12 +1,15 @@
 :host {
   display: block;
-  height: 100%;
   width: 100%;
 }
 
 .card.shadow {
   height: 100%;
-  background-color: inherit;
   width: 100%;
   padding: 16px;
+  background: inherit;
+
+  &.noPadding {
+    padding: 0;
+  }
 }

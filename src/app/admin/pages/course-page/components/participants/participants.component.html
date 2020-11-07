@@ -1,73 +1,66 @@
-<section>
+<app-shadow-container class="participants-container">
+  <p class="title">Участники</p>
   <div class="participants">
-    <p class="title">Участники</p>
-    <app-two-box-grid>
-      <div class="participants-left">
-        <div class="participant-container">
-          <div class="participant-container__inner">
-            <img src="favicon.ico" />
-            <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                                [grey]="true"></app-info-container>
-          </div>
-          <mat-icon>more_vert</mat-icon>
-        </div>
-        <div class="participant-container">
-          <div class="participant-container__inner">
-            <img src="favicon.ico" />
-            <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                                [grey]="true"></app-info-container>
-          </div>
-          <mat-icon>more_vert</mat-icon>
-        </div>
-        <div class="participant-container">
-          <div class="participant-container__inner">
-            <img src="favicon.ico" />
-            <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                                [grey]="true"></app-info-container>
-          </div>
-          <mat-icon>more_vert</mat-icon>
-        </div>
+    <div class="participant-container">
+      <div class="participant-container__inner">
+        <img src="favicon.ico" />
+        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
+                            [grey]="true" [noPadding]="true"></app-info-container>
       </div>
-      <div class="participants-right">
-        <div class="participant-container">
-          <div class="participant-container__inner">
-            <img src="favicon.ico" />
-            <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                                [grey]="true"></app-info-container>
-          </div>
-          <mat-icon>more_vert</mat-icon>
-        </div>
-        <div class="participant-container">
-          <div class="participant-container__inner">
-            <img src="favicon.ico" />
-            <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                                [grey]="true"></app-info-container>
-          </div>
-          <mat-icon>more_vert</mat-icon>
-        </div>
-        <div class="participant-container">
-          <div class="participant-container__inner">
-            <img src="favicon.ico" />
-            <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
-                                [grey]="true"></app-info-container>
-          </div>
-          <mat-icon>more_vert</mat-icon>
-        </div>
+      <mat-icon>more_vert</mat-icon>
+    </div>
+    <div class="participant-container">
+      <div class="participant-container__inner">
+        <img src="favicon.ico" />
+        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
+                            [grey]="true" [noPadding]="true"></app-info-container>
       </div>
-    </app-two-box-grid>
-  </div>
-</section>
-
-<section>
-
-  <div class="invite">
-    <p class="title">Пригласить студента</p>
-    <div class="invite-container" [formGroup]="form">
-        <mat-form-field appearance="outline">
-          <mat-label class="">Поиск</mat-label>
-          <input type="email" formControlName="studentEmail" matInput>
-        </mat-form-field>
-        <app-button class="form-button" [bordered]="true">Отправить приглашение</app-button>
+      <mat-icon>more_vert</mat-icon>
+    </div>
+    <div class="participant-container">
+      <div class="participant-container__inner">
+        <img src="favicon.ico" />
+        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
+                            [grey]="true" [noPadding]="true"></app-info-container>
+      </div>
+      <mat-icon>more_vert</mat-icon>
+    </div>
+    <div class="participant-container">
+      <div class="participant-container__inner">
+        <img src="favicon.ico" />
+        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
+                            [grey]="true" [noPadding]="true"></app-info-container>
+      </div>
+      <mat-icon>more_vert</mat-icon>
+    </div>
+    <div class="participant-container">
+      <div class="participant-container__inner">
+        <img src="favicon.ico" />
+        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
+                            [grey]="true" [noPadding]="true"></app-info-container>
+      </div>
+      <mat-icon>more_vert</mat-icon>
+    </div>
+    <div class="participant-container">
+      <div class="participant-container__inner">
+        <img src="favicon.ico" />
+        <app-info-container center title="Студент" text="Зубенко Михаил Петрович"
+                            [grey]="true" [noPadding]="true"></app-info-container>
+      </div>
+      <mat-icon>more_vert</mat-icon>
     </div>
   </div>
-</section>
+</app-shadow-container>
+
+<app-shadow-container class="invites-container">
+  <p class="title">Пригласить студента</p>
+  <div class="invite">
+    <div class="invite-container" [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label class="">Поиск</mat-label>
+        <input type="email" formControlName="studentEmail" matInput>
+      </mat-form-field>
+      <app-button class="form-button" [bordered]="true">Отправить приглашение</app-button>
+    </div>
+  </div>
+</app-shadow-container>

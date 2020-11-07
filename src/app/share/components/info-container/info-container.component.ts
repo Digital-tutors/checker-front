@@ -16,4 +16,6 @@ export class InfoContainerComponent {
   public text: string;
   @Input()
   public grey: boolean;
+  @Input()
+  public noPadding: boolean;
 }

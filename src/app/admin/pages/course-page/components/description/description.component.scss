@@ -1,6 +1,10 @@
 @import "../../../../../../vars";
 @import "../../../../../../colors";
 
+app-shadow-container {
+  background: $background-white;
+}
+
 .headline--1, .headline--2 {
   margin-bottom: $space * 2;
 }
@@ -17,6 +21,9 @@
   &__item {
     display: flex;
     align-items: center;
+    max-width: 500px;
+    word-wrap: break-word;
+    word-break: break-all;
 
     &:not(:last-child) {
       margin-bottom: $space;

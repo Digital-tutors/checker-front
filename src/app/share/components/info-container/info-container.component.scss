@@ -33,6 +33,10 @@
     background: #D9E0E7;
   }
 
+  &.noPadding {
+    padding: 0;
+  }
+
   .caption {
     color: inherit;
     opacity: 0.5;
