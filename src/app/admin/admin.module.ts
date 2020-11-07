@@ -14,6 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ShareModule } from '@share/share.module';
 
 import { AboutCourseSidebarComponent } from './components/about-course-sidebar/about-course-sidebar.component';
+import { AlertWindowTestComponent } from './components/alert-window-test/alert-window-test.component';
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { LessonPageSidebarComponent } from './components/lesson-page-sidebar/lesson-page-sidebar.component';
@@ -33,6 +34,7 @@ import { RoutingModule } from './admin.routes';
     LessonPageSidebarComponent,
     AlertWindowComponent,
     TestPageSidebarComponent,
+    AlertWindowTestComponent,
   ],
   imports: [
     ShareModule,
