@@ -15,13 +15,14 @@ import { RefVO } from './refVO';
 export interface TopicDTO {
   addons: Array<RefVO>;
   author?: AuthorRefVO;
-  content: Array<RefVO>;
   createdAt: number;
   description?: string;
   extensions: Array<RefVO>;
   fgosStandards: Array<string>;
   id?: number;
+  lessons: Array<RefVO>;
   level: TopicDTO.LevelEnum;
+  practicies: Array<RefVO>;
   professionalStandards: Array<string>;
   replacements: Array<RefVO>;
   simplifications: Array<RefVO>;

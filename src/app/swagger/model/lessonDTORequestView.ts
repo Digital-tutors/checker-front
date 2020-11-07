@@ -12,5 +12,14 @@
 
 export interface LessonDTORequestView {
   htmlBody?: string;
+  level?: LessonDTORequestView.LevelEnum;
   title?: string;
+}
+export namespace LessonDTORequestView {
+  export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';
+  export const LevelEnum = {
+    EASY: 'EASY' as LevelEnum,
+    HARD: 'HARD' as LevelEnum,
+    MIDDLE: 'MIDDLE' as LevelEnum,
+  };
 }

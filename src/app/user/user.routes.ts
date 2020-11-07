@@ -33,11 +33,11 @@ const routes: Routes = [
         pathMatch: 'full',
         loadChildren: () => import('./pages/test-page/test-page.module').then(m => m.TestPageModule),
       },
-      // {
-      //   path: 'courses/:courseId/topic/:topicId/task/:taskId', // Практическое задание
-      //   pathMatch: 'full',
-      //   loadChildren: () => import('./pages/task-page/task-page.module').then(m => m.TaskPageModule),
-      // },
+      {
+        path: 'courses/:courseId/topic/:topicId/task/:taskId', // Практическое задание
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/task-page/task-page.module').then(m => m.TaskPageModule),
+      },
     ],
   },
 ];

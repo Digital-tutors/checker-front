@@ -20,6 +20,16 @@ export * from './roleRequestAdminController.service';
 import { RoleRequestAdminControllerService } from './roleRequestAdminController.service';
 export * from './roleRequestController.service';
 import { RoleRequestControllerService } from './roleRequestController.service';
+export * from './taskAdminController.service';
+import { TaskAdminControllerService } from './taskAdminController.service';
+export * from './taskController.service';
+import { TaskControllerService } from './taskController.service';
+export * from './taskInteractionController.service';
+import { TaskInteractionControllerService } from './taskInteractionController.service';
+export * from './taskRatingController.service';
+import { TaskRatingControllerService } from './taskRatingController.service';
+export * from './taskResultController.service';
+import { TaskResultControllerService } from './taskResultController.service';
 export * from './topicAdminController.service';
 import { TopicAdminControllerService } from './topicAdminController.service';
 export * from './topicController.service';
@@ -42,6 +52,11 @@ export const APIS = [
   LessonRatingControllerService,
   RoleRequestAdminControllerService,
   RoleRequestControllerService,
+  TaskAdminControllerService,
+  TaskControllerService,
+  TaskInteractionControllerService,
+  TaskRatingControllerService,
+  TaskResultControllerService,
   TopicAdminControllerService,
   TopicControllerService,
   TopicInteractionControllerService,

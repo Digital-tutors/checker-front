@@ -9,23 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { AuthorRefVOShortResView } from './authorRefVOShortResView';
-import { RefVOShortResView } from './refVOShortResView';
+import { OptionsDTORequestView } from './optionsDTORequestView';
+import { TestsDTORequestView } from './testsDTORequestView';
 
-export interface TopicDTOShortResView {
-  addons: Array<RefVOShortResView>;
-  author?: AuthorRefVOShortResView;
-  extensions: Array<RefVOShortResView>;
-  id?: number;
-  lessons: Array<RefVOShortResView>;
-  level: TopicDTOShortResView.LevelEnum;
-  practicies: Array<RefVOShortResView>;
-  replacements: Array<RefVOShortResView>;
-  simplifications: Array<RefVOShortResView>;
-  status: TopicDTOShortResView.StatusEnum;
+export interface TaskDTORequestView {
+  description?: string;
+  level?: TaskDTORequestView.LevelEnum;
+  options?: OptionsDTORequestView;
+  status?: TaskDTORequestView.StatusEnum;
+  tests?: TestsDTORequestView;
   title?: string;
 }
-export namespace TopicDTOShortResView {
+export namespace TaskDTORequestView {
   export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';
   export const LevelEnum = {
     EASY: 'EASY' as LevelEnum,

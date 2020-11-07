@@ -11,17 +11,31 @@
   </header>
   <div class="content">
     <nav class="content__nav">
-      <span class="content__nav__item content__nav__item--active caption--light">Список занятий</span>
-      <span class="content__nav__item caption--light">Материалы</span>
+      <span *ngFor="let tab of tabs"
+            class="content__nav__item caption--light"
+            [class.content__nav__item--active]="activeTab === tab.selector"
+            (click)="selectTab(tab.selector)">{{ tab.title }}</span>
     </nav>
-    <div class="content__lessons">
+    <div class="content__data" *ngIf="activeTab === tabsEnum.LESSONS">
       <app-highlighted-container *ngFor="let item of lessons"
                                  color="#00D996"
-                                 [bgColor]="item.id === lesson?.id ? '#00AD78' : null">
+                                 [bgColor]="item.id === lesson?.id ? '#00AD78' : null"
+                                 (click)="navigateToTopicLesson(currentTopic.id, item.id)">
         <app-info-container [center]="true"
                             title="Занятие"
                             [text]="item.title"
                             [class.active]="item.id === lesson?.id"></app-info-container>
+      </app-highlighted-container>
+    </div>
+    <div class="content__data" *ngIf="activeTab === tabsEnum.TASKS">
+      <app-highlighted-container *ngFor="let item of tasks"
+                                 color="#00D996"
+                                 [bgColor]="item.id === task?.id ? '#00AD78' : null"
+                                 (click)="navigateToTopicTask(currentTopic.id, item.id)">
+        <app-info-container [center]="true"
+                            title="Задача"
+                            [text]="item.title"
+                            [class.active]="item.id === task?.id"></app-info-container>
       </app-highlighted-container>
     </div>
   </div>

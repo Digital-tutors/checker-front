@@ -13,6 +13,11 @@ import { LessonInteractionControllerService } from './api/lessonInteractionContr
 import { LessonRatingControllerService } from './api/lessonRatingController.service';
 import { RoleRequestAdminControllerService } from './api/roleRequestAdminController.service';
 import { RoleRequestControllerService } from './api/roleRequestController.service';
+import { TaskAdminControllerService } from './api/taskAdminController.service';
+import { TaskControllerService } from './api/taskController.service';
+import { TaskInteractionControllerService } from './api/taskInteractionController.service';
+import { TaskRatingControllerService } from './api/taskRatingController.service';
+import { TaskResultControllerService } from './api/taskResultController.service';
 import { TopicAdminControllerService } from './api/topicAdminController.service';
 import { TopicControllerService } from './api/topicController.service';
 import { TopicInteractionControllerService } from './api/topicInteractionController.service';
@@ -35,6 +40,11 @@ import { UserControllerService } from './api/userController.service';
     LessonRatingControllerService,
     RoleRequestAdminControllerService,
     RoleRequestControllerService,
+    TaskAdminControllerService,
+    TaskControllerService,
+    TaskInteractionControllerService,
+    TaskRatingControllerService,
+    TaskResultControllerService,
     TopicAdminControllerService,
     TopicControllerService,
     TopicInteractionControllerService,

@@ -9,23 +9,27 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { AuthorRefVOShortResView } from './authorRefVOShortResView';
-import { RefVOShortResView } from './refVOShortResView';
+import { OptionsDTO } from './optionsDTO';
+import { RefVO } from './refVO';
+import { TestsDTO } from './testsDTO';
 
-export interface TopicDTOShortResView {
-  addons: Array<RefVOShortResView>;
-  author?: AuthorRefVOShortResView;
-  extensions: Array<RefVOShortResView>;
+export interface TaskDTO {
+  addons: Array<RefVO>;
+  author?: RefVO;
+  createdAt: number;
+  description?: string;
+  extensions: Array<RefVO>;
   id?: number;
-  lessons: Array<RefVOShortResView>;
-  level: TopicDTOShortResView.LevelEnum;
-  practicies: Array<RefVOShortResView>;
-  replacements: Array<RefVOShortResView>;
-  simplifications: Array<RefVOShortResView>;
-  status: TopicDTOShortResView.StatusEnum;
+  level: TaskDTO.LevelEnum;
+  options?: OptionsDTO;
+  replacements: Array<RefVO>;
+  simplifications: Array<RefVO>;
+  status: TaskDTO.StatusEnum;
+  tests?: TestsDTO;
   title?: string;
+  updatedAt: number;
 }
-export namespace TopicDTOShortResView {
+export namespace TaskDTO {
   export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';
   export const LevelEnum = {
     EASY: 'EASY' as LevelEnum,

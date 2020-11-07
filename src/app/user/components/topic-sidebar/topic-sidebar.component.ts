@@ -3,13 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngxs/store';
 
-import { Observable, of, OperatorFunction } from 'rxjs';
+import { Observable, OperatorFunction } from 'rxjs';
 import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
 
 import { LessonControllerService } from '@swagger/api/lessonController.service';
+import { TaskControllerService } from '@swagger/api/taskController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
 import { LessonDTO } from '@swagger/model/lessonDTO';
 import { LessonDTOShortResView } from '@swagger/model/lessonDTOShortResView';
+import { TaskDTO } from '@swagger/model/taskDTO';
 import { TopicDTO } from '@swagger/model/topicDTO';
 import { TopicDTOShortResView } from '@swagger/model/topicDTOShortResView';
 
@@ -18,6 +20,10 @@ import { Topic } from '@store/actions/topic.actions';
 
 import { RouteParamMapInterface } from '@share/services/route-params/interfaces/route-param-map.interface';
 import { RouteParamsService } from '@share/services/route-params/route-params.service';
+
+import { TABS } from './const/tabs.const';
+import { TabsEnum } from './enums/tabs.enum';
+import { TabInterface } from './interfaces/tab.interface';
 
 @Component({
   selector: 'app-topic-sidebar',
@@ -28,12 +34,19 @@ export class TopicSidebarComponent implements OnInit {
   public lesson: LessonDTO;
   public lessons: LessonDTO[] = [];
 
+  public task: TaskDTO;
+  public tasks: TaskDTO[] = [];
+
   public previousTopic: TopicDTOShortResView;
   public currentTopic: TopicDTO;
   public nextTopic: TopicDTOShortResView;
 
   public previousTopicFirstLessonId: number;
   public nextTopicFirstLessonId: number;
+
+  public tabs: TabInterface[] = TABS;
+  public activeTab: TabsEnum = TabsEnum.LESSONS;
+  public tabsEnum: typeof TabsEnum = TabsEnum;
 
   constructor(
     private router: Router,
@@ -42,6 +55,7 @@ export class TopicSidebarComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private lessonControllerService: LessonControllerService,
     private topicControllerService: TopicControllerService,
+    private taskControllerService: TaskControllerService,
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +84,7 @@ export class TopicSidebarComponent implements OnInit {
   private getTopicAndLesson(): void {
     this.routeParamsService.routeParams$
       .pipe(
-        filter((params: RouteParamMapInterface) => !!params.topicId && !!params.lessonId),
+        filter((params: RouteParamMapInterface) => !!params.topicId),
         mergeMap((params: RouteParamMapInterface) =>
           this.topicControllerService.getTopicByIdUsingGET(params.topicId).pipe(
             tap((topic: TopicDTO) => {
@@ -85,20 +99,48 @@ export class TopicSidebarComponent implements OnInit {
             }),
             this.topicFirstLesson(this.previousTopic, (id: number) => (this.previousTopicFirstLessonId = id)),
             this.topicFirstLesson(this.nextTopic, (id: number) => (this.nextTopicFirstLessonId = id)),
-            mergeMap(() => this.lessonControllerService.getLessonByIdUsingGET(params.lessonId)),
-            tap(lesson => {
-              this.lesson = lesson;
-              this.store.dispatch(new Lesson.Set(this.lesson));
+            mergeMap(() => {
+              let observable$: Observable<any> = this.lessonControllerService.getLessonByTopicIdUsingGET(params.topicId).pipe(
+                tap((lessons: LessonDTO[]) => (this.lessons = lessons)),
+                mergeMap(() => this.taskControllerService.getTasksByTopicIdUsingGET(params.topicId)),
+                tap((tasks: TaskDTO[]) => {
+                  this.tasks = tasks;
+                  this.task = tasks.find(({ id }) => id === Number(params.taskId));
+
+                  if (this.task) {
+                    this.activeTab = TabsEnum.TASKS;
+                  }
+                }),
+              );
+
+              if (params.lessonId) {
+                observable$ = observable$.pipe(
+                  mergeMap(() => this.lessonControllerService.getLessonByIdUsingGET(params.lessonId)),
+                  tap(lesson => {
+                    this.lesson = lesson;
+                    this.store.dispatch(new Lesson.Set(this.lesson));
+                  }),
+                );
+              }
+
+              return observable$;
             }),
-            mergeMap(() => this.lessonControllerService.getLessonByTopicIdUsingGET(params.topicId)),
           ),
         ),
       )
-      .subscribe((lessons: LessonDTO[]) => (this.lessons = lessons));
+      .subscribe();
   }
 
-  private navigateToTopicLesson(topicId: number, lessonId: number): void {
-    this.router.navigate(['./courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'lesson', lessonId]);
+  public navigateToTopicLesson(topicId: number, lessonId: number): void {
+    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'lesson', lessonId]);
+  }
+
+  public navigateToTopicTask(topicId: number, taskId: number): void {
+    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'task', taskId]);
+  }
+
+  public selectTab(tab: TabsEnum): void {
+    this.activeTab = tab;
   }
 
   public navToPreviousTopic(): void {

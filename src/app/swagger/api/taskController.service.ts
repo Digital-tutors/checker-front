@@ -16,18 +16,15 @@ import { CustomHttpUrlEncodingCodec } from '../encoder';
 
 import { Observable } from 'rxjs';
 
-import { PageTaskAdminVO } from '../model/pageTaskAdminVO';
-import { TaskAdminVO } from '../model/taskAdminVO';
-import { TaskCreateRq } from '../model/taskCreateRq';
-import { TaskUpdateRq } from '../model/taskUpdateRq';
-import { TaskVO } from '../model/taskVO';
+import { PageOfTaskDTO } from '../model/pageOfTaskDTO';
+import { TaskDTO } from '../model/taskDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
 
 @Injectable()
 export class TaskControllerService {
-  protected basePath = '//localhost:8080/';
+  protected basePath = '//localhost/';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
@@ -56,166 +53,26 @@ export class TaskControllerService {
   }
 
   /**
-   * createTask
-   *
-   * @param body taskCreateRq
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public createTaskUsingPOST(body: TaskCreateRq, observe?: 'body', reportProgress?: boolean): Observable<TaskVO>;
-  public createTaskUsingPOST(body: TaskCreateRq, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskVO>>;
-  public createTaskUsingPOST(body: TaskCreateRq, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskVO>>;
-  public createTaskUsingPOST(body: TaskCreateRq, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling createTaskUsingPOST.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<TaskVO>('post', `${this.basePath}/task`, {
-      body: body,
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * deleteTask
-   *
-   * @param id id
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public deleteTaskUsingDELETE(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-  public deleteTaskUsingDELETE(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-  public deleteTaskUsingDELETE(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-  public deleteTaskUsingDELETE(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling deleteTaskUsingDELETE.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<any>('delete', `${this.basePath}/task/${encodeURIComponent(String(id))}`, {
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * getAdminTaskById
-   *
-   * @param id id
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getAdminTaskByIdUsingGET(id: string, observe?: 'body', reportProgress?: boolean): Observable<TaskAdminVO>;
-  public getAdminTaskByIdUsingGET(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskAdminVO>>;
-  public getAdminTaskByIdUsingGET(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskAdminVO>>;
-  public getAdminTaskByIdUsingGET(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling getAdminTaskByIdUsingGET.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<TaskAdminVO>('get', `${this.basePath}/task/${encodeURIComponent(String(id))}/admin`, {
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
    * getTaskById
    *
    * @param id id
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTaskByIdUsingGET(id: string, observe?: 'body', reportProgress?: boolean): Observable<TaskVO>;
-  public getTaskByIdUsingGET(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskVO>>;
-  public getTaskByIdUsingGET(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskVO>>;
-  public getTaskByIdUsingGET(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getTaskByIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<TaskDTO>;
+  public getTaskByIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskDTO>>;
+  public getTaskByIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskDTO>>;
+  public getTaskByIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (id === null || id === undefined) {
       throw new Error('Required parameter id was null or undefined when calling getTaskByIdUsingGET.');
     }
 
     let headers = this.defaultHeaders;
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
     }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<TaskVO>('get', `${this.basePath}/task/${encodeURIComponent(String(id))}`, {
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * getTasksByAuthorId
-   *
-   * @param id id
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getTasksByAuthorIdUsingGET(id: string, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskVO>>;
-  public getTasksByAuthorIdUsingGET(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskVO>>>;
-  public getTasksByAuthorIdUsingGET(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskVO>>>;
-  public getTasksByAuthorIdUsingGET(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling getTasksByAuthorIdUsingGET.');
-    }
-
-    let headers = this.defaultHeaders;
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = ['*/*'];
@@ -227,7 +84,7 @@ export class TaskControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<Array<TaskVO>>('get', `${this.basePath}/author/${encodeURIComponent(String(id))}/tasks`, {
+    return this.httpClient.request<TaskDTO>('get', `${this.basePath}/task/${encodeURIComponent(String(id))}`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -242,15 +99,20 @@ export class TaskControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTasksByTopicIdUsingGET(id: string, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskVO>>;
-  public getTasksByTopicIdUsingGET(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskVO>>>;
-  public getTasksByTopicIdUsingGET(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskVO>>>;
-  public getTasksByTopicIdUsingGET(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getTasksByTopicIdUsingGET(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskDTO>>;
+  public getTasksByTopicIdUsingGET(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskDTO>>>;
+  public getTasksByTopicIdUsingGET(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskDTO>>>;
+  public getTasksByTopicIdUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (id === null || id === undefined) {
       throw new Error('Required parameter id was null or undefined when calling getTasksByTopicIdUsingGET.');
     }
 
     let headers = this.defaultHeaders;
+
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
+    }
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = ['*/*'];
@@ -262,7 +124,7 @@ export class TaskControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<Array<TaskVO>>('get', `${this.basePath}/topic/${encodeURIComponent(String(id))}/tasks`, {
+    return this.httpClient.request<Array<TaskDTO>>('get', `${this.basePath}/task/topic/${encodeURIComponent(String(id))}/tasks`, {
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
@@ -277,20 +139,21 @@ export class TaskControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getTasksUsingGET(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageTaskAdminVO>;
-  public getTasksUsingGET(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageTaskAdminVO>>;
-  public getTasksUsingGET(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageTaskAdminVO>>;
-  public getTasksUsingGET(page: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (page === null || page === undefined) {
-      throw new Error('Required parameter page was null or undefined when calling getTasksUsingGET.');
-    }
-
+  public getTasksUsingGET(page?: number, observe?: 'body', reportProgress?: boolean): Observable<PageOfTaskDTO>;
+  public getTasksUsingGET(page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOfTaskDTO>>;
+  public getTasksUsingGET(page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOfTaskDTO>>;
+  public getTasksUsingGET(page?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
     if (page !== undefined && page !== null) {
       queryParameters = queryParameters.set('page', <any>page);
     }
 
     let headers = this.defaultHeaders;
+
+    // authentication (Bearer) required
+    if (this.configuration.apiKeys && this.configuration.apiKeys['Authorization']) {
+      headers = headers.set('Authorization', this.configuration.apiKeys['Authorization']);
+    }
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = ['*/*'];
@@ -302,53 +165,8 @@ export class TaskControllerService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<PageTaskAdminVO>('get', `${this.basePath}/tasks`, {
+    return this.httpClient.request<PageOfTaskDTO>('get', `${this.basePath}/task/all`, {
       params: queryParameters,
-      withCredentials: this.configuration.withCredentials,
-      headers: headers,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * updateTask
-   *
-   * @param body taskUpdateRq
-   * @param id id
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public updateTaskUsingPUT(body: TaskUpdateRq, id: string, observe?: 'body', reportProgress?: boolean): Observable<TaskVO>;
-  public updateTaskUsingPUT(body: TaskUpdateRq, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskVO>>;
-  public updateTaskUsingPUT(body: TaskUpdateRq, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskVO>>;
-  public updateTaskUsingPUT(body: TaskUpdateRq, id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling updateTaskUsingPUT.');
-    }
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling updateTaskUsingPUT.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = ['*/*'];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<TaskVO>('put', `${this.basePath}/task/${encodeURIComponent(String(id))}`, {
-      body: body,
       withCredentials: this.configuration.withCredentials,
       headers: headers,
       observe: observe,
