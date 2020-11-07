@@ -1,36 +1,44 @@
-<app-two-box-grid class="description">
-  <app-shadow-container>
-    <div class="card-header">
-      <p class="title">Описание курса</p>
-      <mat-icon>create</mat-icon>
-    </div>
-    <p class="text" contenteditable="true" [(ngModel)]="description"></p>
-  </app-shadow-container>
-  <app-shadow-container>
-    <div class="card-header">
-      <p class="title">Полученные знания</p>
-      <mat-icon (click)="onAddSkill()">create</mat-icon>
-    </div>
-    <ul class="skills" *ngFor="let skill of skills">
-      <li class="skills__item">
-        <mat-icon>beenhere</mat-icon>
-        <p class="text" contenteditable="true" propValueAccessor="innerHTML"
-           [formControl]="descriptionControl"></p>
-      </li>
-    </ul>
-  </app-shadow-container>
-</app-two-box-grid>
-<app-two-box-grid>
-  <app-shadow-container class="rubrics">
-    <p class="title">Рубрики курса</p>
-    <div class="rubrics__list">
-      <p class="rubrics__list__item text" contenteditable="true" propValueAccessor="innerHTML" [formControl]="descriptionControl"></p>
-      <p class="rubrics__list__item text" contenteditable="true" propValueAccessor="innerHTML" [formControl]="descriptionControl"></p>
-      <p class="rubrics__list__item text" contenteditable="true" propValueAccessor="innerHTML" [formControl]="descriptionControl"></p>
-      <p class="rubrics__list__item text" contenteditable="true" propValueAccessor="innerHTML" [formControl]="descriptionControl"></p>
-      <p class="rubrics__list__item text" contenteditable="true" propValueAccessor="innerHTML" [formControl]="descriptionControl"></p>
-      <p class="rubrics__list__item text" contenteditable="true" propValueAccessor="innerHTML" [formControl]="descriptionControl"></p>
-    </div>
-    <app-button [bordered]="true">Добавить рубрику</app-button>
-  </app-shadow-container>
-</app-two-box-grid>
+<section *ngIf="course$ | async as course">
+
+  <app-two-box-grid class="description">
+    <app-shadow-container>
+      <div class="card-header">
+        <p class="title">Описание курса</p>
+        <mat-icon>create</mat-icon>
+      </div>
+      <p class="text" contenteditable="true" [formControl]="descriptionControl"></p>
+    </app-shadow-container>
+    <app-shadow-container>
+      <div class="card-header">
+        <p class="title">Полученные знания</p>
+      </div>
+      <ul class="skills">
+        <li class="skills__item" *ngFor="let skillControl of skillsControls">
+          <mat-icon>beenhere</mat-icon>
+          <p class="text"
+             contenteditable="true"
+             propValueAccessor="innerHTML"
+             [formControl]="skillControl"></p>
+        </li>
+      </ul>
+      <app-button [bordered]="true" (click)="onAddSkill()">Добавить знание</app-button>
+    </app-shadow-container>
+  </app-two-box-grid>
+
+  <app-two-box-grid>
+    <app-shadow-container class="rubrics">
+      <p class="title">Рубрики курса</p>
+      <div class="rubrics__list">
+        <p *ngFor="let keywordControl of keywordsControls"
+           class="rubrics__list__item text"
+           contenteditable="true"
+           propValueAccessor="innerHTML"
+           [formControl]="keywordControl"></p>
+      </div>
+      <app-button [bordered]="true" (click)="onAddKeyword()">Добавить рубрику</app-button>
+    </app-shadow-container>
+  </app-two-box-grid>
+
+  <app-button class="submit-btn" (click)="onSave(course)">Сохранить</app-button>
+
+</section>

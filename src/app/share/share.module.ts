@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
 
+import { AboutCourseSidebarComponent } from './components/about-course-sidebar/about-course-sidebar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { HighlightedContainerComponent } from './components/highlighted-container/highlighted-container.component';
 import { ImageCardComponent } from './components/image-card/image-card.component';
@@ -21,6 +22,7 @@ const COMPONENTS: any[] = [
   ButtonComponent,
   ShadowContainerComponent,
   HighlightedContainerComponent,
+  AboutCourseSidebarComponent,
 ];
 
 const PIPES: any[] = [FioPipe];

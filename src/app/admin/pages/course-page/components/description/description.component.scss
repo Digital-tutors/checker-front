@@ -1,6 +1,10 @@
 @import "../../../../../../vars";
 @import "../../../../../../colors";
 
+app-shadow-container {
+  background: white;
+}
+
 .headline--1, .headline--2 {
   margin-bottom: $space * 2;
 }
@@ -13,6 +17,10 @@
   padding: 0;
   margin: 0;
   list-style: none;
+
+  &:not(:empty) {
+    margin: 0 0 $space * 2;
+  }
 
   &__item {
     display: flex;
@@ -37,64 +45,6 @@
   margin-bottom: $space * 3;
 }
 
-.lessons {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  &__item {
-    position: relative;
-    display: flex;
-    align-items: center;
-    overflow: visible;
-    margin-bottom: $space !important;
-    cursor: pointer;
-
-    &__line {
-      display: flex;
-      align-items: center;
-      overflow: scroll;
-      width: 100%;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      a {
-        text-decoration: none;
-      }
-
-      app-highlighted-container {
-        flex-shrink: 0;
-        height: 140px;
-
-        @media (min-width: 1281px) {
-          width: 32%;
-          margin-right: 2%;
-        }
-
-        @media (max-width: 1280px) {
-          width: 48%;
-          margin-right: 2%;
-        }
-      }
-    }
-
-    .icon {
-      position: absolute;
-      right: -40px;
-      z-index: 1000;
-      width: 30px;
-      height: 30px;
-
-      &__image {
-        width: 10px;
-      }
-    }
-
-  }
-}
-
 .text {
   margin: 0;
 }
@@ -110,16 +60,16 @@
     list-style: none;
     padding: 0;
     margin: 0 0 $space 0;
-    max-width: 500px;
+
+    & > * {
+      margin-bottom: $space / 2;
+    }
 
     &__item {
-      display: flex;
-      flex-wrap: wrap;
       padding: ($space / 2) $space;
       background: $block-gray;
       border-radius: 4px;
       margin-right: $space / 2;
-      margin-bottom: $space / 2;
       cursor: pointer;
       font-size: 12px;
       max-width: 500px;
@@ -136,4 +86,9 @@
   justify-content: space-between;
 
   margin-bottom: $space;
+}
+
+.submit-btn {
+  display: block;
+  margin-top: $space * 3;
 }

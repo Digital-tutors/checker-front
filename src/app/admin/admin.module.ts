@@ -13,12 +13,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { ShareModule } from '@share/share.module';
 
-import { AboutCourseSidebarComponent } from './components/about-course-sidebar/about-course-sidebar.component';
 import { AlertWindowTestComponent } from './components/alert-window-test/alert-window-test.component';
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { LessonPageSidebarComponent } from './components/lesson-page-sidebar/lesson-page-sidebar.component';
-import { AdminComponent } from './components/quiz/admin.component';
 import { TestPageSidebarComponent } from './components/test-page-sidebar/test-page-sidebar.component';
 import { TopicSidebarComponent } from './components/topic-sidebar/topic-sidebar.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
@@ -28,9 +26,7 @@ import { RoutingModule } from './admin.routes';
   declarations: [
     LayoutComponent,
     WrapperComponent,
-    AboutCourseSidebarComponent,
     TopicSidebarComponent,
-    AdminComponent,
     LessonPageSidebarComponent,
     AlertWindowComponent,
     TestPageSidebarComponent,

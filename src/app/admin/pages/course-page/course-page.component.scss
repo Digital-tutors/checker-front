@@ -1,6 +1,18 @@
 @import "../../../../vars";
 @import '../../../../colors';
 
+:host ::ng-deep {
+  .admin-navigation-bar .card {
+    padding: 0 !important;
+  }
+
+  app-shadow-container {
+    width: auto;
+  }
+
+}
+
+
 .admin-navigation-bar {
   display: flex;
   align-items: center;

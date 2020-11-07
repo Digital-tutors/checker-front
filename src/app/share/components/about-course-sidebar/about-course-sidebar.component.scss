@@ -1,5 +1,5 @@
-@import "../../../../vars";
-@import "../../../../colors";
+@import "src/vars";
+@import "src/colors";
 
 :host {
   flex-grow: 1;
@@ -99,7 +99,7 @@
     &__caption {
       font-size: 12px;
       text-decoration: none;
-      margin: 0 0 0 $space;
+      margin: 0;
     }
   }
 }

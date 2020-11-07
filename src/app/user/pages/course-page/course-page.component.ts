@@ -15,13 +15,13 @@ import { TopicDTOShortResView } from '@swagger/model/topicDTOShortResView';
 import { Course } from '@store/actions/course.actions';
 import { AppState } from '@store/app.state';
 
-import { SidebarService } from '../../../share/services/sidebar.service';
-import { AboutCourseSidebarComponent } from '../../components/about-course-sidebar/about-course-sidebar.component';
+import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
+import { SidebarService } from '@share/services/sidebar.service';
 
 import { TopicWithLessonsInterface } from './interfaces/topic-with-lessons.interface';
 
 @Component({
-  selector: 'app-user-profile',
+  selector: 'app-user-course-page',
   templateUrl: './course-page.component.html',
   styleUrls: ['./course-page.component.scss'],
 })

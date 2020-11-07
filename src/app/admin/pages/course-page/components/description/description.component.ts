@@ -1,5 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
+
+import { Select, Store } from '@ngxs/store';
+
+import { Observable } from 'rxjs';
+import { filter, first } from 'rxjs/operators';
+
+import { CourseAdminControllerService } from '@swagger/api/courseAdminController.service';
+import { CourseDTO } from '@swagger/model/courseDTO';
+import { CourseDTORequestView } from '@swagger/model/courseDTORequestView';
+
+import { Course } from '@store/actions/course.actions';
+import { AppState } from '@store/app.state';
 
 @Component({
   selector: 'app-description',
@@ -7,38 +19,82 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./description.component.scss'],
 })
 export class DescriptionComponent implements OnInit {
-  constructor() {}
+  @Select(AppState.course)
+  public course$: Observable<CourseDTO>;
 
-  description =
-    'Lorem ipsum dolor sit amet,\n' +
-    '      consectetur adipiscing elit. Aenean consectetur, massa quis accumsan malesuada, est urna condimentum neque, in\n' +
-    '      fermentum nunc nulla ac tortor. Cras nec rhoncus magna. Suspendisse non fringilla urna. Phasellus auctor, ex ac\n' +
-    '      dignissim efficitur, diam ante varius nulla, eget auctor ex mauris a tellus. Pellentesque ut iaculis lectus.\n' +
-    '      Aliquam eu risus enim. Mauris quis metus a augue facilisis dignissim. Duis nibh ipsum, cursus vel dictum\n' +
-    '      dignissim, molestie vitae massa.';
-  rubric = '';
+  public descriptionControl: FormControl = new FormControl();
+  public skillsControls: FormControl[] = [];
+  public keywordsControls: FormControl[] = [];
 
-  skills = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  ];
-
-  descriptionControl = new FormControl();
+  constructor(private fb: FormBuilder, private courseAdminControllerService: CourseAdminControllerService, private store: Store) {}
 
   ngOnInit(): void {
-    this.descriptionControl.setValue('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+    this.setForm();
   }
 
-  onDescriptionChange(description) {
-    this.description = description;
+  private setArrayControls(setter: (controls: FormControl[]) => void, values: string[]): void {
+    const controls: FormControl[] = values.map((item: string) => {
+      const control: FormControl = new FormControl();
+      control.setValue(item);
+
+      control.valueChanges
+        .pipe(
+          filter(val => !val),
+          first(),
+        )
+        .subscribe(() => {
+          const controlIndex: number = controls.findIndex(controlRef => controlRef === control);
+          this.setArrayControls(
+            setter,
+            values.filter((_, index) => index !== controlIndex),
+          );
+        });
+
+      return control;
+    });
+
+    setter(controls);
   }
 
-  onRubricChange(rubric) {
-    this.rubric = rubric;
+  private setForm(): void {
+    this.course$
+      .pipe(
+        filter((course: CourseDTO) => !!course),
+        first(),
+      )
+      .subscribe((course: CourseDTO) => {
+        this.descriptionControl.setValue(course.description);
+        this.setArrayControls(controls => (this.skillsControls = controls), course.skills);
+        this.setArrayControls(controls => (this.keywordsControls = controls), course.keywords);
+      });
   }
 
-  onAddSkill() {
-    this.skills.push('');
+  private getControlsArrayValue(array: FormControl[]): string[] {
+    return array.map((control: FormControl) => control.value);
+  }
+
+  private addControlsArrayProp(setter: (controls: FormControl[]) => void, property: FormControl[], defaultValue: string = ''): void {
+    this.setArrayControls(setter, [...this.getControlsArrayValue(property), defaultValue]);
+  }
+
+  public onAddSkill(): void {
+    this.addControlsArrayProp(controls => (this.skillsControls = controls), this.skillsControls, 'Новое знание');
+  }
+
+  public onAddKeyword(): void {
+    this.addControlsArrayProp(controls => (this.keywordsControls = controls), this.keywordsControls, 'Новая рубрика');
+  }
+
+  public onSave(course: CourseDTO): void {
+    const handledCourse: CourseDTORequestView = {
+      ...course,
+      description: this.descriptionControl.value,
+      skills: this.getControlsArrayValue(this.skillsControls),
+      keywords: this.getControlsArrayValue(this.keywordsControls),
+    };
+
+    this.courseAdminControllerService.updateCourseUsingPUT(handledCourse, course.id).subscribe(() => {
+      this.store.dispatch(new Course.Set(handledCourse as CourseDTO));
+    });
   }
 }

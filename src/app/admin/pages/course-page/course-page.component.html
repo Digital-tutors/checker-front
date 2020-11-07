@@ -1,24 +1,31 @@
-<h1 class="headline-1">Программирование на C/C++</h1>
-<nav class="admin-navigation-bar">
-    <ul class="admin-navigation-bar__list">
-      <li class="admin-navigation-bar__list__item" routerLink="./"
-          routerLinkActive="admin-navigation-bar__list__item--active" [routerLinkActiveOptions]="{exact: true}">
-        <p class="text">Описание</p>
-      </li>
-      <li class="admin-navigation-bar__list__item" routerLink="./topics-tasks"
-          routerLinkActive="admin-navigation-bar__list__item--active" [routerLinkActiveOptions]="{exact: true}">
-        <p class="text">Темы и задания</p>
-      </li>
-      <li class="admin-navigation-bar__list__item" routerLink="./participants" routerLinkActive="admin-navigation-bar__list__item--active"
-          [routerLinkActiveOptions]="{exact: true}">
-        <p class="text">Участники</p>
-      </li>
-      <li class="admin-navigation-bar__list__item" routerLink="./settings" routerLinkActive="admin-navigation-bar__list__item--active"
-          [routerLinkActiveOptions]="{exact: true}">
-        <p class="text">Настройки</p>
-      </li>
-    </ul>
-  <!-- <app-button [monochrome]="true">Экспорт курса</app-button> -->
-</nav>
-<router-outlet></router-outlet>
+<section *ngIf="course$ | async as course">
 
+  <h1 class="headline-1">{{ course.title }}</h1>
+  <nav class="admin-navigation-bar">
+    <app-shadow-container>
+
+      <ul class="admin-navigation-bar__list">
+        <li class="admin-navigation-bar__list__item" routerLink="./"
+            routerLinkActive="admin-navigation-bar__list__item--active" [routerLinkActiveOptions]="{exact: true}">
+          <p class="text">Описание</p>
+        </li>
+        <li class="admin-navigation-bar__list__item" routerLink="./topics-tasks"
+            routerLinkActive="admin-navigation-bar__list__item--active" [routerLinkActiveOptions]="{exact: true}">
+          <p class="text">Темы и задания</p>
+        </li>
+        <li class="admin-navigation-bar__list__item" routerLink="./participants" routerLinkActive="admin-navigation-bar__list__item--active"
+            [routerLinkActiveOptions]="{exact: true}">
+          <p class="text">Участники</p>
+        </li>
+        <li class="admin-navigation-bar__list__item" routerLink="./settings" routerLinkActive="admin-navigation-bar__list__item--active"
+            [routerLinkActiveOptions]="{exact: true}">
+          <p class="text">Настройки</p>
+        </li>
+      </ul>
+
+    </app-shadow-container>
+    <!-- <app-button [monochrome]="true">Экспорт курса</app-button> -->
+  </nav>
+  <router-outlet></router-outlet>
+
+</section>
