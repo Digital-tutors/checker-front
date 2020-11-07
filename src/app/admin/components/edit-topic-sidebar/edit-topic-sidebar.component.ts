@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { Select, Store } from '@ngxs/store';
 
-import { Observable } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { filter, first, mergeMap } from 'rxjs/operators';
 
 import { TopicAdminControllerService } from '@swagger/api/topicAdminController.service';
 import { CourseDTO } from '@swagger/model/courseDTO';
@@ -29,6 +29,7 @@ export class EditTopicSidebarComponent implements OnInit {
   public tagsControls: FormControl[] = [];
 
   public levels: TopicDTO.LevelEnum[] = [TopicDTO.LevelEnum.EASY, TopicDTO.LevelEnum.MIDDLE, TopicDTO.LevelEnum.HARD];
+  public publishStatuses: TopicDTO.StatusEnum[] = [TopicDTO.StatusEnum.UNPUBLISHED, TopicDTO.StatusEnum.PUBLISHED];
 
   constructor(private fb: FormBuilder, private topicAdminControllerService: TopicAdminControllerService, private store: Store) {}
 
@@ -79,6 +80,7 @@ export class EditTopicSidebarComponent implements OnInit {
       this.form = this.fb.group({
         title: [topic.title],
         level: [topic.level],
+        status: [topic.status],
       });
     });
   }
@@ -94,12 +96,28 @@ export class EditTopicSidebarComponent implements OnInit {
           ...topic,
           title: this.form.value.title,
           level: this.form.value.level,
+          status: this.form.value.status,
           tags: this.getControlsArrayValue(this.tagsControls),
         };
 
-        this.topicAdminControllerService.updateTopicUsingPUT(handledTopic, handledTopic.id).subscribe(() => {
-          this.store.dispatch(new Topic.Set(handledTopic));
-        });
+        this.topicAdminControllerService
+          .updateTopicUsingPUT(handledTopic, handledTopic.id)
+          .pipe(
+            mergeMap(() => {
+              let changeStatus$: Observable<any> = EMPTY;
+
+              if (handledTopic.status === TopicDTO.StatusEnum.UNPUBLISHED) {
+                changeStatus$ = this.topicAdminControllerService.makeUnpublishedUsingPOST3(handledTopic.id);
+              } else if (handledTopic.status === TopicDTO.StatusEnum.PUBLISHED) {
+                changeStatus$ = this.topicAdminControllerService.makePublishedUsingPOST3(handledTopic.id);
+              }
+
+              return changeStatus$;
+            }),
+          )
+          .subscribe(() => {
+            this.store.dispatch(new Topic.Set(handledTopic));
+          });
       });
   }
 }
