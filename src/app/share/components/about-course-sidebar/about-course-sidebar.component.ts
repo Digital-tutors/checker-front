@@ -42,7 +42,6 @@ export class AboutCourseSidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.data$ = this.getCourseAndData();
-    this.startCourse();
   }
 
   private getCourseStats(id: number): Observable<CourseStatDTO> {
@@ -77,7 +76,7 @@ export class AboutCourseSidebarComponent implements OnInit {
     );
   }
 
-  private startCourse(): void {
+  public startCourse(): void {
     combineLatest([this.user$, this.course$])
       .pipe(
         filter(([user, course]) => !!user && !!course),

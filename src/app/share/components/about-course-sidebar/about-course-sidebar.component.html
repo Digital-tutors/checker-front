@@ -30,4 +30,7 @@
       <app-rating [value]="data.courseStats.countOfLessons" caption="Количество занятий"></app-rating>
     </app-two-box-grid>
   </div>
+  <footer class="footer" *ngIf="!data.course.subscribe">
+    <app-button (click)="startCourse()">Подписаться</app-button>
+  </footer>
 </main>
