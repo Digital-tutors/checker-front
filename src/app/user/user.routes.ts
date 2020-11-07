@@ -14,6 +14,11 @@ const routes: Routes = [
       //   loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule),
       // },
       {
+        path: 'my-courses',
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/my-courses/my-courses.module').then(m => m.MyCoursesModule),
+      },
+      {
         path: 'courses',
         pathMatch: 'full',
         loadChildren: () => import('./pages/courses/courses.module').then(m => m.CoursesModule),

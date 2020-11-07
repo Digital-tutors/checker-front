@@ -2,16 +2,21 @@
   <mat-drawer mode="side" opened class="drawer-content">
     <div class="drawer-content--inner">
       <div class="page-controls">
-        <button type="submit"
-                mat-flat-button
-                class="home-button"
-                color="primary"
-                routerLink="/user/topics">
+        <a
+          mat-button
+          class="home-button"
+          routerLinkActive="active"
+          routerLink="/user/my-courses">
           <mat-icon aria-hidden="false" aria-label="">home</mat-icon>
-        </button>
-        <mat-icon aria-hidden="false" aria-label="">radio_button_unchecked</mat-icon>
+        </a>
+        <a
+          mat-button
+          class="home-button"
+          routerLinkActive="active"
+          routerLink="/user/courses">
+          <mat-icon aria-hidden="false" aria-label="">list</mat-icon>
+        </a>
       </div>
-      <mat-icon aria-hidden="false" aria-label="">picture_in_picture_alt</mat-icon>
     </div>
   </mat-drawer>
   <mat-drawer-content>
