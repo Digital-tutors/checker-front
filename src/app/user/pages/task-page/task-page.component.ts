@@ -64,7 +64,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.routeParamsService.updateState(this.route.snapshot.params);
+    this.route.params.subscribe(params => this.routeParamsService.updateState(params));
+
     this.sidebarService.setSidebar(TopicSidebarComponent);
 
     this.setForm();

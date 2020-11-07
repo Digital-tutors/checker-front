@@ -59,7 +59,7 @@ export class TopicSidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getTopicAndLesson();
+    this.getData();
   }
 
   private topicFirstLesson(topic: TopicDTOShortResView, setter: (id: number) => void): OperatorFunction<any, LessonDTOShortResView[]> {
@@ -81,7 +81,7 @@ export class TopicSidebarComponent implements OnInit {
     };
   }
 
-  private getTopicAndLesson(): void {
+  private getData(): void {
     this.routeParamsService.routeParams$
       .pipe(
         filter((params: RouteParamMapInterface) => !!params.topicId),

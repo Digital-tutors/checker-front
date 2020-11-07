@@ -12,6 +12,9 @@
 
 }
 
+h1:focus {
+  outline: none;
+}
 
 .admin-navigation-bar {
   display: flex;
@@ -35,6 +38,7 @@
     &__item {
       position: relative;
       padding: $space;
+      cursor: pointer;
 
       a {
         text-decoration: none;

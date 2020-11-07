@@ -1,6 +1,6 @@
 <section *ngIf="course$ | async as course">
 
-  <h1 class="headline-1">{{ course.title }}</h1>
+  <h1 class="headline-1" contenteditable="true" [formControl]="courseTitleControl">{{ course.title }}</h1>
   <nav class="admin-navigation-bar">
     <app-shadow-container>
 

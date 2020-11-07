@@ -35,7 +35,7 @@ export class LessonPageComponent implements OnInit, OnDestroy, AfterContentInit 
 
   ngOnInit(): void {
     this.sidebarService.setSidebar(TopicSidebarComponent);
-    this.routeParamsService.updateState(this.activatedRoute.snapshot.params);
+    this.activatedRoute.params.subscribe(params => this.routeParamsService.updateState(params));
   }
 
   ngAfterContentInit() {

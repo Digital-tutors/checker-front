@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Select, Store } from '@ngxs/store';
 
 import { Observable, Subject } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { concatMap, debounceTime, filter, first, mergeMap, tap } from 'rxjs/operators';
 
+import { CourseAdminControllerService } from '@swagger/api/courseAdminController.service';
 import { CourseControllerService } from '@swagger/api/courseController.service';
 import { LessonControllerService } from '@swagger/api/lessonController.service';
 import { TopicControllerService } from '@swagger/api/topicController.service';
@@ -15,6 +17,7 @@ import { Course } from '@store/actions/course.actions';
 import { AppState } from '@store/app.state';
 
 import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
+import { RouteParamsService } from '@share/services/route-params/route-params.service';
 import { SidebarService } from '@share/services/sidebar.service';
 
 @Component({
@@ -26,6 +29,8 @@ export class CoursePageComponent implements OnInit, OnDestroy {
   @Select(AppState.course)
   public course$: Observable<CourseDTO>;
 
+  public courseTitleControl: FormControl = new FormControl();
+
   private ngOnDestroy$: Subject<void> = new Subject();
 
   constructor(
@@ -34,11 +39,14 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     private topicControllerService: TopicControllerService,
     private lessonControllerService: LessonControllerService,
     private courseControllerService: CourseControllerService,
+    private courseAdminControllerService: CourseAdminControllerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private routeParamsService: RouteParamsService,
   ) {}
 
   ngOnInit(): void {
+    this.routeParamsService.updateState(this.activatedRoute.snapshot.params);
     this.setCourse();
     this.setSidebar();
   }
@@ -47,11 +55,48 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     this.ngOnDestroy$.next();
   }
 
+  private updateCourseTitle(title: string): Observable<any> {
+    return this.course$.pipe(
+      filter((course: CourseDTO) => !!course),
+      first(),
+      tap((course: CourseDTO) => {
+        this.store.dispatch(
+          new Course.Set({
+            ...course,
+            title,
+          }),
+        );
+      }),
+      mergeMap((course: CourseDTO) =>
+        this.courseAdminControllerService.updateCourseUsingPUT(
+          {
+            ...course,
+            title,
+          },
+          course.id,
+        ),
+      ),
+    );
+  }
+
+  private setTitleFormControl(course: CourseDTO): void {
+    this.courseTitleControl.setValue(course.title);
+    this.courseTitleControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        concatMap((title: string) => this.updateCourseTitle(title || 'Название курса')),
+      )
+      .subscribe();
+  }
+
   private setCourse(): void {
     this.courseControllerService
       .getCourseByIdUsingGET(this.activatedRoute.snapshot.params.courseId)
-      .pipe(mergeMap((course: CourseDTO) => this.store.dispatch(new Course.Set(course))))
-      .subscribe();
+      .pipe()
+      .subscribe((course: CourseDTO) => {
+        this.setTitleFormControl(course);
+        this.store.dispatch(new Course.Set(course));
+      });
   }
 
   private setSidebar(): void {
