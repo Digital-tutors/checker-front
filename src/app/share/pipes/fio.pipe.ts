@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'fio',
 })
 export class FioPipe implements PipeTransform {
-  transform(value: { firstName?: string; lastName?: string; middleName?: string }): string {
+  transform(value: { firstName?: string; lastName?: string; middleName?: string, email?: string }): string {
     let name = value.lastName;
 
     if (value.firstName) {
@@ -13,6 +13,10 @@ export class FioPipe implements PipeTransform {
 
     if (value.middleName) {
       name += ` ${value.middleName}.`;
+    }
+
+    if (name === null) {
+      name = value.email;
     }
 
     return name;
