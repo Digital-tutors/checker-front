@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Select } from '@ngxs/store';
 
 import { combineLatest, Observable } from 'rxjs';
-import { filter, map, mergeMap, takeWhile } from 'rxjs/operators';
+import { filter, map, mergeMap, takeWhile, tap } from 'rxjs/operators';
 
 import { CourseControllerService } from '@swagger/api/courseController.service';
 import { CourseInteractionControllerService } from '@swagger/api/courseInteractionController.service';
@@ -32,6 +32,8 @@ export class AboutCourseSidebarComponent implements OnInit {
   public user$: Observable<UserDTO>;
 
   public data$: Observable<CourseAndDataInterface>;
+
+  public hideSubscribeButton: boolean;
 
   constructor(
     private router: Router,
@@ -81,6 +83,7 @@ export class AboutCourseSidebarComponent implements OnInit {
       .pipe(
         filter(([user, course]) => !!user && !!course),
         takeWhile(([user, course]) => user.id === course.author.id && !course.subscribe),
+        tap(() => (this.hideSubscribeButton = true)),
         mergeMap(([user, course]) =>
           this.courseInteractionController.saveCourseInteractionUsingPOST({
             interactionEntity: {
