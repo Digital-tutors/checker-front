@@ -1,0 +1,29 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+mat-chip {
+  border-radius: 5px;
+}
+
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: $space;
+  height: 100vh;
+  box-sizing: border-box;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  form {
+    margin-bottom: auto;
+  }
+
+  footer {
+    padding-top: $space;
+    display: flex;
+    justify-content: space-between;
+  }
+}
