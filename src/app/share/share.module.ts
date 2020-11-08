@@ -18,6 +18,7 @@ import { FioPipe } from './pipes/fio.pipe';
 import { LevelPipe } from './pipes/level.pipe';
 
 import { ContenteditableModule } from '@ng-stack/contenteditable';
+import {WysiwygEditorModule} from '@share/components/wysiwyg-editor/wysiwyg-editor.module';
 
 const COMPONENTS: any[] = [
   ImageCardComponent,
@@ -30,13 +31,17 @@ const COMPONENTS: any[] = [
   AboutCourseSidebarComponent,
 ];
 
+const MODULES: any[] = [
+  WysiwygEditorModule
+];
+
 const PIPES: any[] = [FioPipe, LevelPipe, StatusPipe];
 
 const MATERIAL_MODULES: any[] = [MatIconModule];
 
 @NgModule({
   declarations: [...COMPONENTS, ...PIPES],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, ContenteditableModule, ...MATERIAL_MODULES],
-  exports: [CommonModule, ReactiveFormsModule, FormsModule, ContenteditableModule, ...COMPONENTS, ...MATERIAL_MODULES, ...PIPES],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, ContenteditableModule, ...MODULES, ...MATERIAL_MODULES],
+  exports: [CommonModule, ReactiveFormsModule, FormsModule, ContenteditableModule, ...MODULES, ...MATERIAL_MODULES, ...COMPONENTS,  ...PIPES],
 })
 export class ShareModule {}

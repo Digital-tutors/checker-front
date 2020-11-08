@@ -6,7 +6,7 @@ import { SidebarService } from '../../../share/services/sidebar.service';
 import { TopicSidebarComponent } from '../../components/topic-sidebar/topic-sidebar.component';
 
 @Component({
-  selector: 'app-user-profile',
+  selector: 'app-user-test-page',
   templateUrl: './test-page.component.html',
   styleUrls: ['./test-page.component.scss'],
 })

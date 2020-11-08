@@ -3,39 +3,46 @@
     Редактирования занятия
   </header>
 
-  <form [formGroup]="form">
+  <form *ngIf="form" [formGroup]="form">
     <mat-form-field >
       <mat-label>Название занятия</mat-label>
-      <input matInput formControlName="name">
+      <input matInput formControlName="title">
     </mat-form-field>
 
-    <mat-form-field class="select">
+    <mat-form-field>
       <mat-label>Уровень сложности</mat-label>
       <mat-select formControlName="level">
-        <mat-option value="option">Лёгкий</mat-option>
-        <mat-option value="option">Средний</mat-option>
-        <mat-option value="option">Сложный</mat-option>
+        <mat-option *ngFor="let level of levels" [value]="level">
+          {{ level | levelName }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div class="levels">
-      <caption class="title">Уровни подачи материала</caption>
-      <mat-slide-toggle labelPosition="before" class="text">Уровень 1</mat-slide-toggle>
-      <mat-slide-toggle labelPosition="before" class="text">Уровень 2</mat-slide-toggle>
-      <mat-slide-toggle labelPosition="before" class="text">Уровень 3</mat-slide-toggle>
-    </div>
+    <mat-form-field>
+      <mat-label>Статус</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of publishStatuses" [value]="status">
+          {{ status | statusName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+<!--    <div class="levels">-->
+<!--      <caption class="title">Уровни подачи материала</caption>-->
+<!--      <mat-slide-toggle labelPosition="before" class="text">Уровень 1</mat-slide-toggle>-->
+<!--      <mat-slide-toggle labelPosition="before" class="text">Уровень 2</mat-slide-toggle>-->
+<!--      <mat-slide-toggle labelPosition="before" class="text">Уровень 3</mat-slide-toggle>-->
+<!--    </div>-->
   </form>
 
-  <mat-divider></mat-divider>
+<!--  <mat-divider></mat-divider>-->
 
-  <caption class="caption">
-    Уровни подачи материала необходимы для отображения информации в зависимости от знаний обучающегося
-  </caption>
-
-  <mat-divider></mat-divider>
+<!--  <caption class="caption">-->
+<!--    Уровни подачи материала необходимы для отображения информации в зависимости от знаний обучающегося-->
+<!--  </caption>-->
 
   <footer>
-    <button mat-stroked-button color="warn">Назад</button>
-    <button mat-stroked-button color="primary">Сохранить</button>
+<!--    <button mat-stroked-button color="warn">Назад</button>-->
+    <app-button (click)="onSubmit()">Сохранить</app-button>
   </footer>
 </section>

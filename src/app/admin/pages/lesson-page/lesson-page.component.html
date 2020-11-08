@@ -4,39 +4,21 @@
 </header>
 
 <section>
-  <mat-accordion class="headers-align">
-    <mat-expansion-panel class="text">
-      <mat-expansion-panel-header collapsedHeight="70px">
-        <mat-panel-title class="title">
-          Текст занятия. Уровень 1
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <mat-divider></mat-divider>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisl a tellus tristique consectetur in at metus. Etiam commodo ipsum ut ligula pulvinar, eu varius est dictum. Suspendisse luctus lacus vitae eros ultricies vestibulum. Pellentesque laoreet malesuada mi, at dapibus lorem aliquam nec. Integer efficitur massa libero, sed vestibulum neque dapibus in. Curabitur at varius lectus. Nam tortor quam, tempor nec nunc id, laoreet fringilla odio. Donec volutpat in.       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisl a tellus tristique consectetur in at metus. Etiam commodo ipsum ut ligula pulvinar, eu varius est dictum. Suspendisse luctus lacus vitae eros ultricies vestibulum. Pellentesque laoreet malesuada mi, at dapibus lorem aliquam nec. Integer efficitur massa libero, sed vestibulum neque dapibus in. Curabitur at varius lectus. Nam tortor quam, tempor nec nunc id, laoreet fringilla odio. Donec volutpat in.       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisl a tellus tristique consectetur in at metus. Etiam commodo ipsum ut ligula pulvinar, eu varius est dictum. Suspendisse luctus lacus vitae eros ultricies vestibulum. Pellentesque laoreet malesuada mi, at dapibus lorem aliquam nec. Integer efficitur massa libero, sed vestibulum neque dapibus in. Curabitur at varius lectus. Nam tortor quam, tempor nec nunc id, laoreet fringilla odio. Donec volutpat in.       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisl a tellus tristique consectetur in at metus. Etiam commodo ipsum ut ligula pulvinar, eu varius est dictum. Suspendisse luctus lacus vitae eros ultricies vestibulum. Pellentesque laoreet malesuada mi, at dapibus lorem aliquam nec. Integer efficitur massa libero, sed vestibulum neque dapibus in. Curabitur at varius lectus. Nam tortor quam, tempor nec nunc id, laoreet fringilla odio. Donec volutpat in.
-    </mat-expansion-panel>
+  <app-shadow-container *ngIf="lesson$ | async as lesson">
+    <h3 class="title">Текст занятия</h3>
+    <app-wysiwyg-editor id="level1"
+                        [initialData]="lesson.htmlBody"
+                        (valueChange)="handleHtmlChange($event, lesson)"></app-wysiwyg-editor>
+  </app-shadow-container>
 
-    <mat-expansion-panel #disabledPanel disabled>
-      <mat-expansion-panel-header collapsedHeight="70px">
-        <mat-panel-title class="title">
-          Текст занятия. Уровень 2
-        </mat-panel-title>
-        <mat-panel-description *ngIf="disabledPanel.disabled">
-          <mat-icon>lock</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisl a tellus tristique consectetur in at metus. Etiam commodo ipsum ut ligula pulvinar, eu varius est dictum. Suspendisse luctus lacus vitae eros ultricies vestibulum. Pellentesque laoreet malesuada mi, at dapibus lorem aliquam nec. Integer efficitur massa libero, sed vestibulum neque dapibus in. Curabitur at varius lectus. Nam tortor quam, tempor nec nunc id, laoreet fringilla odio. Donec volutpat in.
-    </mat-expansion-panel>
-
-    <mat-expansion-panel #disabledPanel disabled>
-      <mat-expansion-panel-header collapsedHeight="70px">
-        <mat-panel-title class="title">
-          Текст занятия. Уровень 2
-        </mat-panel-title>
-        <mat-panel-description *ngIf="disabledPanel.disabled">
-          <mat-icon>lock</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisl a tellus tristique consectetur in at metus. Etiam commodo ipsum ut ligula pulvinar, eu varius est dictum. Suspendisse luctus lacus vitae eros ultricies vestibulum. Pellentesque laoreet malesuada mi, at dapibus lorem aliquam nec. Integer efficitur massa libero, sed vestibulum neque dapibus in. Curabitur at varius lectus. Nam tortor quam, tempor nec nunc id, laoreet fringilla odio. Donec volutpat in.
-    </mat-expansion-panel>
-  </mat-accordion>
+<!--  <mat-accordion class="headers-align">-->
+<!--    <mat-expansion-panel class="text" >-->
+<!--      <mat-expansion-panel-header collapsedHeight="70px">-->
+<!--        <mat-panel-title class="title">-->
+<!--          Текст занятия-->
+<!--        </mat-panel-title>-->
+<!--      </mat-expansion-panel-header>-->
+<!--      <mat-divider></mat-divider>-->
+<!--    </mat-expansion-panel>-->
+<!--  </mat-accordion>-->
 </section>

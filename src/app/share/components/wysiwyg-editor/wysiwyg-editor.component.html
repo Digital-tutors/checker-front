@@ -1,0 +1,9 @@
+<ckeditor #ckeditor
+          [editor]="editor"
+          [config]="config"
+          [disabled]="readOnly"
+          (change)="onChange($event)"
+          (ready)="onReady($event)"
+          [class.readonly]="readOnly">
+</ckeditor>
+<div [id]="id"></div>

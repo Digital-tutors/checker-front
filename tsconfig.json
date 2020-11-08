@@ -10,6 +10,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "paths": {

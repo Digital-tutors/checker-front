@@ -18,17 +18,6 @@
     "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\"",
     "postinstall": "ngcc"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -46,6 +35,7 @@
     "@angular/platform-browser": "~9.0.0",
     "@angular/platform-browser-dynamic": "~9.0.0",
     "@angular/router": "~9.0.0",
+    "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@ng-stack/contenteditable": "^1.1.1",
     "@ngxs/store": "^3.6.2",
     "ngx-monaco-editor": "^9.0.0",

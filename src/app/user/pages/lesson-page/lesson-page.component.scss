@@ -1,6 +1,13 @@
 @import "../../../../colors";
 @import "../../../../vars";
 
+:host ::ng-deep {
+  pre {
+    background-color: $block-dark-gray !important;
+    padding: $space;
+  }
+}
+
 .button, button {
   font-weight: 600 !important;
   text-transform: uppercase !important;
