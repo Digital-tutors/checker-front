@@ -9,19 +9,22 @@ import { CourseDTO } from '@swagger/model/courseDTO';
 
 import { SidebarService } from '../../../share/services/sidebar.service';
 
+import { coursesMock } from './courses.mock';
+import {CourseAdminControllerService} from '@swagger/api/courseAdminController.service';
+
 @Component({
   selector: 'app-user-profile',
-  templateUrl: './my-courses.component.html',
-  styleUrls: ['./my-courses.component.scss'],
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.scss'],
 })
-export class MyCoursesComponent implements OnInit, OnDestroy {
+export class CoursesComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
   public courses$: Observable<CourseDTO[]>;
 
   constructor(
     private router: Router,
-    private courseControllerService: CourseControllerService,
+    private courseAdminControllerService: CourseAdminControllerService,
     private activatedRoute: ActivatedRoute,
     private sidebarService: SidebarService,
   ) {}
@@ -36,10 +39,10 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
   }
 
   private setCourses(): void {
-    this.courses$ = this.courseControllerService.getSignedUpCoursesUsingGET(0).pipe(map(data => data.content));
+    this.courses$ = this.courseAdminControllerService.getMyOwnCoursesUsingGET(0).pipe(map(data => data.content));
   }
 
   public goToCourse(courseId: number): void {
-    this.router.navigateByUrl(`/user/courses/${courseId}`);
+    this.router.navigate([courseId], { relativeTo: this.activatedRoute });
   }
 }

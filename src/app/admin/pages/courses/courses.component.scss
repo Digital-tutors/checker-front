@@ -1,0 +1,28 @@
+@import "../../../../vars";
+
+:host ::ng-deep {
+  app-image-card {
+    .caption {
+      font-size: 12px !important;
+    }
+    .text {
+      font-size: 18px !important;
+    }
+  }
+}
+
+.courses {
+  display: flex;
+  flex-wrap: wrap;
+
+  app-image-card {
+    display: block;
+    margin-right: $space;
+    margin-bottom: $space;
+    flex-grow: 1;
+  }
+}
+
+.headline-1 {
+  margin-top: 0;
+}

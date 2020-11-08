@@ -1,0 +1,10 @@
+<h1 class="headline-1">Мои созданные курсы</h1>
+
+<div class="courses">
+
+  <app-image-card *ngFor="let course of (courses$ | async)"
+                  [sup]="course.subtitle"
+                  [title]="course.title"
+                  (click)="goToCourse(course.id)"></app-image-card>
+
+</div>

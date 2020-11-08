@@ -17,9 +17,10 @@
           <mat-icon aria-hidden="false" aria-label="">list</mat-icon>
         </a>
       </div>
-      <mat-icon aria-hidden="false" aria-label="" (click)="handleLogout()" routerLink="/auth/login"
-                class="logout-button">clear
-      </mat-icon>
+      <div class="logout-button">
+        <mat-icon mat-button aria-hidden="false" aria-label="" (click)="handleLogout()" routerLink="/auth/login">login
+        </mat-icon>
+      </div>
     </div>
   </mat-drawer>
   <mat-drawer-content>

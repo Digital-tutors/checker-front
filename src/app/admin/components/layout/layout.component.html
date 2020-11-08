@@ -2,21 +2,18 @@
   <mat-drawer mode="side" opened class="drawer-content">
     <div class="drawer-content--inner">
       <div class="page-controls">
-        <button type="submit"
-                mat-flat-button
-                class="home-button"
-                color="primary"
-                routerLink="/user/topics">
+        <a
+          mat-button
+          class="home-button"
+          routerLinkActive="active"
+          routerLink="/admin/courses">
           <mat-icon aria-hidden="false" aria-label="">home</mat-icon>
-        </button>
-        <mat-icon aria-hidden="false" aria-label="">radio_button_unchecked</mat-icon>
+        </a>
       </div>
-      <div class="page-controls">
-        <mat-icon aria-hidden="false" aria-label="" class="pictureInPicture-button">picture_in_picture_alt</mat-icon>
+      <div class="logout-button">
+        <mat-icon mat-button aria-hidden="false" aria-label="" (click)="handleLogout()" routerLink="/auth/login">login
+        </mat-icon>
       </div>
-      <mat-icon aria-hidden="false" aria-label="" (click)="handleLogout()" routerLink="/auth/login"
-                class="logout-button">clear
-      </mat-icon>
     </div>
   </mat-drawer>
   <mat-drawer-content>

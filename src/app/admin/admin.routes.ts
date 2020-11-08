@@ -10,6 +10,10 @@ const routes: Routes = [
     component: WrapperComponent,
     children: [
       {
+        path: 'courses',
+        loadChildren: () => import('./pages/courses/courses.module').then(m => m.CoursesModule),
+      },
+      {
         path: 'courses/:courseId',
         loadChildren: () => import('./pages/course-page/course-page.module').then(m => m.CoursePageModule),
       },
