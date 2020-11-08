@@ -19,6 +19,10 @@ export class LayoutComponent implements AfterViewInit {
     this.handleSidebarChange();
   }
 
+  handleLogout(): void {
+    localStorage.clear();
+  }
+
   private handleSidebarChange(): void {
     this.sidebarService.sidebar$.pipe(delay(0)).subscribe(sidebar => {
       if (sidebar) {

@@ -17,6 +17,9 @@
           <mat-icon aria-hidden="false" aria-label="">list</mat-icon>
         </a>
       </div>
+      <mat-icon aria-hidden="false" aria-label="" (click)="handleLogout()" routerLink="/auth/login"
+                class="logout-button">clear
+      </mat-icon>
     </div>
   </mat-drawer>
   <mat-drawer-content>
@@ -24,7 +27,7 @@
       <main class="main">
         <router-outlet></router-outlet>
       </main>
-      <aside class="sibebar-content">
+      <aside class="sidebar-content">
         <ng-template #sidebar></ng-template>
       </aside>
     </div>

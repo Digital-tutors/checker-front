@@ -11,7 +11,12 @@
         </button>
         <mat-icon aria-hidden="false" aria-label="">radio_button_unchecked</mat-icon>
       </div>
-      <mat-icon aria-hidden="false" aria-label="">picture_in_picture_alt</mat-icon>
+      <div class="page-controls">
+        <mat-icon aria-hidden="false" aria-label="" class="pictureInPicture-button">picture_in_picture_alt</mat-icon>
+      </div>
+      <mat-icon aria-hidden="false" aria-label="" (click)="handleLogout()" routerLink="/auth/login"
+                class="logout-button">clear
+      </mat-icon>
     </div>
   </mat-drawer>
   <mat-drawer-content>
@@ -19,7 +24,7 @@
       <main class="main">
         <router-outlet></router-outlet>
       </main>
-      <aside class="sibebar-content">
+      <aside class="sidebar-content">
         <ng-template #sidebar></ng-template>
       </aside>
     </div>

@@ -1,9 +1,13 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
+
+import { Observable } from 'rxjs';
+import { filter, first, map, startWith } from 'rxjs/operators';
 
 import { SidebarService } from '@share/services/sidebar.service';
 
@@ -25,15 +29,29 @@ export class TestPageComponent implements OnInit {
   visible = true;
   selectable = true;
   removable = true;
-  addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruits: Fruit[] = [];
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<string[]>;
+  fruits: string[] = [];
+  allFruits: string[] = ['информатика', 'тесты', 'программирование', 'C++', 'ООП'];
+  items: string[] = ['1', '2', '3'];
+  inputValue = 'Clear me';
+  public tagsControls: FormControl[] = [];
+
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(private sidebarService: SidebarService, private dialog: MatDialog, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.sidebarService.setSidebar(TestPageSidebarComponent);
     this.setForm();
+
+    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+      // tslint:disable-next-line: deprecation
+      startWith(null),
+      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+    );
   }
 
   public openDialog(): void {
@@ -59,20 +77,72 @@ export class TestPageComponent implements OnInit {
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.fruits.push({ name: value.trim() });
+      this.fruits.push(value.trim());
     }
 
     // Reset the input value
     if (input) {
+      console.log(input.value);
       input.value = '';
     }
+
+    this.fruitCtrl.setValue(null);
   }
 
-  remove(fruit: Fruit): void {
+  remove(fruit: string): void {
     const index = this.fruits.indexOf(fruit);
 
     if (index >= 0) {
       this.fruits.splice(index, 1);
     }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    console.log(event.option.viewValue, this.fruits);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
+
+  private setArrayControls(setter: (controls: FormControl[]) => void, values: string[]): void {
+    const controls: FormControl[] = values.map((item: string) => {
+      const control: FormControl = new FormControl();
+      control.setValue(item);
+
+      control.valueChanges
+        .pipe(
+          filter(val => !val),
+          first(),
+        )
+        .subscribe(() => {
+          const controlIndex: number = controls.findIndex(controlRef => controlRef === control);
+          this.setArrayControls(
+            setter,
+            values.filter((_, index) => index !== controlIndex),
+          );
+        });
+
+      return control;
+    });
+
+    setter(controls);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private addControlsArrayProp(setter: (controls: FormControl[]) => void, property: FormControl[], defaultValue: string = ''): void {
+    this.setArrayControls(setter, [...this.getControlsArrayValue(property), defaultValue]);
+  }
+
+  private getControlsArrayValue(array: FormControl[]): string[] {
+    return array.map((control: FormControl) => control.value);
+  }
+
+  public onAddTag(): void {
+    this.addControlsArrayProp(controls => (this.tagsControls = controls), this.tagsControls, 'Введите вариант ответа');
   }
 }

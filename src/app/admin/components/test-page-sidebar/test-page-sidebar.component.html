@@ -1,1 +1,54 @@
-<p>test-page-sidebar works!</p>
+<section class="sidebar">
+  <span class="title">Редактирование тестов</span>
+  <form [formGroup]="form">
+    <mat-form-field >
+      <mat-label>Название теста</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="select">
+      <mat-label>Уровень сложности</mat-label>
+      <mat-select formControlName="level">
+        <mat-option value="option">Лёгкий</mat-option>
+        <mat-option value="option">Средний</mat-option>
+        <mat-option value="option">Сложный</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-chip-list">
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip
+          *ngFor="let fruit of fruits"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(fruit)"
+          >
+
+          {{fruit}}
+          <mat-icon matChipRemove *ngIf="removable">close</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="Темы или занятия"
+          #fruitInput
+          [formControl]="fruitCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+          <b>Тема:</b>
+          {{fruit}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <footer class="footer">
+    <app-button [alert]="true">Назад</app-button>
+    <app-button >Сохранить</app-button>
+  </footer>
+</section>

@@ -8,6 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 
 import { ShareModule } from '@share/share.module';
@@ -23,13 +24,14 @@ import { RoutingModule } from './test-page.routes';
     ShareModule,
     RoutingModule,
     MatExpansionModule,
-    MatDividerModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatListModule,
+    MatDividerModule,
   ],
 })
 export class TestPageModule {}

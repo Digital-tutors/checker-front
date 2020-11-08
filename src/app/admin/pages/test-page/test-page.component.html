@@ -26,20 +26,69 @@
 
           <mat-form-field class="example-chip-list">
             <mat-chip-list #chipList aria-label="Fruit selection">
-              <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
-                       [removable]="removable" (removed)="remove(fruit)">
-                {{fruit.name}}
+              <mat-chip
+                *ngFor="let fruit of fruits"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(fruit)"
+                >
+
+                {{fruit}}
                 <mat-icon matChipRemove *ngIf="removable">close</mat-icon>
               </mat-chip>
-              <input placeholder="New fruit..."
-                     [matChipInputFor]="chipList"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="add($event)">
+              <input
+                placeholder="Темы или занятия"
+                #fruitInput
+                [formControl]="fruitCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                <b>Тема:</b>
+                {{fruit}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </form>
 
+        <!-- <mat-list role="list" *ngFor="let item of items">
+          <mat-list-item role="listitem">
+            <mat-form-field class="example-form-field">
+              <mat-label>Clearable input</mat-label>
+              <input matInput type="text" [(ngModel)]="inputValue">
+              <button mat-button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear" (click)="inputValue=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-list-item>
+        </mat-list> -->
+
+        <div class="rubrics">
+          <p class="caption">Варианты ответов</p>
+          <ul class="rubrics__list">
+            <li class="rubrics__list__item text"
+                contenteditable="true"
+                propValueAccessor="innerHTML">
+                Правильный ответ
+            </li>
+            <li *ngFor="let tagControl of tagsControls"
+                class="rubrics__list__item text"
+                contenteditable="true"
+                propValueAccessor="innerHTML"
+                [formControl]="tagControl">
+                </li>
+          </ul>
+          <app-button [bordered]="true" (click)="onAddTag()">Добавить вариант</app-button>
+        </div>
+        <mat-divider></mat-divider>
+
+        <footer class="footer">
+          <app-button [alert]="true">Удалить вопрос</app-button>
+          <app-button >Сохранить</app-button>
+        </footer>
       </app-shadow-container>
     </div>
 
@@ -76,4 +125,6 @@
       </div>
     </div>
   </section>
+
+
 </section>
