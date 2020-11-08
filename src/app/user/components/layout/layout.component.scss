@@ -61,7 +61,7 @@ mat-drawer-container {
   overflow-x: hidden;
 }
 
-.sibebar-content {
+.sidebar-content {
   display: flex;
   flex-direction: column;
   width: 320px;
@@ -73,4 +73,8 @@ mat-drawer-container {
   &:empty {
     display: none;
   }
+}
+
+.logout-button {
+  cursor: pointer;
 }

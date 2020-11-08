@@ -24,6 +24,16 @@ mat-drawer-container {
       padding: 0 0 0 2px;
     }
 
+    .pictureInPicture-button {
+      margin-bottom: 25px;
+      line-height: 40px;
+      padding: 0 0 0 2px;
+    }
+
+    .logout-button {
+      cursor: pointer;
+    }
+
     .page-controls {
       display: flex;
       flex-direction: column;
@@ -55,7 +65,7 @@ mat-drawer-container {
   overflow-x: hidden;
 }
 
-.sibebar-content {
+.sidebar-content {
   display: flex;
   flex-direction: column;
   width: 320px;
