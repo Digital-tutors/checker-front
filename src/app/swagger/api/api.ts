@@ -42,27 +42,4 @@ export * from './userAdminController.service';
 import { UserAdminControllerService } from './userAdminController.service';
 export * from './userController.service';
 import { UserControllerService } from './userController.service';
-export const APIS = [
-  AuthControllerService,
-  CourseAdminControllerService,
-  CourseControllerService,
-  CourseInteractionControllerService,
-  CourseRatingControllerService,
-  LessonAdminControllerService,
-  LessonControllerService,
-  LessonInteractionControllerService,
-  LessonRatingControllerService,
-  RoleRequestAdminControllerService,
-  RoleRequestControllerService,
-  TaskAdminControllerService,
-  TaskControllerService,
-  TaskInteractionControllerService,
-  TaskRatingControllerService,
-  TaskResultControllerService,
-  TopicAdminControllerService,
-  TopicControllerService,
-  TopicInteractionControllerService,
-  TopicRatingControllerService,
-  UserAdminControllerService,
-  UserControllerService,
-];
+export const APIS = [AuthControllerService, CourseAdminControllerService, CourseControllerService, CourseInteractionControllerService, CourseRatingControllerService, LessonAdminControllerService, LessonControllerService, LessonInteractionControllerService, LessonRatingControllerService, RoleRequestAdminControllerService, RoleRequestControllerService, TaskAdminControllerService, TaskControllerService, TaskInteractionControllerService, TaskRatingControllerService, TaskResultControllerService, TopicAdminControllerService, TopicControllerService, TopicInteractionControllerService, TopicRatingControllerService, UserAdminControllerService, UserControllerService];
