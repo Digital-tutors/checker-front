@@ -29,12 +29,14 @@ app-shadow-container {
         flex-grow: 3;
         max-width: 50%;
         flex-basis: 1;
+        padding-left: $space;
       }
 
       .difficulty {
         flex-grow: 2;
         flex-basis: 0;
         max-width: 30%;
+        padding-left: $space;
       }
     }
 
