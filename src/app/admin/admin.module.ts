@@ -24,6 +24,8 @@ import { TestPageSidebarComponent } from './components/test-page-sidebar/test-pa
 import { TopicSidebarComponent } from './components/topic-sidebar/topic-sidebar.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { RoutingModule } from './admin.routes';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { RoutingModule } from './admin.routes';
     MatDialogModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatSnackBarModule
   ],
   exports: [],
   entryComponents: [AlertWindowComponent],

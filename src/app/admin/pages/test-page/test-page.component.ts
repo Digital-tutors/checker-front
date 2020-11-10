@@ -13,6 +13,7 @@ import { SidebarService } from '@share/services/sidebar.service';
 
 import { AlertWindowTestComponent } from 'app/admin/components/alert-window-test/alert-window-test.component';
 import { TestPageSidebarComponent } from 'app/admin/components/test-page-sidebar/test-page-sidebar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface Fruit {
   name: string;
@@ -41,7 +42,7 @@ export class TestPageComponent implements OnInit {
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-  constructor(private sidebarService: SidebarService, private dialog: MatDialog, private fb: FormBuilder) {}
+  constructor(private sidebarService: SidebarService, private dialog: MatDialog, private fb: FormBuilder, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.sidebarService.setSidebar(TestPageSidebarComponent);
@@ -144,5 +145,11 @@ export class TestPageComponent implements OnInit {
 
   public onAddTag(): void {
     this.addControlsArrayProp(controls => (this.tagsControls = controls), this.tagsControls, 'Введите вариант ответа');
+  }
+
+  public openSnackBar() {
+    this._snackBar.open('Данные успешно сохранены', 'OK', {
+      duration: 2000,
+    });
   }
 }

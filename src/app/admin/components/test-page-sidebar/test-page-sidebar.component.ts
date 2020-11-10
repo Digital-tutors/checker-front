@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -31,7 +32,7 @@ export class TestPageSidebarComponent implements OnInit {
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -90,5 +91,11 @@ export class TestPageSidebarComponent implements OnInit {
     if (index >= 0) {
       this.fruits.splice(index, 1);
     }
+  }
+
+  public openSnackBar() {
+    this._snackBar.open('Данные успешно сохранены', 'OK', {
+      duration: 2000,
+    });
   }
 }

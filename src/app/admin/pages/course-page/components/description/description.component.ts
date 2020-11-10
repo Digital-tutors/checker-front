@@ -12,6 +12,7 @@ import { CourseDTORequestView } from '@swagger/model/courseDTORequestView';
 
 import { Course } from '@store/actions/course.actions';
 import { AppState } from '@store/app.state';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-description',
@@ -26,7 +27,7 @@ export class DescriptionComponent implements OnInit {
   public skillsControls: FormControl[] = [];
   public keywordsControls: FormControl[] = [];
 
-  constructor(private fb: FormBuilder, private courseAdminControllerService: CourseAdminControllerService, private store: Store) {}
+  constructor(private fb: FormBuilder, private courseAdminControllerService: CourseAdminControllerService, private store: Store, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -95,6 +96,14 @@ export class DescriptionComponent implements OnInit {
 
     this.courseAdminControllerService.updateCourseUsingPUT(handledCourse, course.id).subscribe(() => {
       this.store.dispatch(new Course.Set(handledCourse as CourseDTO));
+    });
+
+    this.openSnackBar();
+  }
+
+  public openSnackBar() {
+    this._snackBar.open('Данные успешно сохранены', 'OK', {
+      duration: 2000,
     });
   }
 }

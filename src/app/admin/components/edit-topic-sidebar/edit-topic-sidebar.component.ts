@@ -15,6 +15,7 @@ import { AppState } from '@store/app.state';
 
 import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
 import { SidebarService } from '@share/services/sidebar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-topic-sidebar',
@@ -31,7 +32,7 @@ export class EditTopicSidebarComponent implements OnInit {
   public levels: TopicDTO.LevelEnum[] = [TopicDTO.LevelEnum.EASY, TopicDTO.LevelEnum.MIDDLE, TopicDTO.LevelEnum.HARD];
   public publishStatuses: TopicDTO.StatusEnum[] = [TopicDTO.StatusEnum.UNPUBLISHED, TopicDTO.StatusEnum.PUBLISHED];
 
-  constructor(private fb: FormBuilder, private topicAdminControllerService: TopicAdminControllerService, private store: Store) {}
+  constructor(private fb: FormBuilder, private topicAdminControllerService: TopicAdminControllerService, private store: Store, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -119,5 +120,12 @@ export class EditTopicSidebarComponent implements OnInit {
             this.store.dispatch(new Topic.Set(handledTopic));
           });
       });
+
+    this.openSnackBar();
+  }
+  public openSnackBar() {
+    this._snackBar.open('Данные успешно сохранены', 'OK', {
+      duration: 2000,
+    });
   }
 }

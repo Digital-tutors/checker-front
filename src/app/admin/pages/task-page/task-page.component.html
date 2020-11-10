@@ -84,7 +84,7 @@
     </div>
 
     <div class="topic-button">
-      <button [disabled]="form.invalid" mat-flat-button color="primary">Сохранить</button>
+      <button [disabled]="form.invalid" mat-flat-button color="primary" (click)="openSnackBar()">Сохранить</button>
     </div>
   </form>
 </section>

@@ -9,6 +9,7 @@ import {Select, Store} from '@ngxs/store';
 import {Lesson} from '@store/actions/lesson.actions';
 import {EMPTY, Observable} from 'rxjs';
 import {AppState} from '@store/app.state';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lesson-page-sidebar',
@@ -30,6 +31,7 @@ export class LessonPageSidebarComponent implements OnInit {
     private routeParamsService: RouteParamsService,
     private lessonAdminControllerService: LessonAdminControllerService,
     private lessonControllerService: LessonControllerService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -86,5 +88,12 @@ export class LessonPageSidebarComponent implements OnInit {
             this.store.dispatch(new Lesson.Set(handledLesson));
           });
       });
+    this.openSnackBar();
+  }
+
+  public openSnackBar() {
+    this._snackBar.open('Данные успешно сохранены', 'OK', {
+      duration: 2000,
+    });
   }
 }

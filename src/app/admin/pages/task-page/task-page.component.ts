@@ -9,6 +9,7 @@ import {TaskControllerService} from '@swagger/api/taskController.service';
 import {TaskAdminControllerService} from '@swagger/api/taskAdminController.service';
 import {TaskDTO} from '@swagger/model/taskDTO';
 import {TaskDTORequestView} from '@swagger/model/taskDTORequestView';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-page',
@@ -42,6 +43,7 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private taskControllerService: TaskControllerService,
     private taskAdminControllerService: TaskAdminControllerService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -126,5 +128,11 @@ export class TaskPageComponent implements OnInit, OnDestroy {
         )
         .subscribe();
     }
+  }
+
+  public openSnackBar() {
+    this._snackBar.open('Данные успешно сохранены', 'OK', {
+      duration: 2000,
+    });
   }
 }
