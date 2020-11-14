@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "dev": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "yarn run lint:check && yarn run lint:style && yarn run format:check",
@@ -16,7 +17,8 @@
     "lint:fix": "eslint --fix \"src/**/*.ts\"",
     "format:check": "prettier --check src/**/*.ts",
     "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\"",
-    "postinstall": "ngcc"
+    "postinstall": "ngcc",
+    "heroku-postbuild": "ng build"
   },
   "config": {
     "commitizen": {
@@ -38,7 +40,9 @@
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@ng-stack/contenteditable": "^1.1.1",
     "@ngxs/store": "^3.6.2",
+    "express": "^4.17.1",
     "ngx-monaco-editor": "^9.0.0",
+    "path": "^0.12.7",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
