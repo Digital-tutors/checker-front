@@ -17,8 +17,7 @@
     "lint:fix": "eslint --fix \"src/**/*.ts\"",
     "format:check": "prettier --check src/**/*.ts",
     "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\"",
-    "postinstall": "ngcc",
-    "heroku-postbuild": "ng build"
+    "postinstall": "ngcc"
   },
   "config": {
     "commitizen": {
