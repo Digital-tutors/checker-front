@@ -45,4 +45,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public goToCourse(courseId: number): void {
     this.router.navigate([courseId], { relativeTo: this.activatedRoute });
   }
+
+  public createCourse(): void {
+    this.courseAdminControllerService.createCourseUsingPOST({}).subscribe((course: CourseDTO) => this.goToCourse(course.id));
+  }
 }
