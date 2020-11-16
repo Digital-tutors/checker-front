@@ -11,25 +11,26 @@
  */
 import { AuthorRefVO } from './authorRefVO';
 import { RefVO } from './refVO';
+import { RefWithLevelVO } from './refWithLevelVO';
 
 export interface TopicDTO { 
-    addons: Array<RefVO>;
+    addons: Array<RefWithLevelVO>;
     author?: AuthorRefVO;
-    createdAt: number;
+    createdAt: Date;
     description?: string;
-    extensions: Array<RefVO>;
+    extensions: Array<RefWithLevelVO>;
     fgosStandards: Array<string>;
     id?: number;
     lessons: Array<RefVO>;
     level: TopicDTO.LevelEnum;
     practicies: Array<RefVO>;
     professionalStandards: Array<string>;
-    replacements: Array<RefVO>;
-    simplifications: Array<RefVO>;
+    replacements: Array<RefWithLevelVO>;
+    simplifications: Array<RefWithLevelVO>;
     status: TopicDTO.StatusEnum;
     tags: Array<string>;
     title?: string;
-    updatedAt: number;
+    updatedAt: Date;
 }
 export namespace TopicDTO {
     export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';

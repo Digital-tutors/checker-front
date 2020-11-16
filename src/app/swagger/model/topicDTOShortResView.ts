@@ -11,17 +11,18 @@
  */
 import { AuthorRefVOShortResView } from './authorRefVOShortResView';
 import { RefVOShortResView } from './refVOShortResView';
+import { RefWithLevelVOShortResView } from './refWithLevelVOShortResView';
 
 export interface TopicDTOShortResView { 
-    addons: Array<RefVOShortResView>;
+    addons: Array<RefWithLevelVOShortResView>;
     author?: AuthorRefVOShortResView;
-    extensions: Array<RefVOShortResView>;
+    extensions: Array<RefWithLevelVOShortResView>;
     id?: number;
     lessons: Array<RefVOShortResView>;
     level: TopicDTOShortResView.LevelEnum;
     practicies: Array<RefVOShortResView>;
-    replacements: Array<RefVOShortResView>;
-    simplifications: Array<RefVOShortResView>;
+    replacements: Array<RefWithLevelVOShortResView>;
+    simplifications: Array<RefWithLevelVOShortResView>;
     status: TopicDTOShortResView.StatusEnum;
     title?: string;
 }

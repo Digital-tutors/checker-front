@@ -91,3 +91,38 @@ $tutor-app-theme: mat-light-theme($tutor-primary, $tutor-accent, $tutor-warn);
   letter-spacing: 0.46px !important;
   margin-bottom: $space * 3 !important;
 }
+
+.flex {
+  display: flex;
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.two-cols {
+    > * {
+      width: 40%;
+    }
+  }
+
+  &.end {
+    justify-content: flex-end;
+  }
+
+  &.al-center {
+    align-items: center;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+}
+

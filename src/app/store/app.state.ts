@@ -10,6 +10,10 @@ import { Lesson } from '@store/actions/lesson.actions';
 import { Topic } from '@store/actions/topic.actions';
 import { User } from '@store/actions/user.actions';
 import { StateInterface } from '@store/state.interface';
+import {TaskDTO} from '@swagger/model/taskDTO';
+import {Task} from '@store/actions/task.actions';
+import {TaskResult} from '@store/actions/task-result.actions';
+import {TaskResultDTO} from '@swagger/model/taskResultDTO';
 
 @State<StateInterface>({
   name: 'state',
@@ -18,6 +22,8 @@ import { StateInterface } from '@store/state.interface';
     course: null,
     topic: null,
     lesson: null,
+    task: null,
+    taskResult: null,
   },
 })
 export class AppState {
@@ -39,6 +45,16 @@ export class AppState {
   @Selector()
   public static topic(state: StateInterface): TopicDTO {
     return state.topic;
+  }
+
+  @Selector()
+  public static task(state: StateInterface): TaskDTO {
+    return state.task;
+  }
+
+  @Selector()
+  public static taskResult(state: StateInterface): TaskResultDTO {
+    return state.taskResult;
   }
 
   @Action(User.Set)
@@ -70,6 +86,22 @@ export class AppState {
     ctx.setState({
       ...ctx.getState(),
       topic: action.value,
+    });
+  }
+
+  @Action(Task.Set)
+  public setTask(ctx: StateContext<StateInterface>, action: Task.Set): void {
+    ctx.setState({
+      ...ctx.getState(),
+      task: action.value,
+    });
+  }
+
+  @Action(TaskResult.Set)
+  public setTaskResult(ctx: StateContext<StateInterface>, action: TaskResult.Set): void {
+    ctx.setState({
+      ...ctx.getState(),
+      taskResult: action.value,
     });
   }
 }

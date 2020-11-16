@@ -1,0 +1,38 @@
+<app-shadow-container>
+  <table mat-table [dataSource]="data$ | async">
+    <ng-container matColumnDef="student">
+      <th mat-header-cell *matHeaderCellDef>Студент</th>
+      <td mat-cell *matCellDef="let element"> {{element.user | fio}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="task">
+      <th mat-header-cell *matHeaderCellDef>Название задачи</th>
+      <td mat-cell *matCellDef="let element">{{element.task.title}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lang">
+      <th mat-header-cell *matHeaderCellDef>Язык прогр.</th>
+      <td mat-cell *matCellDef="let element">{{element.result.language}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="attempt">
+      <th mat-header-cell *matHeaderCellDef>Попытки</th>
+      <td mat-cell *matCellDef="let element">{{element.result.attempt}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="completed">
+      <th mat-header-cell *matHeaderCellDef>Завершено</th>
+      <td mat-cell *matCellDef="let element">{{element.result.completed ? 'Да' : 'Нет'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Исходный код</th>
+      <td mat-cell *matCellDef="let element">
+        <app-button [bordered]="true" (click)="openSourceCode(element)">Посмотреть</app-button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</app-shadow-container>

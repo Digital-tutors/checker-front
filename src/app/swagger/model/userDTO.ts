@@ -11,14 +11,14 @@
  */
 
 export interface UserDTO { 
-    createdAt: number;
+    createdAt: Date;
     email?: string;
     firstName?: string;
     id?: number;
     lastName?: string;
     middleName?: string;
     role: UserDTO.RoleEnum;
-    updatedAt: number;
+    updatedAt: Date;
 }
 export namespace UserDTO {
     export type RoleEnum = 'ROLE_ADMIN' | 'ROLE_SUPER_ADMIN' | 'ROLE_TEACHER' | 'ROLE_USER';

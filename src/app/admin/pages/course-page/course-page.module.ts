@@ -25,9 +25,12 @@ import { CoursePageComponent } from './course-page.component';
 import { RoutingModule } from './course-page.routes';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import {ResultsComponent} from './components/results/results.component';
+import {TaskSourceCodeWindowComponent} from '../../components/task-source-code-window/task-source-code-window.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [CoursePageComponent, DescriptionComponent, TopicsTasksComponent, ParticipantsComponent, SettingsComponent],
+  declarations: [TaskSourceCodeWindowComponent, CoursePageComponent, DescriptionComponent, TopicsTasksComponent, ParticipantsComponent, ResultsComponent, SettingsComponent],
   imports: [
     CommonModule,
     RoutingModule,
@@ -47,6 +50,9 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
+    MatDialogModule,
+    MonacoEditorModule,
   ],
+  entryComponents: [TaskSourceCodeWindowComponent],
 })
 export class CoursePageModule {}

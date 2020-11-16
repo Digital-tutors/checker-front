@@ -11,9 +11,9 @@
  */
 
 export interface TestsDTO { 
-    createdAt: number;
+    createdAt: Date;
     id?: number;
     input?: Array<string>;
     output?: Array<string>;
-    updatedAt: number;
+    updatedAt: Date;
 }

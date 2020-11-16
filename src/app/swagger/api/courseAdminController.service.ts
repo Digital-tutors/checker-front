@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class CourseAdminControllerService {
 
-    protected basePath = '//localhost/';
+    protected basePath = '//164.90.237.175:8080/';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

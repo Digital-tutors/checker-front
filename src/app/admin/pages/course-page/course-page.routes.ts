@@ -6,6 +6,7 @@ import { ParticipantsComponent } from './components/participants/participants.co
 import { SettingsComponent } from './components/settings/settings.component';
 import { TopicsTasksComponent } from './components/topics-tasks/topics-tasks.component';
 import { CoursePageComponent } from './course-page.component';
+import {ResultsComponent} from './components/results/results.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,11 @@ const routes: Routes = [
         path: 'participants',
         pathMatch: 'full',
         component: ParticipantsComponent,
+      },
+      {
+        path: 'results',
+        pathMatch: 'full',
+        component: ResultsComponent,
       },
       {
         path: 'settings',

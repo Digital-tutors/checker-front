@@ -1,0 +1,34 @@
+<section class="alert-box">
+  <h1 class="headline-2">{{ task.title }}</h1>
+
+  <section class="task-info">
+    <h3>Описание</h3>
+    <p>{{task.description}}</p>
+
+    <h3 *ngIf="task.options.constructions.length > 0">Запрещенные конструкции</h3>
+    <ul *ngIf="task.options.constructions.length > 0">
+      <li *ngFor="let c of task.options.constructions">{{c}}</li>
+    </ul>
+
+    <h3 *ngIf="task.options.constructions.length > 0">Время выполнения:</h3>
+    <p>{{ result.runtime }}</p>
+
+    <h3 *ngIf="task.options.constructions.length > 0">Память:</h3>
+    <p>{{ result.memory }}</p>
+
+    <h3 *ngIf="task.options.constructions.length > 0">Попыток:</h3>
+    <p>{{ result.attempt }}</p>
+
+    <h3 *ngIf="task.options.constructions.length > 0">Вывод программы:</h3>
+    <p>{{ result.messageOut }}</p>
+
+  </section>
+
+  <h3 class="title" *ngIf="task.options.constructions.length > 0">Исходный код программы:</h3>
+  <ngx-monaco-editor [options]="editorOptions"
+                     [(ngModel)]="sourceCode"></ngx-monaco-editor>
+
+  <footer class="flex center">
+    <app-button mat-dialog-close color="primary">Закрыть</app-button>
+  </footer>
+</section>

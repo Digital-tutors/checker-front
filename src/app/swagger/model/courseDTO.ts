@@ -14,7 +14,7 @@ import { RefVO } from './refVO';
 export interface CourseDTO { 
     author?: RefVO;
     content: Array<RefVO>;
-    createdAt: number;
+    createdAt: Date;
     description?: string;
     id?: number;
     keywords: Array<string>;
@@ -23,7 +23,7 @@ export interface CourseDTO {
     subscribe: boolean;
     subtitle?: string;
     title?: string;
-    updatedAt: number;
+    updatedAt: Date;
 }
 export namespace CourseDTO {
     export type StatusEnum = 'ARCHIVED' | 'PUBLISHED' | 'UNPUBLISHED';

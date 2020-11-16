@@ -11,23 +11,24 @@
  */
 import { OptionsDTO } from './optionsDTO';
 import { RefVO } from './refVO';
+import { RefWithLevelVO } from './refWithLevelVO';
 import { TestsDTO } from './testsDTO';
 
 export interface TaskDTO { 
-    addons: Array<RefVO>;
+    addons: Array<RefWithLevelVO>;
     author?: RefVO;
-    createdAt: number;
+    createdAt: Date;
     description?: string;
-    extensions: Array<RefVO>;
+    extensions: Array<RefWithLevelVO>;
     id?: number;
     level: TaskDTO.LevelEnum;
     options?: OptionsDTO;
-    replacements: Array<RefVO>;
-    simplifications: Array<RefVO>;
+    replacements: Array<RefWithLevelVO>;
+    simplifications: Array<RefWithLevelVO>;
     status: TaskDTO.StatusEnum;
     tests?: TestsDTO;
     title?: string;
-    updatedAt: number;
+    updatedAt: Date;
 }
 export namespace TaskDTO {
     export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';

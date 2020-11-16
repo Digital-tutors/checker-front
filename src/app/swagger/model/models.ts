@@ -25,6 +25,8 @@ export * from './pageable';
 export * from './refVO';
 export * from './refVORequestView';
 export * from './refVOShortResView';
+export * from './refWithLevelVO';
+export * from './refWithLevelVOShortResView';
 export * from './roleRequestDTO';
 export * from './roleRequestDTORequestView';
 export * from './sort';

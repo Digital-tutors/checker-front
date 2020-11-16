@@ -15,7 +15,7 @@ export interface TaskResultDTO {
     attempt: number;
     codeReturn?: string;
     completed: boolean;
-    createdAt: number;
+    createdAt: Date;
     id?: number;
     language?: string;
     memory?: string;
@@ -24,7 +24,7 @@ export interface TaskResultDTO {
     sourceCode?: string;
     status: TaskResultDTO.StatusEnum;
     task?: RefVO;
-    updatedAt: number;
+    updatedAt: Date;
     user?: RefVO;
 }
 export namespace TaskResultDTO {

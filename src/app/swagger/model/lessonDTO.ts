@@ -10,21 +10,21 @@
  * Do not edit the class manually.
  */
 import { AuthorRefVO } from './authorRefVO';
-import { RefVO } from './refVO';
+import { RefWithLevelVO } from './refWithLevelVO';
 
 export interface LessonDTO { 
-    addons: Array<RefVO>;
+    addons: Array<RefWithLevelVO>;
     author?: AuthorRefVO;
-    createdAt: number;
-    extensions: Array<RefVO>;
+    createdAt: Date;
+    extensions: Array<RefWithLevelVO>;
     htmlBody?: string;
     id?: number;
     level: LessonDTO.LevelEnum;
-    replacements: Array<RefVO>;
-    simplifications: Array<RefVO>;
+    replacements: Array<RefWithLevelVO>;
+    simplifications: Array<RefWithLevelVO>;
     status: LessonDTO.StatusEnum;
     title?: string;
-    updatedAt: number;
+    updatedAt: Date;
 }
 export namespace LessonDTO {
     export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';

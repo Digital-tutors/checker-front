@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 import { AuthorRefVOShortResView } from './authorRefVOShortResView';
-import { RefVOShortResView } from './refVOShortResView';
+import { RefWithLevelVOShortResView } from './refWithLevelVOShortResView';
 
 export interface LessonDTOShortResView { 
-    addons: Array<RefVOShortResView>;
+    addons: Array<RefWithLevelVOShortResView>;
     author?: AuthorRefVOShortResView;
-    extensions: Array<RefVOShortResView>;
+    extensions: Array<RefWithLevelVOShortResView>;
     id?: number;
     level: LessonDTOShortResView.LevelEnum;
-    replacements: Array<RefVOShortResView>;
-    simplifications: Array<RefVOShortResView>;
+    replacements: Array<RefWithLevelVOShortResView>;
+    simplifications: Array<RefWithLevelVOShortResView>;
     status: LessonDTOShortResView.StatusEnum;
     title?: string;
 }
