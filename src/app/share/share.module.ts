@@ -19,6 +19,7 @@ import { LevelPipe } from './pipes/level.pipe';
 
 import { ContenteditableModule } from '@ng-stack/contenteditable';
 import {WysiwygEditorModule} from '@share/components/wysiwyg-editor/wysiwyg-editor.module';
+import {LetDirective} from '@share/directories/let.directives';
 
 const COMPONENTS: any[] = [
   ImageCardComponent,
@@ -37,11 +38,13 @@ const MODULES: any[] = [
 
 const PIPES: any[] = [FioPipe, LevelPipe, StatusPipe];
 
+const DIRECTIVES: any[] = [LetDirective];
+
 const MATERIAL_MODULES: any[] = [MatIconModule];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS, ...PIPES, ...DIRECTIVES],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, ContenteditableModule, ...MODULES, ...MATERIAL_MODULES],
-  exports: [CommonModule, ReactiveFormsModule, FormsModule, ContenteditableModule, ...MODULES, ...MATERIAL_MODULES, ...COMPONENTS,  ...PIPES],
+  exports: [CommonModule, ReactiveFormsModule, FormsModule, ContenteditableModule, ...MODULES, ...MATERIAL_MODULES, ...COMPONENTS,  ...PIPES, ...DIRECTIVES],
 })
 export class ShareModule {}

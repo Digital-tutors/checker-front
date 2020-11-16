@@ -1,4 +1,4 @@
-<ul class="list" *ngIf="topicsWithLessons$ | async as data">
+<ul class="list" *appLet="topicsWithLessons$ | async as data">
 
   <li class="list__item" *ngFor="let item of data; let i = index">
     <main>
@@ -41,13 +41,10 @@
 
   </li>
 
-  <li class="list__item" *ngIf="!data.length">
-    <main>
-    </main>
-
+  <li class="list__item" *ngIf="!data || data && !data.length">
     <aside class="subject__actions">
       <div class="subject__actions__row">
-        <app-button class="button" [bordered]="true" (click)="addTopic()">Добавить тему</app-button>
+        <app-button class="button" (click)="addTopic()">Добавить тему</app-button>
       </div>
     </aside>
 
