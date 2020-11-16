@@ -41,11 +41,16 @@
 
   </li>
 
-  <li class="list__item">
+  <li class="list__item" *ngIf="!data.length">
+    <main>
+    </main>
+
     <aside class="subject__actions">
       <div class="subject__actions__row">
+        <app-button class="button" [bordered]="true" (click)="addTopic()">Добавить тему</app-button>
       </div>
     </aside>
+
   </li>
 
 </ul>
