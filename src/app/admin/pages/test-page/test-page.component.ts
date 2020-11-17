@@ -37,6 +37,8 @@ export class TestPageComponent implements OnInit {
   allFruits: string[] = ['информатика', 'тесты', 'программирование', 'C++', 'ООП'];
   items: string[] = ['1', '2', '3'];
   inputValue = 'Clear me';
+  isMultiple: boolean = true;
+
   public tagsControls: FormControl[] = [];
 
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;

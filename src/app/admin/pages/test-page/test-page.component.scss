@@ -94,9 +94,21 @@ mat-chip {
             margin-right: $space / 2;
             cursor: pointer;
             font-size: 12px;
-            max-width: 500px;
+            // max-width: 500px;
             word-wrap: break-word;
             word-break: break-all;
+            display: flex;
+          }
+
+          span {
+            display: block;
+            margin-left: $space;
+            width: 100%;
+            box-sizing: border-box;
+
+            &:first-child {
+              margin-left: 0;
+            }
           }
         }
       }

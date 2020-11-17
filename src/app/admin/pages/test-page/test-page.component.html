@@ -70,16 +70,22 @@
           <p class="caption">Варианты ответов</p>
           <ul class="rubrics__list">
             <li class="rubrics__list__item text"
+                *ngIf="!isMultiple"
                 contenteditable="true"
                 propValueAccessor="innerHTML">
                 Правильный ответ
             </li>
             <li *ngFor="let tagControl of tagsControls"
                 class="rubrics__list__item text"
+                >
+                <mat-checkbox class="example-margin" color="primary" *ngIf="isMultiple"></mat-checkbox>
+                <span
                 contenteditable="true"
                 propValueAccessor="innerHTML"
-                [formControl]="tagControl">
-                </li>
+                [formControl]="tagControl"></span>
+
+            </li>
+
           </ul>
           <app-button [bordered]="true" (click)="onAddTag()">Добавить вариант</app-button>
         </div>

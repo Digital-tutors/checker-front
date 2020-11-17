@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 import { ShareModule } from '@share/share.module';
 
@@ -32,6 +34,7 @@ import { RoutingModule } from './test-page.routes';
     MatAutocompleteModule,
     MatListModule,
     MatDividerModule,
+    MatCheckboxModule
   ],
 })
 export class TestPageModule {}
