@@ -38,14 +38,14 @@
         </mat-form-field>
 
         <div class="restrictions">
-          <mat-form-field class="item" hintLabel="Максимально 8 секунд" >
+          <mat-form-field class="item" hintLabel="Максимально 20 секунд" >
             <mat-label>Введите ограничение по времени выполнения (секунды)</mat-label>
             <input matInput #input formControlName="timeLimit" placeholder="1">
           </mat-form-field>
 
-          <mat-form-field class="item" hintLabel="Максимально 256 Мб" >
+          <mat-form-field class="item" hintLabel="Максимально 512 Мб" >
             <mat-label>Введите ограничение по используемой памяти (Мб)</mat-label>
-            <input matInput #input formControlName="memoryLimit" placeholder="256">
+            <input matInput #input formControlName="memoryLimit" placeholder="512">
           </mat-form-field>
 
           <mat-form-field class="item" hintLabel="Ввод только через запятую, без пробелов между конструкциями" >
