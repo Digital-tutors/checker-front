@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {EMPTY, Subject} from 'rxjs';
@@ -10,6 +10,7 @@ import {TaskAdminControllerService} from '@swagger/api/taskAdminController.servi
 import {TaskDTO} from '@swagger/model/taskDTO';
 import {TaskDTORequestView} from '@swagger/model/taskDTORequestView';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {TestsDTO} from '@swagger/model/testsDTO';
 
 @Component({
   selector: 'app-task-page',
@@ -43,7 +44,7 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private taskControllerService: TaskControllerService,
     private taskAdminControllerService: TaskAdminControllerService,
-    private _snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +61,10 @@ export class TaskPageComponent implements OnInit, OnDestroy {
       .subscribe((task: TaskDTO) => this.setForm(task));
   }
 
+  ngOnDestroy(): void {
+    this.ngOnDestroy$.next();
+  }
+
   private setForm(task: TaskDTO): void {
     this.form = this.fb.group({
       title: [task.title, [Validators.required, Validators.min(1), Validators.max(180)]],
@@ -69,22 +74,30 @@ export class TaskPageComponent implements OnInit, OnDestroy {
       timeLimit: [task.options?.timeLimit, [Validators.required, Validators.max(20)]],
       memoryLimit: [task.options?.memoryLimit, [Validators.required, Validators.max(512)]],
       constructions: [task.options?.constructions, [Validators.pattern('^[a-zA-Z,]*')]],
-      codes: this.fb.array([this.createItem(), this.createItem(), this.createItem()]),
+      codes: this.getCodesForm(task.tests),
     });
   }
 
-  ngOnDestroy(): void {
-    this.ngOnDestroy$.next();
+  private getCodesForm(tests: TestsDTO): FormArray {
+    const formArray: FormGroup[] = [];
+
+    const maxLength = Math.max(tests.input.length, tests.output.length);
+
+    for (let i = 0; i < maxLength; i++) {
+      formArray.push(this.createItem(tests.input[i], tests.output[i]));
+    }
+
+    return this.fb.array(formArray.length > 0 ? formArray : [this.createItem()]);
   }
 
   get codes() {
     return this.form.get('codes') as FormArray;
   }
 
-  public createItem(): FormGroup {
+  public createItem(input: string = '', output: string = ''): FormGroup {
     return this.fb.group({
-      input: ['', []],
-      output: ['', []],
+      input: [input, []],
+      output: [output, []],
     });
   }
 
@@ -131,7 +144,7 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   }
 
   public openSnackBar() {
-    this._snackBar.open('Данные успешно сохранены', 'OK', {
+    this.snackBar.open('Данные успешно сохранены', 'OK', {
       duration: 2000,
     });
   }
