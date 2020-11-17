@@ -66,8 +66,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
       level: [task.level, [Validators.required]],
       status: [task.status, [Validators.required]],
       description: [task.description, [Validators.required]],
-      timeLimit: [task.options?.timeLimit, [Validators.required, Validators.max(8)]],
-      memoryLimit: [task.options?.memoryLimit, [Validators.required, Validators.max(256)]],
+      timeLimit: [task.options?.timeLimit, [Validators.required, Validators.max(20)]],
+      memoryLimit: [task.options?.memoryLimit, [Validators.required, Validators.max(512)]],
       constructions: [task.options?.constructions, [Validators.pattern('^[a-zA-Z,]*')]],
       codes: this.fb.array([this.createItem(), this.createItem(), this.createItem()]),
     });
@@ -83,8 +83,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 
   public createItem(): FormGroup {
     return this.fb.group({
-      input: ['', [Validators.required]],
-      output: ['', [Validators.required]],
+      input: ['', []],
+      output: ['', []],
     });
   }
 
