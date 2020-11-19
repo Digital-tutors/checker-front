@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import {MatDialog} from '@angular/material/dialog';
+
 import { Select, Store } from '@ngxs/store';
 
 import { Observable, Subject } from 'rxjs';
@@ -20,6 +22,8 @@ import { AboutCourseSidebarComponent } from '@share/components/about-course-side
 import { RouteParamsService } from '@share/services/route-params/route-params.service';
 import { SidebarService } from '@share/services/sidebar.service';
 
+import {AlertWindowCourseComponent} from '../../components/alert-window-course/alert-window-course.component';
+
 @Component({
   selector: 'app-admin-course-page',
   templateUrl: './course-page.component.html',
@@ -36,6 +40,7 @@ export class CoursePageComponent implements OnInit, OnDestroy {
   constructor(
     private sidebarService: SidebarService,
     private store: Store,
+    private dialog: MatDialog,
     private topicControllerService: TopicControllerService,
     private lessonControllerService: LessonControllerService,
     private courseControllerService: CourseControllerService,
@@ -97,6 +102,17 @@ export class CoursePageComponent implements OnInit, OnDestroy {
         this.setTitleFormControl(course);
         this.store.dispatch(new Course.Set(course));
       });
+  }
+
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(AlertWindowCourseComponent, {
+      width: '473px',
+      height: '220px',
+    });
+
+    this.course$.subscribe(course => {
+      dialogRef.componentInstance.taskId = course.id;
+    });
   }
 
   private setSidebar(): void {

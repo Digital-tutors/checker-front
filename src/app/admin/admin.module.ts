@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { ShareModule } from '@share/share.module';
 
+import {AlertWindowCourseComponent} from './components/alert-window-course/alert-window-course.component';
 import {AlertWindowTaskComponent} from './components/alert-window-task/alert-window-task.component';
 import { AlertWindowTestComponent } from './components/alert-window-test/alert-window-test.component';
 import {AlertWindowTopicComponent} from './components/alert-window-topic/alert-window-topic.component';
@@ -38,6 +39,7 @@ import { RoutingModule } from './admin.routes';
     AlertWindowComponent,
     AlertWindowTaskComponent,
     AlertWindowTopicComponent,
+    AlertWindowCourseComponent,
     TestPageSidebarComponent,
     EditTopicSidebarComponent,
     AlertWindowTestComponent,
