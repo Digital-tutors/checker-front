@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
+import {MatDialog} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { Select, Store } from '@ngxs/store';
 
 import { EMPTY, Observable } from 'rxjs';
@@ -12,7 +15,7 @@ import { TopicDTO } from '@swagger/model/topicDTO';
 import { Topic } from '@store/actions/topic.actions';
 import { AppState } from '@store/app.state';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {AlertWindowTopicComponent} from '../alert-window-topic/alert-window-topic.component';
 
 @Component({
   selector: 'app-edit-topic-sidebar',
@@ -29,7 +32,13 @@ export class EditTopicSidebarComponent implements OnInit {
   public levels: TopicDTO.LevelEnum[] = [TopicDTO.LevelEnum.EASY, TopicDTO.LevelEnum.MIDDLE, TopicDTO.LevelEnum.HARD];
   public publishStatuses: TopicDTO.StatusEnum[] = [TopicDTO.StatusEnum.UNPUBLISHED, TopicDTO.StatusEnum.PUBLISHED];
 
-  constructor(private fb: FormBuilder, private topicAdminControllerService: TopicAdminControllerService, private store: Store, private _snackBar: MatSnackBar) {}
+  constructor(
+    private fb: FormBuilder,
+    private topicAdminControllerService: TopicAdminControllerService,
+    private dialog: MatDialog,
+    private store: Store,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -126,9 +135,21 @@ export class EditTopicSidebarComponent implements OnInit {
 
     this.openSnackBar();
   }
+
   public openSnackBar() {
     this._snackBar.open('Данные успешно сохранены', 'OK', {
       duration: 2000,
+    });
+  }
+
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(AlertWindowTopicComponent, {
+      width: '473px',
+      height: '220px',
+    });
+
+    this.topic$.subscribe(topic => {
+      dialogRef.componentInstance.taskId = topic.id;
     });
   }
 }

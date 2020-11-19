@@ -39,6 +39,11 @@
       <app-button [bordered]="true" (click)="onAddTag()">Добавить</app-button>
     </div>
   </div>
+
+  <div class="delete">
+    <p class="caption">Удаление темы</p>
+    <app-button [alert]="true" (click)="openDialog()">Удалить тему</app-button>
+  </div>
   <footer class="footer">
     <app-button (click)="onCancel()" [alert]="true">Отменить</app-button>
     <app-button (click)="onSubmit()">Сохранить</app-button>

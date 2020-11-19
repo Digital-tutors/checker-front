@@ -18,6 +18,7 @@ import { ShareModule } from '@share/share.module';
 
 import {AlertWindowTaskComponent} from './components/alert-window-task/alert-window-task.component';
 import { AlertWindowTestComponent } from './components/alert-window-test/alert-window-test.component';
+import {AlertWindowTopicComponent} from './components/alert-window-topic/alert-window-topic.component';
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 import { EditTopicSidebarComponent } from './components/edit-topic-sidebar/edit-topic-sidebar.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -36,6 +37,7 @@ import { RoutingModule } from './admin.routes';
     LessonPageSidebarComponent,
     AlertWindowComponent,
     AlertWindowTaskComponent,
+    AlertWindowTopicComponent,
     TestPageSidebarComponent,
     EditTopicSidebarComponent,
     AlertWindowTestComponent,

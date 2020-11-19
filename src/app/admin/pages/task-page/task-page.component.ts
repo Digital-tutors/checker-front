@@ -3,6 +3,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import {MatDialog} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import {EMPTY, Subject} from 'rxjs';
@@ -15,8 +16,7 @@ import {TaskDTORequestView} from '@swagger/model/taskDTORequestView';
 import {TestsDTO} from '@swagger/model/testsDTO';
 
 import {SidebarService} from '@share/services/sidebar.service';
-import {AlertWindowComponent} from '../../components/alert-window/alert-window.component';
-import {MatDialog} from '@angular/material/dialog';
+
 import {AlertWindowTaskComponent} from '../../components/alert-window-task/alert-window-task.component';
 
 @Component({
