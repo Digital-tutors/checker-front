@@ -47,6 +47,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   public createCourse(): void {
-    this.courseAdminControllerService.createCourseUsingPOST({}).subscribe((course: CourseDTO) => this.goToCourse(course.id));
+    this.courseAdminControllerService
+      .createCourseUsingPOST({ title: 'Название нового курса' })
+      .subscribe((course: CourseDTO) => this.goToCourse(course.id));
   }
 }
