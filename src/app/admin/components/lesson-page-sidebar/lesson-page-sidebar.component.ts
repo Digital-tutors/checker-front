@@ -51,6 +51,7 @@ export class LessonPageSidebarComponent implements OnInit {
           title: [lesson.title],
           level: [lesson.level],
           status: [lesson.status],
+          priority: [lesson.priority]
         });
       });
   }
@@ -67,6 +68,7 @@ export class LessonPageSidebarComponent implements OnInit {
           title: this.form.value.title,
           level: this.form.value.level,
           status: this.form.value.status,
+          priority: this.form.value.priority
         };
 
         this.lessonAdminControllerService

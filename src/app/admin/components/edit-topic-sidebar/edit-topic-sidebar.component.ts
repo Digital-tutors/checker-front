@@ -79,6 +79,7 @@ export class EditTopicSidebarComponent implements OnInit {
         title: [topic.title],
         level: [topic.level],
         status: [topic.status],
+        priority: [topic.priority],
       });
     });
   }
@@ -99,6 +100,7 @@ export class EditTopicSidebarComponent implements OnInit {
           title: this.form.value.title,
           level: this.form.value.level,
           status: this.form.value.status,
+          priority: this.form.value.priority,
           tags: this.getControlsArrayValue(this.tagsControls),
         };
 
