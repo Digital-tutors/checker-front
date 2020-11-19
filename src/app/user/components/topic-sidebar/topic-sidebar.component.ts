@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngxs/store';
 
-import {Observable, of, OperatorFunction} from 'rxjs';
-import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
+import {Observable, of } from 'rxjs';
+import { filter, first, mergeMap, tap } from 'rxjs/operators';
 
 import { LessonControllerService } from '@swagger/api/lessonController.service';
 import { TaskControllerService } from '@swagger/api/taskController.service';
@@ -68,8 +68,6 @@ export class TopicSidebarComponent implements OnInit {
     if (topic) {
       observable$ = this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id);
     }
-
-    console.log(topic);
 
     return observable$.pipe(
       first(),
