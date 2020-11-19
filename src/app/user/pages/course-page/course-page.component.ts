@@ -66,17 +66,25 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.activatedRoute.snapshot.params.courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest(
-          topics.map(topic =>
-            combineLatest([
-              this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
-              this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
-            ]).pipe(
-              map(([lessons, tasks]) => ({
-                topic,
-                lessons,
-                tasks,
-              })),
-            ),
+          topics
+            .sort((a, b) => {
+              return a.priority - b.priority;
+            })
+            .map(topic =>
+              combineLatest([
+                this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
+                this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
+              ]).pipe(
+                map(([lessons, tasks]) => ({
+                  topic,
+                  lessons: lessons.sort((a, b) => {
+                    return a.priority - b.priority;
+                  }),
+                  tasks: tasks.sort((a, b) => {
+                    return a.priority - b.priority;
+                  }),
+                })),
+              ),
           ),
         ),
       ),

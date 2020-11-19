@@ -87,18 +87,26 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.routeParamsService.routeParamsSnapshot().courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest(
-          topics.map(topic =>
-            combineLatest([
-              this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
-              this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
-            ]).pipe(
-              map(([lessons, tasks]) => ({
-                topic,
-                lessons,
-                tasks,
-              })),
+          topics
+            .sort((a, b) => {
+              return a.priority - b.priority;
+            })
+            .map(topic =>
+              combineLatest([
+                this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
+                this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
+              ]).pipe(
+                map(([lessons, tasks]) => ({
+                  topic,
+                  lessons: lessons.sort((a, b) => {
+                    return a.priority - b.priority;
+                  }),
+                  tasks: tasks.sort((a, b) => {
+                    return a.priority - b.priority;
+                  }),
+                })),
+              ),
             ),
-          ),
         ),
       ),
       repeatWhen(() => race([this.replayFetch$.asObservable(), this.topic$.pipe(filter((topic: TopicDTO) => !!topic))])),
