@@ -15,6 +15,9 @@ import {TaskDTORequestView} from '@swagger/model/taskDTORequestView';
 import {TestsDTO} from '@swagger/model/testsDTO';
 
 import {SidebarService} from '@share/services/sidebar.service';
+import {AlertWindowComponent} from '../../components/alert-window/alert-window.component';
+import {MatDialog} from '@angular/material/dialog';
+import {AlertWindowTaskComponent} from '../../components/alert-window-task/alert-window-task.component';
 
 @Component({
   selector: 'app-task-page',
@@ -45,6 +48,7 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
     private sidebarService: SidebarService,
     private taskControllerService: TaskControllerService,
     private taskAdminControllerService: TaskAdminControllerService,
@@ -150,6 +154,15 @@ export class TaskPageComponent implements OnInit, OnDestroy {
         )
         .subscribe();
     }
+  }
+
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(AlertWindowTaskComponent, {
+      width: '473px',
+      height: '220px',
+    });
+
+    dialogRef.componentInstance.taskId = this.taskId;
   }
 
   public openSnackBar() {

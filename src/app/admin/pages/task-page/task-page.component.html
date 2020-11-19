@@ -3,13 +3,16 @@
     <app-button [bordered]="true" (click)="goBack()">Назад</app-button>
   </div>
 
-  <h1 class="headline-1">Добавление нового задания</h1>
+  <header>
+    <h1 class="headline-1">Добавление нового задания</h1>
+    <app-button [alert]="true" (click)="openDialog()">Удалить задание</app-button>
+  </header>
   <mat-card-subtitle *ngIf="error">Неправильно заполнены поля ввода</mat-card-subtitle>
-    <form class="add-topic" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form class="add-topic" [formGroup]="form" (ngSubmit)="onSubmit()">
 
-      <app-shadow-container>
-        <div class="name-and-diff">
-        <mat-form-field class="add-title" hintLabel="Максимально 180 символов" >
+    <app-shadow-container>
+      <div class="name-and-diff">
+        <mat-form-field class="add-title" hintLabel="Максимально 180 символов">
           <mat-label>Введите название задания</mat-label>
           <input matInput #input formControlName="title" maxlength="180" placeholder="Программирование в среде СУБД">
           <mat-hint align="end">{{input.value?.length || 0}}/180</mat-hint>
@@ -35,32 +38,33 @@
         </mat-form-field>
       </div>
 
-        <mat-form-field class="add-desc" >
+      <mat-form-field class="add-desc">
         <mat-label>Описание задачи</mat-label>
         <textarea formControlName="description" matInput class="desc-width"></textarea>
+      </mat-form-field>
+
+      <div class="restrictions">
+        <mat-form-field class="item" hintLabel="Максимально 20 секунд">
+          <mat-label>Введите ограничение по времени выполнения (секунды)</mat-label>
+          <input matInput #input formControlName="timeLimit" placeholder="1">
         </mat-form-field>
 
-        <div class="restrictions">
-          <mat-form-field class="item" hintLabel="Максимально 20 секунд" >
-            <mat-label>Введите ограничение по времени выполнения (секунды)</mat-label>
-            <input matInput #input formControlName="timeLimit" placeholder="1">
-          </mat-form-field>
+        <mat-form-field class="item" hintLabel="Максимально 512 Мб">
+          <mat-label>Введите ограничение по используемой памяти (Мб)</mat-label>
+          <input matInput #input formControlName="memoryLimit" placeholder="512">
+        </mat-form-field>
 
-          <mat-form-field class="item" hintLabel="Максимально 512 Мб" >
-            <mat-label>Введите ограничение по используемой памяти (Мб)</mat-label>
-            <input matInput #input formControlName="memoryLimit" placeholder="512">
-          </mat-form-field>
-
-          <mat-form-field class="item" hintLabel="Ввод только через запятую, без пробелов между конструкциями" >
-            <mat-label>Введите запрещенные конструкции через запятую</mat-label>
-            <input matInput #input formControlName="constructions" placeholder="if,for,while">
-          </mat-form-field>
-        </div>
+        <mat-form-field class="item" hintLabel="Ввод только через запятую, без пробелов между конструкциями">
+          <mat-label>Введите запрещенные конструкции через запятую</mat-label>
+          <input matInput #input formControlName="constructions" placeholder="if,for,while">
+        </mat-form-field>
+      </div>
     </app-shadow-container>
 
     <div class="tests">
       <h2 class="headline-2">Добавление тестов</h2>
-      <p class="text">При добавлении данных, по которым будет производиться проверка программного кода необходимо писать с новой
+      <p class="text">При добавлении данных, по которым будет производиться проверка программного кода необходимо писать
+        с новой
         строчки. Минимальное количество тестируемых данных равно 3.</p>
     </div>
 
@@ -72,10 +76,10 @@
 
         <div class="add-test" [formGroupName]="i">
           <ngx-monaco-editor [options]="editorOptions"
-                            formControlName="input"></ngx-monaco-editor>
+                             formControlName="input"></ngx-monaco-editor>
 
           <ngx-monaco-editor [options]="editorOptions"
-                            formControlName="output"></ngx-monaco-editor>
+                             formControlName="output"></ngx-monaco-editor>
         </div>
 
       </div>

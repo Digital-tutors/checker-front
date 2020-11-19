@@ -10,6 +10,18 @@ app-shadow-container {
   margin: 0px auto 0;
   padding: 20px;
 
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .headline-1 {
+      display: flex;
+      margin: 0 !important;
+    }
+  }
+
   .add-topic {
     display: flex;
     flex-direction: column;

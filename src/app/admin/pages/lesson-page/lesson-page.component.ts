@@ -52,10 +52,6 @@ export class LessonPageComponent implements OnInit {
     this.lesson$.subscribe(lesson => {
       dialogRef.componentInstance.taskId = lesson.id;
     });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.location.back();
-    });
   }
 
   public handleHtmlChange(data: string, lesson: LessonDTO): void {

@@ -11,10 +11,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { ShareModule } from '@share/share.module';
 
+import {AlertWindowTaskComponent} from './components/alert-window-task/alert-window-task.component';
 import { AlertWindowTestComponent } from './components/alert-window-test/alert-window-test.component';
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 import { EditTopicSidebarComponent } from './components/edit-topic-sidebar/edit-topic-sidebar.component';
@@ -24,7 +26,6 @@ import { TestPageSidebarComponent } from './components/test-page-sidebar/test-pa
 import { TopicSidebarComponent } from './components/topic-sidebar/topic-sidebar.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { RoutingModule } from './admin.routes';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     TopicSidebarComponent,
     LessonPageSidebarComponent,
     AlertWindowComponent,
+    AlertWindowTaskComponent,
     TestPageSidebarComponent,
     EditTopicSidebarComponent,
     AlertWindowTestComponent,

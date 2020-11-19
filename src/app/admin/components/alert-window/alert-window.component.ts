@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 
 import {LessonAdminControllerService} from '@swagger/api/lessonAdminController.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-alert-window',
@@ -15,6 +16,7 @@ export class AlertWindowComponent implements OnInit {
   constructor(
     private lessonAdminService: LessonAdminControllerService,
     private dialogRef: MatDialogRef<AlertWindowComponent>,
+    private location: Location
   ) {
   }
 
@@ -24,6 +26,7 @@ export class AlertWindowComponent implements OnInit {
   public delete(): void {
     this.lessonAdminService.deleteLessonUsingDELETE(this.taskId).subscribe(() => {
       this.dialogRef.close();
+      this.location.back();
     });
   }
 }
