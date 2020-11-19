@@ -82,7 +82,6 @@ export class AboutCourseSidebarComponent implements OnInit {
     combineLatest([this.user$, this.course$])
       .pipe(
         filter(([user, course]) => !!user && !!course),
-        takeWhile(([user, course]) => user.id === course.author.id && !course.subscribe),
         tap(() => (this.hideSubscribeButton = true)),
         mergeMap(([user, course]) =>
           this.courseInteractionController.saveCourseInteractionUsingPOST({
@@ -90,7 +89,7 @@ export class AboutCourseSidebarComponent implements OnInit {
               id: course.id,
             },
             status: 'STARTED',
-          }),
+          })
         ),
       )
       .subscribe();
