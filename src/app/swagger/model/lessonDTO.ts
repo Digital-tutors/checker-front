@@ -15,16 +15,17 @@ import { RefWithLevelVO } from './refWithLevelVO';
 export interface LessonDTO { 
     addons: Array<RefWithLevelVO>;
     author?: AuthorRefVO;
-    createdAt: Date;
+    createdAt?: Date;
     extensions: Array<RefWithLevelVO>;
     htmlBody?: string;
     id?: number;
     level: LessonDTO.LevelEnum;
+    priority: number;
     replacements: Array<RefWithLevelVO>;
     simplifications: Array<RefWithLevelVO>;
     status: LessonDTO.StatusEnum;
     title?: string;
-    updatedAt: Date;
+    updatedAt?: Date;
 }
 export namespace LessonDTO {
     export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';

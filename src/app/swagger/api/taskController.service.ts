@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { PageOfTaskDTO } from '../model/pageOfTaskDTO';
+import { ReplacementVO } from '../model/replacementVO';
 import { TaskDTO } from '../model/taskDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -55,6 +56,60 @@ export class TaskControllerService {
         return false;
     }
 
+
+    /**
+     * getReplacementByCurrentIdAndLevel
+     * 
+     * @param id id
+     * @param level level
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getReplacementByCurrentIdAndLevelUsingGET1(id: number, level?: string, observe?: 'body', reportProgress?: boolean): Observable<ReplacementVO>;
+    public getReplacementByCurrentIdAndLevelUsingGET1(id: number, level?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ReplacementVO>>;
+    public getReplacementByCurrentIdAndLevelUsingGET1(id: number, level?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ReplacementVO>>;
+    public getReplacementByCurrentIdAndLevelUsingGET1(id: number, level?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getReplacementByCurrentIdAndLevelUsingGET1.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (level !== undefined && level !== null) {
+            queryParameters = queryParameters.set('level', <any>level);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ReplacementVO>('get',`${this.basePath}/task/${encodeURIComponent(String(id))}/replacement`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * getTaskById

@@ -12,9 +12,9 @@
 
 export interface OptionsDTO { 
     constructions?: Array<string>;
-    createdAt: Date;
+    createdAt?: Date;
     id?: number;
     memoryLimit?: string;
     timeLimit?: string;
-    updatedAt: Date;
+    updatedAt?: Date;
 }

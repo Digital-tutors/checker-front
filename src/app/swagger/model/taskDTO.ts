@@ -17,18 +17,19 @@ import { TestsDTO } from './testsDTO';
 export interface TaskDTO { 
     addons: Array<RefWithLevelVO>;
     author?: RefVO;
-    createdAt: Date;
+    createdAt?: Date;
     description?: string;
     extensions: Array<RefWithLevelVO>;
     id?: number;
     level: TaskDTO.LevelEnum;
     options?: OptionsDTO;
+    priority: number;
     replacements: Array<RefWithLevelVO>;
     simplifications: Array<RefWithLevelVO>;
     status: TaskDTO.StatusEnum;
     tests?: TestsDTO;
     title?: string;
-    updatedAt: Date;
+    updatedAt?: Date;
 }
 export namespace TaskDTO {
     export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';

@@ -16,6 +16,7 @@ import { TaskPageComponent } from './task-page.component';
 import { RoutingModule } from './task-page.routes';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import {SelectDifficultyModule} from '../../components/select-difficulty/select-difficulty.module';
 
 @NgModule({
   declarations: [TaskPageComponent],
@@ -32,6 +33,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
+    SelectDifficultyModule,
   ],
 })
 export class TaskPageModule {}

@@ -20,6 +20,9 @@ import { LevelPipe } from './pipes/level.pipe';
 import { ContenteditableModule } from '@ng-stack/contenteditable';
 import {WysiwygEditorModule} from '@share/components/wysiwyg-editor/wysiwyg-editor.module';
 import {LetDirective} from '@share/directories/let.directives';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 const COMPONENTS: any[] = [
   ImageCardComponent,
@@ -40,7 +43,7 @@ const PIPES: any[] = [FioPipe, LevelPipe, StatusPipe];
 
 const DIRECTIVES: any[] = [LetDirective];
 
-const MATERIAL_MODULES: any[] = [MatIconModule];
+const MATERIAL_MODULES: any[] = [MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatSelectModule];
 
 @NgModule({
   declarations: [...COMPONENTS, ...PIPES, ...DIRECTIVES],

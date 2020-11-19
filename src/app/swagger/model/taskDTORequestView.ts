@@ -16,6 +16,7 @@ export interface TaskDTORequestView {
     description?: string;
     level?: TaskDTORequestView.LevelEnum;
     options?: OptionsDTORequestView;
+    priority?: number;
     status?: TaskDTORequestView.StatusEnum;
     tests?: TestsDTORequestView;
     title?: string;

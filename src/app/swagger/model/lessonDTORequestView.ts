@@ -13,6 +13,8 @@
 export interface LessonDTORequestView { 
     htmlBody?: string;
     level?: LessonDTORequestView.LevelEnum;
+    priority?: number;
+    status?: LessonDTORequestView.StatusEnum;
     title?: string;
 }
 export namespace LessonDTORequestView {
@@ -21,5 +23,11 @@ export namespace LessonDTORequestView {
         EASY: 'EASY' as LevelEnum,
         HARD: 'HARD' as LevelEnum,
         MIDDLE: 'MIDDLE' as LevelEnum
+    };
+    export type StatusEnum = 'ARCHIVED' | 'PUBLISHED' | 'UNPUBLISHED';
+    export const StatusEnum = {
+        ARCHIVED: 'ARCHIVED' as StatusEnum,
+        PUBLISHED: 'PUBLISHED' as StatusEnum,
+        UNPUBLISHED: 'UNPUBLISHED' as StatusEnum
     };
 }

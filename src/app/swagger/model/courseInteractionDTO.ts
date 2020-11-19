@@ -12,11 +12,11 @@
 import { RefVO } from './refVO';
 
 export interface CourseInteractionDTO { 
-    createdAt: Date;
+    createdAt?: Date;
     id?: number;
     interactionEntity?: RefVO;
     status: CourseInteractionDTO.StatusEnum;
-    updatedAt: Date;
+    updatedAt?: Date;
 }
 export namespace CourseInteractionDTO {
     export type StatusEnum = 'COMPLETED' | 'STARTED';

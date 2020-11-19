@@ -16,7 +16,6 @@ import { RoutingModule } from './user.routes';
 @NgModule({
   declarations: [LayoutComponent, WrapperComponent, TopicSidebarComponent, QuizComponent],
   imports: [ShareModule, RoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule],
-  exports: [],
   providers: [],
 })
 export class UserModule {}

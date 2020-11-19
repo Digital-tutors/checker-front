@@ -18,6 +18,7 @@ export interface LessonDTOShortResView {
     extensions: Array<RefWithLevelVOShortResView>;
     id?: number;
     level: LessonDTOShortResView.LevelEnum;
+    priority: number;
     replacements: Array<RefWithLevelVOShortResView>;
     simplifications: Array<RefWithLevelVOShortResView>;
     status: LessonDTOShortResView.StatusEnum;

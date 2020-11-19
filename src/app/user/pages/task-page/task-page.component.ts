@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,9 +23,11 @@ import { RouteParamsService } from '@share/services/route-params/route-params.se
 
 import { SidebarService } from '../../../share/services/sidebar.service';
 import { TopicSidebarComponent } from '../../components/topic-sidebar/topic-sidebar.component';
+import {LessonDTO} from '@swagger/model/lessonDTO';
+import {ReplacementVO} from '@swagger/model/replacementVO';
 
 @Component({
-  selector: 'app-user-profile',
+  selector: 'app-task-page',
   templateUrl: './task-page.component.html',
   styleUrls: ['./task-page.component.scss'],
 })
@@ -60,6 +62,7 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     private taskControllerService: TaskControllerService,
     private taskResultControllerService: TaskResultControllerService,
     private route: ActivatedRoute,
+    private router: Router,
     private routeParamsService: RouteParamsService,
   ) {}
 
@@ -140,5 +143,16 @@ export class TaskPageComponent implements OnInit, OnDestroy {
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = data.content;
     });
+  }
+
+  public handleLevelChanged(level: LessonDTO.LevelEnum): void {
+    this.taskControllerService
+      .getReplacementByCurrentIdAndLevelUsingGET1(this.task.id, level)
+      .subscribe((replacement: ReplacementVO) => {
+        if (replacement.isReplacementExist) {
+          const url = this.router.url.split('/').slice(0, this.router.url.split('/').length - 1).join('/') + `/${replacement.replacementItemId}`;
+          this.router.navigateByUrl(url);
+        }
+      });
   }
 }

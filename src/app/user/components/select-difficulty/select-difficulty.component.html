@@ -1,0 +1,9 @@
+<mat-form-field>
+  <mat-label>Уровень подачи материала</mat-label>
+  <mat-select [formControl]="formControl">
+    <mat-option *ngFor="let level of levels"
+                [value]="level">
+      {{ level | levelName }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

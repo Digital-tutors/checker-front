@@ -1,6 +1,10 @@
-<section>
+<section *ngIf="lesson">
 
-  <h1 class="headline-1">{{ lesson?.title }}</h1>
+  <header class="flex al-center between">
+    <h1 class="headline-1">{{ lesson.title }}</h1>
+    <app-user-select-difficulty [currentLevel]="lesson.level"
+                                (levelChanged)="handleLevelChanged($event)"></app-user-select-difficulty>
+  </header>
 
   <app-shadow-container>
 
@@ -8,5 +12,5 @@
 
   </app-shadow-container>
 
-
 </section>
+<mat-spinner *ngIf="!lesson"></mat-spinner>

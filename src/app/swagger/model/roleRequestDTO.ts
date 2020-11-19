@@ -12,12 +12,12 @@
 import { RefVO } from './refVO';
 
 export interface RoleRequestDTO { 
-    createdAt: Date;
+    createdAt?: Date;
     id?: number;
     messageArgument?: string;
     requiredRole: RoleRequestDTO.RequiredRoleEnum;
     status: RoleRequestDTO.StatusEnum;
-    updatedAt: Date;
+    updatedAt?: Date;
     user?: RefVO;
 }
 export namespace RoleRequestDTO {

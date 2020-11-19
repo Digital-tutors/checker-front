@@ -10,6 +10,14 @@ h1.headline-2 {
   background: transparent;
 }
 
+header {
+  margin-bottom: $space * 3;
+
+  .headline-1 {
+    margin-bottom: 0 !important;
+  }
+}
+
 .complete {
   color: #3f51b5;
 }

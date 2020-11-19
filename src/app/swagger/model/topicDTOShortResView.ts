@@ -21,6 +21,7 @@ export interface TopicDTOShortResView {
     lessons: Array<RefVOShortResView>;
     level: TopicDTOShortResView.LevelEnum;
     practicies: Array<RefVOShortResView>;
+    priority: number;
     replacements: Array<RefWithLevelVOShortResView>;
     simplifications: Array<RefWithLevelVOShortResView>;
     status: TopicDTOShortResView.StatusEnum;

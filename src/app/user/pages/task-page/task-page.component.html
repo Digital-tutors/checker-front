@@ -1,7 +1,11 @@
 <app-two-box-grid *ngIf="task">
 
   <section>
-    <h1 class="headline-2">{{task.title}}</h1>
+    <header>
+      <h1 class="headline-2">{{task.title}}</h1>
+      <app-user-select-difficulty [currentLevel]="task.level"
+                                (levelChanged)="handleLevelChanged($event)"></app-user-select-difficulty>
+    </header>
 
     <app-shadow-container>
       <div class="info-header">
@@ -114,3 +118,4 @@
                  showFirstLastButtons
   ></mat-paginator>
 </section>
+<mat-spinner *ngIf="!task"></mat-spinner>

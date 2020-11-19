@@ -13,7 +13,17 @@
 export interface TopicDTORequestView { 
     description?: string;
     fgosStandards?: Array<string>;
+    level?: TopicDTORequestView.LevelEnum;
+    priority?: number;
     professionalStandards?: Array<string>;
     tags?: Array<string>;
     title?: string;
+}
+export namespace TopicDTORequestView {
+    export type LevelEnum = 'EASY' | 'HARD' | 'MIDDLE';
+    export const LevelEnum = {
+        EASY: 'EASY' as LevelEnum,
+        HARD: 'HARD' as LevelEnum,
+        MIDDLE: 'MIDDLE' as LevelEnum
+    };
 }
