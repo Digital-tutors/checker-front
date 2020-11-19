@@ -78,6 +78,7 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       title: [task.title, [Validators.required, Validators.min(1), Validators.max(180)]],
       level: [task.level, [Validators.required]],
+      priority: [task.priority, [Validators.required]],
       status: [task.status, [Validators.required]],
       description: [task.description, [Validators.required]],
       timeLimit: [task.options?.timeLimit, [Validators.required, Validators.max(20)]],
@@ -125,12 +126,13 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    const { title, level, description, timeLimit, memoryLimit, constructions, codes } = this.form.value;
+    const { title, level, description, timeLimit, memoryLimit, constructions, codes, priority } = this.form.value;
 
     const updateTask: TaskDTORequestView = {
       title,
       level,
       description,
+      priority,
       options: {
         constructions: constructions.toString().replace(' ', '').split(','),
         timeLimit,
