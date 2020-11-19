@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
+import {MatDialogRef} from '@angular/material/dialog';
+
+import {LessonAdminControllerService} from '@swagger/api/lessonAdminController.service';
 
 @Component({
   selector: 'app-alert-window',
@@ -6,7 +10,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./alert-window.component.scss'],
 })
 export class AlertWindowComponent implements OnInit {
-  constructor() {}
+  public taskId: number;
 
-  ngOnInit(): void {}
+  constructor(
+    private lessonAdminService: LessonAdminControllerService,
+    private dialogRef: MatDialogRef<AlertWindowComponent>,
+  ) {
+  }
+
+  ngOnInit(): void {
+  }
+
+  public delete(): void {
+    this.lessonAdminService.deleteLessonUsingDELETE(this.taskId).subscribe(() => {
+      this.dialogRef.close();
+    });
+  }
 }

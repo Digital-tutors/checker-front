@@ -48,6 +48,14 @@ export class LessonPageComponent implements OnInit {
       width: '473px',
       height: '270px',
     });
+
+    this.lesson$.subscribe(lesson => {
+      dialogRef.componentInstance.taskId = lesson.id;
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.location.back();
+    });
   }
 
   public handleHtmlChange(data: string, lesson: LessonDTO): void {
