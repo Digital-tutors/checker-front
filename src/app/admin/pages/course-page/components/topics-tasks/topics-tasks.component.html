@@ -35,7 +35,7 @@
       <div class="subject__actions__row">
         <app-button class="button" [bordered]="true" (click)="addLesson(item.topic.id)">Добавить занятие</app-button>
         <app-button class="button" [bordered]="true" (click)="addTask(item.topic.id)">Добавить практ. занятие</app-button>
-        <app-button *ngIf="i === data.length - 1" class="button" [bordered]="true" (click)="addTopic()">Добавить тему</app-button>
+        <app-button *ngIf="i === 0" class="button" [bordered]="true" (click)="addTopic()">Добавить тему</app-button>
       </div>
     </aside>
 
