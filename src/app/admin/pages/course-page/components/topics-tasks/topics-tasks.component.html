@@ -7,7 +7,7 @@
                               [class.active]="item.topic.id === selectedTopic?.id">
           <app-info-container class="info-container"
                               center
-                              title="Тема"
+                              [title]="'Тема ('+item.topic.priority+')'"
                               [text]="item.topic.title"
                               [grey]="item.topic.id !== selectedTopic?.id"
                               (click)="selectTopic(item.topic)"></app-info-container>
@@ -17,14 +17,14 @@
         <app-shadow-container *ngFor="let lesson of item.lessons"
                               class="shadow-container">
           <app-info-container center
-                              title="Занятие"
+                              [title]="'Занятие ('+item.topic.priority+')'"
                               [text]="lesson.title"
                               [routerLink]="['/admin/topic', item.topic.id, 'lesson', lesson.id]"></app-info-container>
         </app-shadow-container>
         <app-shadow-container *ngFor="let task of item.tasks"
                               class="shadow-container">
           <app-info-container center
-                              title="Задача"
+                              [title]="'Задача ('+item.topic.priority+')'"
                               [text]="task.title"
                               [routerLink]="['/admin/topic', item.topic.id, 'task', task.id]"></app-info-container>
         </app-shadow-container>
