@@ -3,7 +3,6 @@
   <div class="participants" *ngIf="students$ | async as students">
     <div class="participant-container" *ngFor="let student of students">
       <div class="participant-container__inner">
-<!--        <img src="favicon.ico" />-->
         <app-info-container center
                             title="Студент"
                             [text]="student | fio"
@@ -12,5 +11,8 @@
       </div>
       <mat-icon>more_vert</mat-icon>
     </div>
+
+    <div *ngIf="students.length == 0">Нет данных</div>
   </div>
+
 </app-shadow-container>

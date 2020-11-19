@@ -1,5 +1,9 @@
 <section class="alert-box">
-  <h1 class="headline-2">{{ task.title }}</h1>
+  <div class="header">
+    <h1 class="headline-2">{{ task.title }}</h1>
+    <span *ngIf="result.completed; else res" class="green">Выполнено</span>
+    <span class="red" #res>Не выполнено</span>
+  </div>
 
   <section class="task-info">
     <h3>Описание</h3>
@@ -10,16 +14,16 @@
       <li *ngFor="let c of task.options.constructions">{{c}}</li>
     </ul>
 
-    <h3 *ngIf="task.options.constructions.length > 0">Время выполнения:</h3>
+    <h3 *ngIf="result.runtime != null">Время выполнения:</h3>
     <p>{{ result.runtime }}</p>
 
-    <h3 *ngIf="task.options.constructions.length > 0">Память:</h3>
+    <h3 *ngIf="result.memory != null">Память:</h3>
     <p>{{ result.memory }}</p>
 
-    <h3 *ngIf="task.options.constructions.length > 0">Попыток:</h3>
+    <h3 *ngIf="result.attempt != null">Кол-во попыток:</h3>
     <p>{{ result.attempt }}</p>
 
-    <h3 *ngIf="task.options.constructions.length > 0">Вывод программы:</h3>
+    <h3 *ngIf="result.messageOut != null">Вывод программы:</h3>
     <p>{{ result.messageOut }}</p>
 
   </section>

@@ -1,6 +1,24 @@
 @import "../../../../vars";
 @import "../../../../colors";
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0 !important;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .green {
+    color: mediumseagreen;
+  }
+}
+
 .task-info, .info-header {
   padding: 0;
   width: calc(100% - 40px);
