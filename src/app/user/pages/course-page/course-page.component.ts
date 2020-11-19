@@ -68,7 +68,13 @@ export class CoursePageComponent implements OnInit, OnDestroy {
         combineLatest(
           topics
             .sort((a, b) => {
-              return b.priority - a.priority;
+              if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
             })
             .map(topic =>
               combineLatest([
@@ -78,10 +84,22 @@ export class CoursePageComponent implements OnInit, OnDestroy {
                 map(([lessons, tasks]) => ({
                   topic,
                   lessons: lessons.sort((a, b) => {
-                    return b.priority - a.priority;
+                    if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
                   }),
                   tasks: tasks.sort((a, b) => {
-                    return b.priority - a.priority;
+                    if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
                   }),
                 })),
               ),

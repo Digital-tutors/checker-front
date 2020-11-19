@@ -93,7 +93,13 @@ export class TopicSidebarComponent implements OnInit {
             tap((topics: TopicDTOShortResView[]) => {
               const indexOfCurrentTopic: number = topics
                 .sort((a, b) => {
-                  return b.priority - a.priority;
+                  if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
                 })
                 .findIndex(({ id }) => id === this.currentTopic.id);
               this.previousTopic = topics[indexOfCurrentTopic - 1];
