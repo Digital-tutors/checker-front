@@ -5,11 +5,11 @@ import { AuthGuard } from '@share/guards/auth.guard';
 import { NotAuthGuard } from '@share/guards/not-auth.guard';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   pathMatch: 'full',
-  //   loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'auth',
+  },
   {
     path: 'auth',
     canActivate: [NotAuthGuard],

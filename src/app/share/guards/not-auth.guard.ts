@@ -11,7 +11,7 @@ export class NotAuthGuard implements CanActivate, CanActivateChild {
 
   private checkForAuth(): boolean {
     if (localStorage.getItem(environment.token)) {
-      this.router.navigate(['']);
+      this.router.navigate(['user/courses']);
     }
 
     return !localStorage.getItem(environment.token);
