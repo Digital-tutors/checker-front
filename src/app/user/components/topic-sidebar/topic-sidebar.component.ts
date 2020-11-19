@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngxs/store';
 
-import { Observable, OperatorFunction } from 'rxjs';
+import {Observable, of, OperatorFunction} from 'rxjs';
 import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
 
 import { LessonControllerService } from '@swagger/api/lessonController.service';
@@ -62,23 +62,23 @@ export class TopicSidebarComponent implements OnInit {
     this.getData();
   }
 
-  private topicFirstLesson(topic: TopicDTOShortResView, setter: (id: number) => void): OperatorFunction<any, LessonDTOShortResView[]> {
-    return (source: Observable<any>) => {
-      let observable$: Observable<LessonDTOShortResView[]> = source.pipe(map(() => []));
+  private topicFirstLesson(topic: TopicDTOShortResView, setter: (id: number) => void): Observable<LessonDTOShortResView[]> {
+    let observable$: Observable<LessonDTOShortResView[]> = of([]);
 
-      if (topic) {
-        observable$ = source.pipe(mergeMap(() => this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id)));
-      }
+    if (topic) {
+      observable$ = this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id);
+    }
 
-      return observable$.pipe(
-        first(),
-        tap((lessons: LessonDTOShortResView[]) => {
-          if (lessons.length) {
-            setter(lessons[0].id);
-          }
-        }),
-      );
-    };
+    console.log(topic);
+
+    return observable$.pipe(
+      first(),
+      tap((lessons: LessonDTOShortResView[]) => {
+        if (lessons.length) {
+          setter(lessons[0].id);
+        }
+      }),
+    );
   }
 
   private getData(): void {
@@ -97,8 +97,8 @@ export class TopicSidebarComponent implements OnInit {
               this.previousTopic = topics[indexOfCurrentTopic - 1];
               this.nextTopic = topics[indexOfCurrentTopic + 1];
             }),
-            this.topicFirstLesson(this.previousTopic, (id: number) => (this.previousTopicFirstLessonId = id)),
-            this.topicFirstLesson(this.nextTopic, (id: number) => (this.nextTopicFirstLessonId = id)),
+            mergeMap(() => this.topicFirstLesson(this.previousTopic, (id: number) => (this.previousTopicFirstLessonId = id))),
+            mergeMap(() => this.topicFirstLesson(this.nextTopic, (id: number) => (this.nextTopicFirstLessonId = id))),
             mergeMap(() => {
               let observable$: Observable<any> = this.lessonControllerService.getLessonByTopicIdUsingGET(params.topicId).pipe(
                 tap((lessons: LessonDTO[]) => (this.lessons = lessons)),
@@ -144,6 +144,7 @@ export class TopicSidebarComponent implements OnInit {
   }
 
   public navToPreviousTopic(): void {
+    console.log(this.previousTopic.id, this.previousTopicFirstLessonId);
     this.navigateToTopicLesson(this.previousTopic.id, this.previousTopicFirstLessonId);
   }
 
