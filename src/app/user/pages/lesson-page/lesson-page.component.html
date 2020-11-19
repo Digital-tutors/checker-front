@@ -3,6 +3,7 @@
   <header class="flex al-center between">
     <h1 class="headline-1">{{ lesson.title }}</h1>
     <app-user-select-difficulty [currentLevel]="lesson.level"
+                                [levels]="levels$ | async"
                                 (levelChanged)="handleLevelChanged($event)"></app-user-select-difficulty>
   </header>
 

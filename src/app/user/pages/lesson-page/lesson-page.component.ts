@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Select} from '@ngxs/store';
 
 import {Observable, Subject} from 'rxjs';
-import {delay, filter, tap} from 'rxjs/operators';
+import {delay, filter, map, mergeMap, tap} from 'rxjs/operators';
 
 import {LessonDTO} from '@swagger/model/lessonDTO';
 
@@ -33,6 +33,8 @@ export class LessonPageComponent implements OnInit, OnDestroy, AfterContentInit 
 
   public lesson: LessonDTO;
 
+  public levels$: Observable<any[]>;
+
   constructor(
     private sidebarService: SidebarService,
     private activatedRoute: ActivatedRoute,
@@ -43,6 +45,7 @@ export class LessonPageComponent implements OnInit, OnDestroy, AfterContentInit 
   }
 
   ngOnInit(): void {
+    this.getLevels();
     this.sidebarService.setSidebar(TopicSidebarComponent);
     this.activatedRoute.params.subscribe(params => this.routeParamsService.updateState(params));
   }
@@ -65,12 +68,32 @@ export class LessonPageComponent implements OnInit, OnDestroy, AfterContentInit 
     this.ngOnDestroy$.next();
   }
 
+  private getLevels(): void {
+    this.levels$ = this.lesson$.pipe(
+      filter(lesson => !!lesson),
+      mergeMap(lesson => this.lessonControllerService.getReplacementByCurrentIdAndLevelUsingGET(lesson.id)),
+      map((replacement: ReplacementVO) => {
+        const levels: any[] = [];
+        if (replacement.easy?.isReplacementExist) {
+          levels.push(LessonDTO.LevelEnum.EASY);
+        }
+        if (replacement.middle?.isReplacementExist) {
+          levels.push(LessonDTO.LevelEnum.MIDDLE);
+        }
+        if (replacement.hard?.isReplacementExist) {
+          levels.push(LessonDTO.LevelEnum.HARD);
+        }
+        return levels;
+      }),
+    );
+  }
+
   public handleLevelChanged(level: LessonDTO.LevelEnum): void {
     this.lessonControllerService
-      .getReplacementByCurrentIdAndLevelUsingGET(this.lesson.id, level)
+      .getReplacementByCurrentIdAndLevelUsingGET(this.lesson.id)
       .subscribe((replacement: ReplacementVO) => {
-        if (replacement.isReplacementExist) {
-          const url = this.router.url.split('/').slice(0, this.router.url.split('/').length - 1).join('/') + `/${replacement.replacementItemId}`;
+        if (replacement[level.toLowerCase()].isReplacementExist) {
+          const url = this.router.url.split('/').slice(0, this.router.url.split('/').length - 1).join('/') + `/${replacement[level.toLowerCase()].replacementItemId}`;
           this.router.navigateByUrl(url);
         }
       });

@@ -45,6 +45,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   public spinner = false;
   public taskResults: PageOfTaskResultDTO;
 
+  public levels$: Observable<any[]>;
+
   public dataSource = new MatTableDataSource<TaskResultDTO>();
 
   public editorOptions = { theme: 'vs-dark', language: 'cpp' };
@@ -78,6 +80,7 @@ export class TaskPageComponent implements OnInit, OnDestroy {
         tap(params => {
           this.taskId = params.get('taskId');
           this.topicId = params.get('id');
+          this.getLevels();
         }),
         mergeMap(params => this.taskControllerService.getTaskByIdUsingGET(Number(params.get('taskId')))),
         tap(task => (this.task = task)),
@@ -103,6 +106,24 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 
   private getHandledCode(): string {
     return this.codeForm.get('code').value.split('    ').join('\t');
+  }
+
+  private getLevels(): void {
+    this.levels$ = this.taskControllerService.getReplacementByCurrentIdAndLevelUsingGET1(Number(this.taskId)).pipe(
+      map((replacement: ReplacementVO) => {
+        const levels: any[] = [];
+        if (replacement.easy?.isReplacementExist) {
+          levels.push(TaskDTO.LevelEnum.EASY);
+        }
+        if (replacement.middle?.isReplacementExist) {
+          levels.push(TaskDTO.LevelEnum.MIDDLE);
+        }
+        if (replacement.hard?.isReplacementExist) {
+          levels.push(TaskDTO.LevelEnum.HARD);
+        }
+        return levels;
+      }),
+    );
   }
 
   public sendCode(): void {
@@ -147,10 +168,10 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 
   public handleLevelChanged(level: LessonDTO.LevelEnum): void {
     this.taskControllerService
-      .getReplacementByCurrentIdAndLevelUsingGET1(this.task.id, level)
+      .getReplacementByCurrentIdAndLevelUsingGET1(this.task.id)
       .subscribe((replacement: ReplacementVO) => {
-        if (replacement.isReplacementExist) {
-          const url = this.router.url.split('/').slice(0, this.router.url.split('/').length - 1).join('/') + `/${replacement.replacementItemId}`;
+        if (replacement[level.toLowerCase()].isReplacementExist) {
+          const url = this.router.url.split('/').slice(0, this.router.url.split('/').length - 1).join('/') + `/${replacement[level.toLowerCase()].replacementItemId}`;
           this.router.navigateByUrl(url);
         }
       });

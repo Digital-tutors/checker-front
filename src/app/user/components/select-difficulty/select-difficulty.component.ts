@@ -9,8 +9,8 @@ import {filter} from 'rxjs/operators';
   styleUrls: ['./select-difficulty.component.scss']
 })
 export class SelectDifficultyComponent implements OnInit {
-  public levels: any[] = [LessonDTO.LevelEnum.EASY, LessonDTO.LevelEnum.MIDDLE, LessonDTO.LevelEnum.HARD];
-
+  @Input()
+  public levels: any[] = [];
   @Input()
   public currentLevel: any;
 
@@ -22,7 +22,7 @@ export class SelectDifficultyComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.handleCurrentLevel()
+    this.handleCurrentLevel();
     this.handleFormControlChange();
   }
 

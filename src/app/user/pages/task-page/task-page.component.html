@@ -4,6 +4,7 @@
     <header>
       <h1 class="headline-2">{{task.title}}</h1>
       <app-user-select-difficulty [currentLevel]="task.level"
+                                  [levels]="levels$ | async"
                                   (levelChanged)="handleLevelChanged($event)"></app-user-select-difficulty>
     </header>
 

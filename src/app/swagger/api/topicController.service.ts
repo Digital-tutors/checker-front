@@ -62,23 +62,16 @@ export class TopicControllerService {
      * getReplacementByCurrentIdAndLevel
      * 
      * @param id id
-     * @param level level
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, level?: string, observe?: 'body', reportProgress?: boolean): Observable<ReplacementVO>;
-    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, level?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ReplacementVO>>;
-    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, level?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ReplacementVO>>;
-    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, level?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, observe?: 'body', reportProgress?: boolean): Observable<ReplacementVO>;
+    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ReplacementVO>>;
+    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ReplacementVO>>;
+    public getReplacementByCurrentIdAndLevelUsingGET2(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getReplacementByCurrentIdAndLevelUsingGET2.');
-        }
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (level !== undefined && level !== null) {
-            queryParameters = queryParameters.set('level', <any>level);
         }
 
         let headers = this.defaultHeaders;
@@ -103,7 +96,6 @@ export class TopicControllerService {
 
         return this.httpClient.request<ReplacementVO>('get',`${this.basePath}/topic/${encodeURIComponent(String(id))}/replacement`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
