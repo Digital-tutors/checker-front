@@ -89,7 +89,7 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
         combineLatest(
           topics
             .sort((a, b) => {
-              return a.priority - b.priority;
+              return b.priority - a.priority;
             })
             .map(topic =>
               combineLatest([
@@ -99,10 +99,10 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
                 map(([lessons, tasks]) => ({
                   topic,
                   lessons: lessons.sort((a, b) => {
-                    return a.priority - b.priority;
+                    return b.priority - a.priority;
                   }),
                   tasks: tasks.sort((a, b) => {
-                    return a.priority - b.priority;
+                    return b.priority - a.priority;
                   }),
                 })),
               ),

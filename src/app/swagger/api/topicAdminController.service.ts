@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { TopicDTO } from '../model/topicDTO';
 import { TopicDTORequestView } from '../model/topicDTORequestView';
+import { TopicDTOShortResView } from '../model/topicDTOShortResView';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -145,6 +146,52 @@ export class TopicAdminControllerService {
         ];
 
         return this.httpClient.request<any>('delete',`${this.basePath}/admin/topic/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * getTopicsForAdminByCourseId
+     * 
+     * @param courseId courseId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getTopicsForAdminByCourseIdUsingGET(courseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<TopicDTOShortResView>>;
+    public getTopicsForAdminByCourseIdUsingGET(courseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TopicDTOShortResView>>>;
+    public getTopicsForAdminByCourseIdUsingGET(courseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TopicDTOShortResView>>>;
+    public getTopicsForAdminByCourseIdUsingGET(courseId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (courseId === null || courseId === undefined) {
+            throw new Error('Required parameter courseId was null or undefined when calling getTopicsForAdminByCourseIdUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<TopicDTOShortResView>>('get',`${this.basePath}/admin/topic/${encodeURIComponent(String(courseId))}/topics/all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
