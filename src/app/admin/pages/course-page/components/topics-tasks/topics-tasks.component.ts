@@ -93,7 +93,7 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
             })
             .map(topic =>
               combineLatest([
-                this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
+                this.lessonAdminControllerService.getLessonForAdminByTopicIdUsingGET(topic.id),
                 this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
               ]).pipe(
                 map(([lessons, tasks]) => ({
