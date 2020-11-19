@@ -36,7 +36,7 @@
     </div>
   </div>
   <footer class="footer">
-    <app-button [alert]="true">Отменить</app-button>
+    <app-button (click)="onCancel()" [alert]="true">Отменить</app-button>
     <app-button (click)="onSubmit()">Сохранить</app-button>
   </footer>
 </main>

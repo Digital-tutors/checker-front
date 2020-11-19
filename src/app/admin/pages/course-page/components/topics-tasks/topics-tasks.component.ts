@@ -65,10 +65,22 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setTopicsAndLessons();
+    this.handleSelectedTopicChange();
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(new Topic.Set(null));
+  }
+
+  private handleSelectedTopicChange(): void {
+    this.topic$
+      .pipe(
+        filter(topic => !topic),
+      )
+      .subscribe(() => {
+        this.selectedTopic = null;
+        this.sidebarService.setSidebar(AboutCourseSidebarComponent);
+      });
   }
 
   private setTopicsAndLessons(): void {
@@ -133,7 +145,7 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
   public selectTopic(topic: TopicDTO | TopicDTOShortResView): void {
     if (this.selectedTopic && this.selectedTopic.id === topic.id) {
       this.selectedTopic = null;
-      this.store.dispatch(null);
+      this.store.dispatch(new Topic.Set(null));
       this.sidebarService.setSidebar(AboutCourseSidebarComponent);
     } else {
       this.selectedTopic = topic as TopicDTO;

@@ -7,14 +7,11 @@ import { EMPTY, Observable } from 'rxjs';
 import { filter, first, mergeMap } from 'rxjs/operators';
 
 import { TopicAdminControllerService } from '@swagger/api/topicAdminController.service';
-import { CourseDTO } from '@swagger/model/courseDTO';
 import { TopicDTO } from '@swagger/model/topicDTO';
 
 import { Topic } from '@store/actions/topic.actions';
 import { AppState } from '@store/app.state';
 
-import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
-import { SidebarService } from '@share/services/sidebar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -84,6 +81,10 @@ export class EditTopicSidebarComponent implements OnInit {
         status: [topic.status],
       });
     });
+  }
+
+  public onCancel(): void {
+    this.store.dispatch(new Topic.Set(null));
   }
 
   public onSubmit(): void {
