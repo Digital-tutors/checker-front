@@ -2,10 +2,11 @@
   <header class="author">
     <p class="title">Автор курса</p>
     <div class="author__person">
-<!--      <img class="author__person__avatar" src="assets/img/thumbnail_avatar.svg" alt="avatar" />-->
+      <!--      <img class="author__person__avatar" src="assets/img/thumbnail_avatar.svg" alt="avatar" />-->
       <aside class="author__person__info">
         <p class="author__person__info__role caption--light">Преподаватель</p>
-        <p class="author__person__info__name headline-2">{{ (data.authorWithStats.author | fio) || 'Фамилия И.О.' }}</p>
+        <p
+          class="author__person__info__name headline-2">{{ (data.authorWithStats.author | fio) || 'Фамилия И.О.' }}</p>
       </aside>
     </div>
     <app-two-box-grid [center]="true">
@@ -30,7 +31,10 @@
       <app-rating [value]="data.courseStats.countOfLessons" caption="Количество занятий"></app-rating>
     </app-two-box-grid>
   </div>
-  <footer class="footer" *ngIf="!data.course.subscribe && !hideSubscribeButton">
-    <app-button (click)="startCourse()">Подписаться</app-button>
-  </footer>
+  <div class="footer" *ngIf="user$ | async as user">
+    <footer
+            *ngIf="!data.course.subscribe && !hideSubscribeButton">
+      <app-button *ngIf="user.id != data.course.author.id" (click)="startCourse()">Подписаться</app-button>
+    </footer>
+  </div>
 </main>
