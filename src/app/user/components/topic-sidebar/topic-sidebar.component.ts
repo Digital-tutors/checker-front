@@ -91,7 +91,11 @@ export class TopicSidebarComponent implements OnInit {
             }),
             mergeMap(() => this.topicControllerService.getTopicsByCourseIdUsingGET(params.courseId)),
             tap((topics: TopicDTOShortResView[]) => {
-              const indexOfCurrentTopic: number = topics.findIndex(({ id }) => id === this.currentTopic.id);
+              const indexOfCurrentTopic: number = topics
+                .sort((a, b) => {
+                  return a.priority - b.priority;
+                })
+                .findIndex(({ id }) => id === this.currentTopic.id);
               this.previousTopic = topics[indexOfCurrentTopic - 1];
               this.nextTopic = topics[indexOfCurrentTopic + 1];
             }),
