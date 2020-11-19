@@ -1,4 +1,7 @@
 <section class="wrapper" *ngIf="form">
+  <div class="back-btn">
+    <app-button [bordered]="true" (click)="goBack()">Назад</app-button>
+  </div>
 
   <h1 class="headline-1">Добавление нового задания</h1>
   <mat-card-subtitle *ngIf="error">Неправильно заполнены поля ввода</mat-card-subtitle>

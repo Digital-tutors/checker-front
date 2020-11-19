@@ -1,16 +1,20 @@
+import {Location} from '@angular/common';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import {EMPTY, Subject} from 'rxjs';
 import {catchError, mergeMap, takeUntil, tap} from 'rxjs/operators';
-import {SidebarService} from '@share/services/sidebar.service';
-import {TaskControllerService} from '@swagger/api/taskController.service';
+
 import {TaskAdminControllerService} from '@swagger/api/taskAdminController.service';
+import {TaskControllerService} from '@swagger/api/taskController.service';
 import {TaskDTO} from '@swagger/model/taskDTO';
 import {TaskDTORequestView} from '@swagger/model/taskDTORequestView';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {TestsDTO} from '@swagger/model/testsDTO';
+
+import {SidebarService} from '@share/services/sidebar.service';
 
 @Component({
   selector: 'app-task-page',
@@ -44,7 +48,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private taskControllerService: TaskControllerService,
     private taskAdminControllerService: TaskAdminControllerService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -92,6 +97,10 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 
   get codes() {
     return this.form.get('codes') as FormArray;
+  }
+
+  public goBack(): void {
+    this.location.back();
   }
 
   public createItem(input: string = '', output: string = ''): FormGroup {

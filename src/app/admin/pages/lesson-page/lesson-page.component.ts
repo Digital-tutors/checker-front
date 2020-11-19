@@ -1,19 +1,24 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
+import {Select, Store} from '@ngxs/store';
+
+import {Observable} from 'rxjs';
+
+import {LessonDTO} from '@swagger/model/lessonDTO';
+
+import {Lesson} from '@store/actions/lesson.actions';
+import {AppState} from '@store/app.state';
+
+import {RouteParamsService} from '@share/services/route-params/route-params.service';
 import { SidebarService } from '@share/services/sidebar.service';
 
 import { LessonPageSidebarComponent } from '../../components/lesson-page-sidebar/lesson-page-sidebar.component';
 
 import { AlertWindowComponent } from 'app/admin/components/alert-window/alert-window.component';
-import {RouteParamsService} from '@share/services/route-params/route-params.service';
-import {ActivatedRoute} from '@angular/router';
-import {Select, Store} from '@ngxs/store';
-import {AppState} from '@store/app.state';
-import {Observable} from 'rxjs';
-import {LessonDTO} from '@swagger/model/lessonDTO';
-import {Lesson} from '@store/actions/lesson.actions';
 
 @Component({
   selector: 'app-lesson-page',
@@ -30,6 +35,7 @@ export class LessonPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private routeParamsService: RouteParamsService,
     private store: Store,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -46,5 +52,9 @@ export class LessonPageComponent implements OnInit {
 
   public handleHtmlChange(data: string, lesson: LessonDTO): void {
     this.store.dispatch(new Lesson.Set({ ...lesson, htmlBody: data }));
+  }
+
+  public goBack(): void {
+    this.location.back();
   }
 }
