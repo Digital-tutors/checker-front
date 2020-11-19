@@ -13,17 +13,17 @@
           <li><b>Тема:</b> {{task.title}}</li>
           <li><b>Уровень
             сложности:</b> {{task.level == 'EASY' ? 'Легкий' : task.level == 'MIDDLE' ? 'Средний' : 'Сложный'}}</li>
-          <li><b>Время выполнения:</b> {{task.options.timeLimit}} с.</li>
-          <li><b>Память:</b> {{task.options.memoryLimit}} Mб</li>
+          <li><b>Время выполнения:</b> {{task.options?.timeLimit}} с.</li>
+          <li><b>Память:</b> {{task.options?.memoryLimit}} Mб</li>
         </ul>
       </div>
       <section class="task-info">
         <h3>Описание</h3>
         <p>{{task.description}}</p>
 
-        <h3 *ngIf="task.options.constructions.length > 0">Запрещенные конструкции</h3>
-        <ul *ngIf="task.options.constructions.length > 0">
-          <li *ngFor="let c of task.options.constructions">{{c}}</li>
+        <h3 *ngIf="task.options?.constructions?.length > 0">Запрещенные конструкции</h3>
+        <ul *ngIf="task.options?.constructions?.length > 0">
+          <li *ngFor="let c of task.options?.constructions">{{c}}</li>
         </ul>
 
         <div class="task-table">
@@ -31,10 +31,10 @@
           <h3>Выходные данные</h3>
         </div>
 
-        <div class="task-table" *ngFor="let test of task.tests.input; let i = index">
+        <div class="task-table" *ngFor="let test of task.tests?.input; let i = index">
           <p>{{test}}</p>
 
-          <p>{{task.tests.output[i]}}</p>
+          <p>{{task.tests?.output[i]}}</p>
         </div>
       </section>
     </app-shadow-container>

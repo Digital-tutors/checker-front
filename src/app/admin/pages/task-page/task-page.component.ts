@@ -74,14 +74,14 @@ export class TaskPageComponent implements OnInit, OnDestroy {
       timeLimit: [task.options?.timeLimit, [Validators.required, Validators.max(20)]],
       memoryLimit: [task.options?.memoryLimit, [Validators.required, Validators.max(512)]],
       constructions: [task.options?.constructions, [Validators.pattern('^[a-zA-Z,]*')]],
-      codes: this.getCodesForm(task.tests),
+      codes: task.tests ? this.getCodesForm(task.tests) : this.fb.array([this.createItem()]),
     });
   }
 
   private getCodesForm(tests: TestsDTO): FormArray {
     const formArray: FormGroup[] = [];
 
-    const maxLength = Math.max(tests.input.length, tests.output.length);
+    const maxLength = Math.max(tests.input?.length || 0, tests.output?.length || 0);
 
     for (let i = 0; i < maxLength; i++) {
       formArray.push(this.createItem(tests.input[i], tests.output[i]));
