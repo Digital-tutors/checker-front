@@ -5,7 +5,6 @@ import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
 import shuffle from 'shuffle-list';
 
 import {SidebarService} from '@share/services/sidebar.service';
-
 import {TopicSidebarComponent} from '../../components/topic-sidebar/topic-sidebar.component';
 import {QuestionInterface} from '../../../testing/services/interfaces/question.interface';
 import {TestInterface} from '../../../testing/services/interfaces/test.interface';
@@ -14,6 +13,7 @@ import {TestingService} from '../../../testing/services/testing.service';
 import {filter, map, mergeMap, tap} from 'rxjs/operators';
 import {Select} from '@ngxs/store';
 import {UserDTO} from '@swagger/model/userDTO';
+import {RouteParamsService} from '@share/services/route-params/route-params.service';
 
 @Component({
   selector: 'app-user-test-page',
@@ -38,11 +38,13 @@ export class TestPageComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private testingService: TestingService
+    private testingService: TestingService,
+    private routeParamsService: RouteParamsService,
   ) {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => this.routeParamsService.updateState(params));
     this.sidebarService.setSidebar(TopicSidebarComponent);
     this.getData();
   }

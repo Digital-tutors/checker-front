@@ -25,6 +25,8 @@ import { TABS } from './const/tabs.const';
 import { TabsEnum } from './enums/tabs.enum';
 import { TabInterface } from './interfaces/tab.interface';
 import sort from 'sort-array';
+import {TestingService} from '../../../testing/services/testing.service';
+import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-tests.interface';
 
 @Component({
   selector: 'app-topic-sidebar',
@@ -37,6 +39,9 @@ export class TopicSidebarComponent implements OnInit {
 
   public task: TaskDTO;
   public tasks: TaskDTO[] = [];
+
+  public test: ThemeTestsInterface;
+  public tests: ThemeTestsInterface[] = [];
 
   public previousTopic: TopicDTOShortResView;
   public currentTopic: TopicDTO;
@@ -57,6 +62,7 @@ export class TopicSidebarComponent implements OnInit {
     private lessonControllerService: LessonControllerService,
     private topicControllerService: TopicControllerService,
     private taskControllerService: TaskControllerService,
+    private testingService: TestingService,
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +129,20 @@ export class TopicSidebarComponent implements OnInit {
                 );
               }
 
+              if (params.testId) {
+                observable$ = observable$.pipe(
+                  mergeMap(() => this.testingService.getTestsByThemeId(params.topicId)),
+                  tap(tests => {
+                    this.tests = tests;
+                    this.test = this.tests.find(({ testId }) => testId === Number(params.testId));
+
+                    if (this.test) {
+                      this.activeTab = TabsEnum.TESTS;
+                    }
+                  }),
+                );
+              }
+
               return observable$;
             }),
           ),
@@ -137,6 +157,10 @@ export class TopicSidebarComponent implements OnInit {
 
   public navigateToTopicTask(topicId: number, taskId: number): void {
     this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'task', taskId]);
+  }
+
+  public navigateToTopicTest(topicId: number, testId: number): void {
+    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'test', testId]);
   }
 
   public selectTab(tab: TabsEnum): void {

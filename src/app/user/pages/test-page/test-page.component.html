@@ -2,7 +2,7 @@
 
 <app-shadow-container>
 
-  <app-button *ngIf="!activeQuestion && !isDone" (click)="startQuiz()"></app-button>
+  <div></div>
 
   <div class="question" *ngIf="activeQuestion">
     <h1 class="question__title title">{{ activeQuestion.text }}</h1>
