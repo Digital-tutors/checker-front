@@ -6,6 +6,8 @@ import { Select, Store } from '@ngxs/store';
 import { combineLatest, Observable, race, Subject } from 'rxjs';
 import { filter, map, mergeMap, repeatWhen } from 'rxjs/operators';
 
+import sort from 'sort-array';
+
 import { CourseControllerService } from '@swagger/api/courseController.service';
 import { LessonAdminControllerService } from '@swagger/api/lessonAdminController.service';
 import { LessonControllerService } from '@swagger/api/lessonController.service';
@@ -29,6 +31,7 @@ import { SidebarService } from '@share/services/sidebar.service';
 import { EditTopicSidebarComponent } from '../../../../components/edit-topic-sidebar/edit-topic-sidebar.component';
 
 import { TopicWithPayloadInterface } from './interfaces/topic-with-payload.interface';
+import {TopicWithLessonsInterface} from '../../../../../user/pages/course-page/interfaces/topic-with-lessons.interface';
 
 @Component({
   selector: 'app-topics-tasks',
@@ -86,17 +89,8 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
   private setTopicsAndLessons(): void {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.routeParamsService.routeParamsSnapshot().courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
-        combineLatest(
-          topics
-            .sort((a, b) => {
-              if (a.priority === 0) {
-                      return 0;
-                    } else if (a.priority < b.priority) {
-                      return -1;
-                    } else {
-                      return  1;
-                    }
-            })
+        combineLatest<TopicWithLessonsInterface[]>(
+          sort(topics, { by: 'priority' })
             .map(topic =>
               combineLatest([
                 this.lessonAdminControllerService.getLessonForAdminByTopicIdUsingGET(topic.id),
@@ -104,24 +98,8 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
               ]).pipe(
                 map(([lessons, tasks]) => ({
                   topic,
-                  lessons: lessons.sort((a, b) => {
-                    if (a.priority === 0) {
-                      return 0;
-                    } else if (a.priority < b.priority) {
-                      return -1;
-                    } else {
-                      return  1;
-                    }
-                  }),
-                  tasks: tasks.sort((a, b) => {
-                    if (a.priority === 0) {
-                      return 0;
-                    } else if (a.priority < b.priority) {
-                      return -1;
-                    } else {
-                      return  1;
-                    }
-                  }),
+                  lessons: sort(lessons, { by: 'priority' }),
+                  tasks: sort(tasks, { by: 'priority' }),
                 })),
               ),
             ),
