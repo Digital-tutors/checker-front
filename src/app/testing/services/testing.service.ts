@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 
 import {Observable} from 'rxjs';
 
+import {QuestionInterface} from './interfaces/question.interface';
 import {ResultInterface} from './interfaces/result.interface';
 import {TestInterface} from './interfaces/test.interface';
-import {QuestionInterface} from './interfaces/question.interface';
 
 @Injectable({
   providedIn: 'root'
