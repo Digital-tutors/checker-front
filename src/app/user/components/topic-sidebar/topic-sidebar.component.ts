@@ -74,7 +74,7 @@ export class TopicSidebarComponent implements OnInit {
       first(),
       tap((lessons: LessonDTOShortResView[]) => {
         if (lessons.length) {
-          setter(lessons[0].id);
+          setter(sort(lessons, { by: 'priority' })[0].id);
         }
       }),
     );
