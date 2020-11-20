@@ -32,6 +32,7 @@ import { EditTopicSidebarComponent } from '../../../../components/edit-topic-sid
 
 import { TopicWithPayloadInterface } from './interfaces/topic-with-payload.interface';
 import {TopicWithLessonsInterface} from '../../../../../user/pages/course-page/interfaces/topic-with-lessons.interface';
+import {TestingService} from '../../../../../testing/services/testing.service';
 
 @Component({
   selector: 'app-topics-tasks',
@@ -60,6 +61,7 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
     private courseControllerService: CourseControllerService,
     private topicAdminControllerService: TopicAdminControllerService,
     private lessonAdminControllerService: LessonAdminControllerService,
+    private testingService: TestingService,
     private taskAdminControllerService: TaskAdminControllerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -95,11 +97,13 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
               combineLatest([
                 this.lessonAdminControllerService.getLessonForAdminByTopicIdUsingGET(topic.id),
                 this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
+                this.testingService.getTestsByThemeId(topic.id),
               ]).pipe(
-                map(([lessons, tasks]) => ({
+                map(([lessons, tasks, tests]) => ({
                   topic,
                   lessons: sort(lessons, { by: 'priority' }),
                   tasks: sort(tasks, { by: 'priority' }),
+                  tests,
                 })),
               ),
             ),

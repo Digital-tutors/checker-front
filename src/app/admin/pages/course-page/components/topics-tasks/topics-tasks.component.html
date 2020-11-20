@@ -21,6 +21,13 @@
                               [text]="lesson.title"
                               [routerLink]="['/admin/topic', item.topic.id, 'lesson', lesson.id]"></app-info-container>
         </app-shadow-container>
+        <app-shadow-container *ngFor="let test of item.tests; let i = index"
+                              class="shadow-container">
+          <app-info-container center
+                              title="Тест"
+                              [text]="'Тест #' + i"
+                              [routerLink]="['/admin/topic', item.topic.id, 'task', test.testId]"></app-info-container>
+        </app-shadow-container>
         <app-shadow-container *ngFor="let task of item.tasks"
                               class="shadow-container">
           <app-info-container center
