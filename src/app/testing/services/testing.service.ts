@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {ResultInterface} from './interfaces/result.interface';
 import {TestInterface} from './interfaces/test.interface';
 import {QuestionInterface} from './interfaces/question.interface';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,12 @@ export class TestingService {
   }
 
   public getQuestion(questionId: string): Observable<QuestionInterface> {
-    return this.http.get<QuestionInterface>(`${this.url}/question-details/${questionId}`);
+    return this.http.get<QuestionInterface>(`${this.url}/question-details/${questionId}`).pipe(
+      map(question => ({
+        ...question,
+        answers: Object.values(question.answers),
+      })),
+    );
   }
 
   public postTestResult(result: ResultInterface): Observable<any> {

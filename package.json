@@ -43,6 +43,7 @@
     "ngx-monaco-editor": "^9.0.0",
     "path": "^0.12.7",
     "rxjs": "~6.5.4",
+    "shuffle-list": "^1.0.0",
     "sort-array": "^4.1.2",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
