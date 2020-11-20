@@ -6,8 +6,6 @@ import { Select, Store } from '@ngxs/store';
 import { combineLatest, Observable, race, Subject } from 'rxjs';
 import { filter, map, mergeMap, repeatWhen } from 'rxjs/operators';
 
-import sort from 'sort-array';
-
 import { CourseControllerService } from '@swagger/api/courseController.service';
 import { LessonAdminControllerService } from '@swagger/api/lessonAdminController.service';
 import { LessonControllerService } from '@swagger/api/lessonController.service';
@@ -89,7 +87,16 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.routeParamsService.routeParamsSnapshot().courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest(
-          sort(topics, 'priority')
+          topics
+            .sort((a, b) => {
+              if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
+            })
             .map(topic =>
               combineLatest([
                 this.lessonAdminControllerService.getLessonForAdminByTopicIdUsingGET(topic.id),
@@ -97,8 +104,24 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
               ]).pipe(
                 map(([lessons, tasks]) => ({
                   topic,
-                  lessons: sort(lessons, 'priority'),
-                  tasks: sort(tasks, 'priority'),
+                  lessons: lessons.sort((a, b) => {
+                    if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
+                  }),
+                  tasks: tasks.sort((a, b) => {
+                    if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
+                  }),
                 })),
               ),
             ),

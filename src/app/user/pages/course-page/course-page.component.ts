@@ -20,7 +20,6 @@ import { AboutCourseSidebarComponent } from '@share/components/about-course-side
 import { SidebarService } from '@share/services/sidebar.service';
 
 import { TopicWithLessonsInterface } from './interfaces/topic-with-lessons.interface';
-import sort from 'sort-array';
 
 @Component({
   selector: 'app-user-course-page',
@@ -67,7 +66,16 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.activatedRoute.snapshot.params.courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest(
-          sort(topics, 'priority')
+          topics
+            .sort((a, b) => {
+              if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
+            })
             .map(topic =>
               combineLatest([
                 this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
@@ -75,8 +83,24 @@ export class CoursePageComponent implements OnInit, OnDestroy {
               ]).pipe(
                 map(([lessons, tasks]) => ({
                   topic,
-                  lessons: sort(lessons, 'priority'),
-                  tasks: sort(tasks, 'priority'),
+                  lessons: lessons.sort((a, b) => {
+                    if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
+                  }),
+                  tasks: tasks.sort((a, b) => {
+                    if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
+                  }),
                 })),
               ),
           ),

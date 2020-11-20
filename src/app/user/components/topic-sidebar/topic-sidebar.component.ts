@@ -24,7 +24,6 @@ import { RouteParamsService } from '@share/services/route-params/route-params.se
 import { TABS } from './const/tabs.const';
 import { TabsEnum } from './enums/tabs.enum';
 import { TabInterface } from './interfaces/tab.interface';
-import sort from 'sort-array';
 
 @Component({
   selector: 'app-topic-sidebar',
@@ -92,7 +91,16 @@ export class TopicSidebarComponent implements OnInit {
             }),
             mergeMap(() => this.topicControllerService.getTopicsByCourseIdUsingGET(params.courseId)),
             tap((topics: TopicDTOShortResView[]) => {
-              const indexOfCurrentTopic: number = sort(topics, 'priority')
+              const indexOfCurrentTopic: number = topics
+                .sort((a, b) => {
+                  if (a.priority === 0) {
+                      return 0;
+                    } else if (a.priority < b.priority) {
+                      return -1;
+                    } else {
+                      return  1;
+                    }
+                })
                 .findIndex(({ id }) => id === this.currentTopic.id);
               this.previousTopic = topics[indexOfCurrentTopic - 1];
               this.nextTopic = topics[indexOfCurrentTopic + 1];
@@ -101,11 +109,11 @@ export class TopicSidebarComponent implements OnInit {
             mergeMap(() => this.topicFirstLesson(this.nextTopic, (id: number) => (this.nextTopicFirstLessonId = id))),
             mergeMap(() => {
               let observable$: Observable<any> = this.lessonControllerService.getLessonByTopicIdUsingGET(params.topicId).pipe(
-                tap((lessons: LessonDTO[]) => (this.lessons = sort(lessons, 'priority'))),
+                tap((lessons: LessonDTO[]) => (this.lessons = lessons)),
                 mergeMap(() => this.taskControllerService.getTasksByTopicIdUsingGET(params.topicId)),
                 tap((tasks: TaskDTO[]) => {
-                  this.tasks = sort(tasks, 'priority');
-                  this.task = this.tasks.find(({ id }) => id === Number(params.taskId));
+                  this.tasks = tasks;
+                  this.task = tasks.find(({ id }) => id === Number(params.taskId));
 
                   if (this.task) {
                     this.activeTab = TabsEnum.TASKS;
@@ -144,6 +152,7 @@ export class TopicSidebarComponent implements OnInit {
   }
 
   public navToPreviousTopic(): void {
+    console.log(this.previousTopic.id, this.previousTopicFirstLessonId);
     this.navigateToTopicLesson(this.previousTopic.id, this.previousTopicFirstLessonId);
   }
 
