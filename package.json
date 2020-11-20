@@ -6,7 +6,7 @@
     "ng": "ng",
     "dev": "ng serve",
     "start": "node server.js",
-    "build": "ng build",
+    "build": "ngcc & ng build",
     "test": "ng test",
     "lint": "yarn run lint:check && yarn run lint:style && yarn run format:check",
     "e2e": "ng e2e",
