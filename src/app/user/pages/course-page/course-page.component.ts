@@ -19,7 +19,10 @@ import { AppState } from '@store/app.state';
 import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
 import { SidebarService } from '@share/services/sidebar.service';
 
+import {TestingService} from '../../../testing/services/testing.service';
+
 import { TopicWithLessonsInterface } from './interfaces/topic-with-lessons.interface';
+
 import sort from 'sort-array';
 
 @Component({
@@ -42,6 +45,7 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     private lessonControllerService: LessonControllerService,
     private taskControllerService: TaskControllerService,
     private courseControllerService: CourseControllerService,
+    private testingService: TestingService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {}
@@ -72,14 +76,16 @@ export class CoursePageComponent implements OnInit, OnDestroy {
               combineLatest([
                 this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
                 this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
+                this.testingService.getTestsByThemeId(topic.id),
               ]).pipe(
-                map(([lessons, tasks]) => ({
+                map(([lessons, tasks, tests]) => ({
                   topic,
                   lessons: sort(lessons, { by: 'priority' }),
                   tasks: sort(tasks, { by: 'priority' }),
+                  tests,
                 })),
               ),
-          ),
+            ),
         ),
       ),
     );
