@@ -23,6 +23,11 @@ export class TestPageComponent implements OnInit, OnDestroy {
   public test: TestInterface;
   public questions: QuestionInterface[] = [];
 
+  public activeQuestion: QuestionInterface;
+  public answerIndexes: string[];
+
+  public isDone: boolean;
+
   constructor(
     private sidebarService: SidebarService,
     private router: Router,
@@ -56,5 +61,37 @@ export class TestPageComponent implements OnInit, OnDestroy {
         tap(questions => this.questions = questions),
       )
       .subscribe();
+  }
+
+  public startQuiz(): void {
+    this.activeQuestion = this.questions[0];
+  }
+
+  public answersMapToObj(answers: any): { index: string; answer: string }[] {
+    return Object.entries(answers).map(([key, value]) => ({
+      index: key,
+      answer: value as string,
+    }));
+  }
+
+  public handleCheckbox(item: { index: string; answer: string }): void {
+    if (!this.answerIndexes.includes(item.index)) {
+      this.answerIndexes.push(item.index);
+    } else {
+      this.answerIndexes = this.answerIndexes.filter(i => i === item.index);
+    }
+  }
+
+  public submitQuestion(): void {
+    const question = { ...this.activeQuestion };
+    const answers: number[] = this.answerIndexes.map(item => Number(item));
+    const indexOfCurrentQuestion = this.questions.findIndex(({ id }) => id === this.activeQuestion.id);
+    this.activeQuestion = this.questions[indexOfCurrentQuestion + 1];
+
+    if (!this.activeQuestion) {
+      this.isDone = true;
+    }
+
+    // сделать что-то с answers
   }
 }
