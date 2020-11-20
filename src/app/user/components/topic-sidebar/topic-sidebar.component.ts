@@ -92,7 +92,7 @@ export class TopicSidebarComponent implements OnInit {
             }),
             mergeMap(() => this.topicControllerService.getTopicsByCourseIdUsingGET(params.courseId)),
             tap((topics: TopicDTOShortResView[]) => {
-              const indexOfCurrentTopic: number = sort(topics, 'priority')
+              const indexOfCurrentTopic: number = sort(topics, { by: 'priority' })
                 .findIndex(({ id }) => id === this.currentTopic.id);
               this.previousTopic = topics[indexOfCurrentTopic - 1];
               this.nextTopic = topics[indexOfCurrentTopic + 1];
@@ -101,10 +101,10 @@ export class TopicSidebarComponent implements OnInit {
             mergeMap(() => this.topicFirstLesson(this.nextTopic, (id: number) => (this.nextTopicFirstLessonId = id))),
             mergeMap(() => {
               let observable$: Observable<any> = this.lessonControllerService.getLessonByTopicIdUsingGET(params.topicId).pipe(
-                tap((lessons: LessonDTO[]) => (this.lessons = sort(lessons, 'priority'))),
+                tap((lessons: LessonDTO[]) => (this.lessons = sort(lessons, { by: 'priority' }))),
                 mergeMap(() => this.taskControllerService.getTasksByTopicIdUsingGET(params.topicId)),
                 tap((tasks: TaskDTO[]) => {
-                  this.tasks = sort(tasks, 'priority');
+                  this.tasks = sort(tasks, { by: 'priority' });
                   this.task = this.tasks.find(({ id }) => id === Number(params.taskId));
 
                   if (this.task) {

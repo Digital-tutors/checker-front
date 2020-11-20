@@ -16,8 +16,7 @@
     "lint:check": "eslint \"src/**/*.ts\" && tsc --noemit",
     "lint:fix": "eslint --fix \"src/**/*.ts\"",
     "format:check": "prettier --check src/**/*.ts",
-    "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\"",
-    "postinstall": "ngcc"
+    "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\""
   },
   "config": {
     "commitizen": {
@@ -39,7 +38,6 @@
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@ng-stack/contenteditable": "^1.1.1",
     "@ngxs/store": "^3.6.2",
-    "@types/sort-array": "^2.0.0",
     "express": "^4.17.1",
     "ngx-monaco-editor": "^9.0.0",
     "path": "^0.12.7",

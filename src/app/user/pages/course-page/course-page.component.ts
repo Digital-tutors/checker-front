@@ -67,7 +67,7 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.activatedRoute.snapshot.params.courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest(
-          sort(topics, 'priority')
+          sort(topics, { by: 'priority' })
             .map(topic =>
               combineLatest([
                 this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
@@ -75,8 +75,8 @@ export class CoursePageComponent implements OnInit, OnDestroy {
               ]).pipe(
                 map(([lessons, tasks]) => ({
                   topic,
-                  lessons: sort(lessons, 'priority'),
-                  tasks: sort(tasks, 'priority'),
+                  lessons: sort(lessons, { by: 'priority' }),
+                  tasks: sort(tasks, { by: 'priority' }),
                 })),
               ),
           ),
