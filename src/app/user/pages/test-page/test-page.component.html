@@ -2,7 +2,26 @@
 
 <app-shadow-container>
 
-  <p>Тест</p>
+  <app-button *ngIf="!activeQuestion && !isDone" (click)="startQuiz()"></app-button>
+
+  <div class="question" *ngIf="activeQuestion">
+    <h1 class="question__title title">{{ activeQuestion.text }}</h1>
+
+    <ul class="question__answers">
+      <li *ngFor="let item of answersMapToObj(activeQuestion.answers)"
+          class="question__answers__item">
+        <mat-checkbox (change)="handleCheckbox(item)">{{ item.answer }}</mat-checkbox>
+      </li>
+    </ul>
+
+    <app-button (click)="submitQuestion()">Подтвердить</app-button>
+
+  </div>
+
+  <div *ngIf="isDone"
+       class="results">
+    результаты
+  </div>
 
 </app-shadow-container>
 

@@ -8,5 +8,7 @@ export interface QuestionInterface {
   right_answers: number[];
   points: number;
   subtheme: number;
-  answers: string[];
+  answers: {
+    [num: string]: string;
+  };
 }
