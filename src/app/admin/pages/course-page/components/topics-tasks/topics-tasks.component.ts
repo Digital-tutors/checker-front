@@ -31,6 +31,7 @@ import { SidebarService } from '@share/services/sidebar.service';
 import { EditTopicSidebarComponent } from '../../../../components/edit-topic-sidebar/edit-topic-sidebar.component';
 
 import { TopicWithPayloadInterface } from './interfaces/topic-with-payload.interface';
+import {TopicWithLessonsInterface} from '../../../../../user/pages/course-page/interfaces/topic-with-lessons.interface';
 
 @Component({
   selector: 'app-topics-tasks',
@@ -88,7 +89,7 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
   private setTopicsAndLessons(): void {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.routeParamsService.routeParamsSnapshot().courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
-        combineLatest(
+        combineLatest<TopicWithLessonsInterface[]>(
           sort(topics, { by: 'priority' })
             .map(topic =>
               combineLatest([

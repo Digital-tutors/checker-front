@@ -66,9 +66,9 @@ export class CoursePageComponent implements OnInit, OnDestroy {
   private setTopicsAndLessons(): void {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.activatedRoute.snapshot.params.courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
-        combineLatest(
+        combineLatest<TopicWithLessonsInterface[]>(
           sort(topics, { by: 'priority' })
-            .map(topic =>
+            .map((topic: TopicDTOShortResView) =>
               combineLatest([
                 this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
                 this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
