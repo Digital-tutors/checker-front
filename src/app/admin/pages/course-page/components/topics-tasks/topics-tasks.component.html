@@ -17,14 +17,14 @@
         <app-shadow-container *ngFor="let lesson of item.lessons"
                               class="shadow-container">
           <app-info-container center
-                              [title]="'Занятие ('+item.topic.priority+')'"
+                              [title]="'Занятие ('+lesson.priority+')'"
                               [text]="lesson.title"
                               [routerLink]="['/admin/topic', item.topic.id, 'lesson', lesson.id]"></app-info-container>
         </app-shadow-container>
         <app-shadow-container *ngFor="let task of item.tasks"
                               class="shadow-container">
           <app-info-container center
-                              [title]="'Задача ('+item.topic.priority+')'"
+                              [title]="'Задача ('+task.priority+')'"
                               [text]="task.title"
                               [routerLink]="['/admin/topic', item.topic.id, 'task', task.id]"></app-info-container>
         </app-shadow-container>
