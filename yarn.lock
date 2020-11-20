@@ -1087,11 +1087,6 @@
   resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-3.0.17.tgz#50bea0c3c2acc31c959c5b1e747798b3b3d06d4b"
   integrity sha512-tGomyEuzSC1H28y2zlW6XPCaDaXFaD6soTdb4GNdmte2qfHtrKqhy0ZFs4r/1hpazCfEZqeTSRLvSasmEx89uw==
 
-"@types/sort-array@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@types/sort-array/-/sort-array-2.0.0.tgz#c1206d93116c8e4bd04baf720ed6237626f3e5bd"
-  integrity sha512-O1GO2Zty0dkfrhmiAKRO01xxBuLPH2RGLeaTgYYTwvyKoABUAhQK6QWWwhfMtZuV7PVb3jPuL1dxSGdP4t6/aA==
-
 "@types/source-list-map@*":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
