@@ -23,6 +23,16 @@ export class TestingService {
     return this.http.get<QuestionInterface>(`${this.url}/question-details/${questionId}`);
   }
 
+  public postQuestionAnswer(userId: number, topicId: number, testId: number, questionId: string, answers: number[]): Observable<any> {
+    return this.http.post<any>(`${this.url}/question-result/${userId}/${topicId}/${testId}/${questionId}`, {
+      user_id: userId,
+      theme_id: topicId,
+      test_id: testId,
+      question: questionId,
+      user_answers: answers,
+    });
+  }
+
   public postTestResult(result: ResultInterface): Observable<any> {
     return this.http.post(`${this.url}/user-test-result/${result.user_id}/${result.theme_id}/${result.test_id}`, result);
   }

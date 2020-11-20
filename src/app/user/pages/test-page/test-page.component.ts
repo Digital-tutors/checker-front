@@ -1,16 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {combineLatest, Subject} from 'rxjs';
+import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
 
 import shuffle from 'shuffle-list';
 
-import {SidebarService} from '../../../share/services/sidebar.service';
+import {SidebarService} from '@share/services/sidebar.service';
+
 import {TopicSidebarComponent} from '../../components/topic-sidebar/topic-sidebar.component';
 import {QuestionInterface} from '../../../testing/services/interfaces/question.interface';
 import {TestInterface} from '../../../testing/services/interfaces/test.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestingService} from '../../../testing/services/testing.service';
-import {map, mergeMap, tap} from 'rxjs/operators';
+import {filter, map, mergeMap, tap} from 'rxjs/operators';
+import {Select} from '@ngxs/store';
+import {UserDTO} from '@swagger/model/userDTO';
 
 @Component({
   selector: 'app-user-test-page',
@@ -27,6 +30,9 @@ export class TestPageComponent implements OnInit, OnDestroy {
   public answerIndexes: string[];
 
   public isDone: boolean;
+
+  @Select()
+  public user$: Observable<UserDTO>;
 
   constructor(
     private sidebarService: SidebarService,
@@ -63,6 +69,20 @@ export class TestPageComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  private postQuestionAnswer(question: QuestionInterface, answers: number[]): Observable<any> {
+    return this.user$
+      .pipe(
+        filter(user => !!user),
+        mergeMap(user => this.testingService.postQuestionAnswer(
+          user.id,
+          this.test.theme_id,
+          this.test.test_id,
+          question.id,
+          answers,
+        ))
+      );
+  }
+
   public startQuiz(): void {
     this.activeQuestion = this.questions[0];
   }
@@ -83,15 +103,23 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   public submitQuestion(): void {
-    const question = { ...this.activeQuestion };
+    const question = {...this.activeQuestion};
     const answers: number[] = this.answerIndexes.map(item => Number(item));
-    const indexOfCurrentQuestion = this.questions.findIndex(({ id }) => id === this.activeQuestion.id);
+
+    const indexOfCurrentQuestion = this.questions.findIndex(({id}) => id === this.activeQuestion.id);
     this.activeQuestion = this.questions[indexOfCurrentQuestion + 1];
+    this.answerIndexes = [];
+
+    let observable$ = this.postQuestionAnswer(question, answers);
 
     if (!this.activeQuestion) {
-      this.isDone = true;
+      // Получать результат теста
+      observable$ = observable$.pipe(
+        mergeMap(() => EMPTY),
+        tap(() => this.isDone = true),
+      );
     }
 
-    // сделать что-то с answers
+    observable$.subscribe();
   }
 }

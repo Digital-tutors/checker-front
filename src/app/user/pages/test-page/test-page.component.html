@@ -15,12 +15,18 @@
     </ul>
 
     <app-button (click)="submitQuestion()">Подтвердить</app-button>
-
   </div>
 
   <div *ngIf="isDone"
        class="results">
-    результаты
+    <p class="title">Ваш результат: <b>4</b></p>
+    <p class="text">Вы допустили ошибки в следующих занятиях:</p>
+    <ul class="results__subjects">
+      <li class="results__subjects__item link">Объект null</li>
+      <li class="results__subjects__item link">Объект null</li>
+      <li class="results__subjects__item link">Объект null</li>
+      <li class="results__subjects__item link">Объект null</li>
+    </ul>
   </div>
 
 </app-shadow-container>
