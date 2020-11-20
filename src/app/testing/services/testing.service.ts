@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {QuestionInterface} from './interfaces/question.interface';
 import {ResultInterface} from './interfaces/result.interface';
 import {TestInterface} from './interfaces/test.interface';
+import {ThemeTestsInterface} from './interfaces/theme-tests.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class TestingService {
   }
 
   public getQuestion(questionId: string): Observable<QuestionInterface> {
-    return this.http.get<QuestionInterface>(`${this.url}/question-details/${questionId}`);
+    return this.http.get<QuestionInterface>(`${this.url}/question-detail/${questionId}`);
   }
 
   public postQuestionAnswer(userId: number, topicId: number, testId: number, questionId: string, answers: number[]): Observable<any> {
@@ -41,7 +42,7 @@ export class TestingService {
     return this.http.get(`${this.url}/user-test-result/${result.user_id}/${result.theme_id}/${result.test_id}`);
   }
 
-  public getTestsByThemeId(themeId: number): Observable<any> {
-    return this.http.get(`${this.url}/tests-in-theme/${themeId}`);
+  public getTestsByThemeId(themeId: number): Observable<ThemeTestsInterface[]> {
+    return this.http.get<ThemeTestsInterface[]>(`${this.url}/tests-in-theme/${themeId}`);
   }
 }
