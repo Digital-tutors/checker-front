@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ResultInterface} from './interfaces/result.interface';
+import {TestInterface} from './interfaces/test.interface';
+import {QuestionInterface} from './interfaces/question.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,12 @@ export class TestingService {
 
   constructor(private http: HttpClient) { }
 
-  public getTest(topicId: number, testId: string): Observable<any> {
-    return this.http.get(`${this.url}/test/${topicId}/${testId}`);
+  public getTest(topicId: number, testId: string): Observable<TestInterface> {
+    return this.http.get<TestInterface>(`${this.url}/test/${topicId}/${testId}`);
+  }
+
+  public getQuestion(questionId: string): Observable<QuestionInterface> {
+    return this.http.get<QuestionInterface>(`${this.url}/question-details/${questionId}`);
   }
 
   public postTestResult(result: ResultInterface): Observable<any> {
