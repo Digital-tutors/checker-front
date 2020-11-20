@@ -6,7 +6,7 @@
     "ng": "ng",
     "dev": "ng serve",
     "start": "node server.js",
-    "build": "ngcc & ng build",
+    "build": "ng build",
     "test": "ng test",
     "lint": "yarn run lint:check && yarn run lint:style && yarn run format:check",
     "e2e": "ng e2e",
@@ -16,7 +16,8 @@
     "lint:check": "eslint \"src/**/*.ts\" && tsc --noemit",
     "lint:fix": "eslint --fix \"src/**/*.ts\"",
     "format:check": "prettier --check src/**/*.ts",
-    "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\""
+    "format:fix": "prettier --write \"src/**/*.{ts,js,json,scss}\"",
+    "postinstall": "ngcc"
   },
   "config": {
     "commitizen": {
