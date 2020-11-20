@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
 import {Observable} from 'rxjs';
+
 import {ResultInterface} from './interfaces/result.interface';
 import {TestInterface} from './interfaces/test.interface';
 import {QuestionInterface} from './interfaces/question.interface';
@@ -27,5 +29,9 @@ export class TestingService {
 
   public getTestResult(result: ResultInterface): Observable<any> {
     return this.http.get(`${this.url}/user-test-result/${result.user_id}/${result.theme_id}/${result.test_id}`);
+  }
+
+  public getTestsByThemeId(themeId: number): Observable<any> {
+    return this.http.get(`${this.url}/tests-in-theme/${themeId}`);
   }
 }
