@@ -21,14 +21,14 @@
 
   <div *ngIf="isDone"
        class="results">
-    <p class="title">Ваш результат: <b>4</b></p>
+    <p class="title">Ваш результат: <b>{{ result.points }}</b></p>
     <p class="text">Вы допустили ошибки в следующих занятиях:</p>
     <ul class="results__subjects">
-      <li class="results__subjects__item link">Объект null</li>
-      <li class="results__subjects__item link">Объект null</li>
-      <li class="results__subjects__item link">Объект null</li>
-      <li class="results__subjects__item link">Объект null</li>
+      <li *ngFor="let item of lessons"
+          (click)="toLesson(item.id)"
+          class="results__subjects__item link">{{ item.title }}</li>
     </ul>
+    <app-button (click)="startQuiz()">Попробовать еще раз</app-button>
   </div>
 
 </app-shadow-container>

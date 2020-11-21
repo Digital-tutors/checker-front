@@ -41,12 +41,12 @@
     <div class="content__data" *ngIf="activeTab === tabsEnum.TESTS">
       <app-highlighted-container *ngFor="let item of tests; let i = index"
                                  color="#00D996"
-                                 [bgColor]="item.testId === test?.testId ? '#00AD78' : null"
-                                 (click)="navigateToTopicTest(currentTopic.id, item.testId)">
+                                 [bgColor]="item._id === test?._id ? '#00AD78' : null"
+                                 (click)="navigateToTopicTest(currentTopic.id, item._id)">
         <app-info-container [center]="true"
                             title="Тест"
                             [text]="'Тест ' + (i + 1)"
-                            [class.active]="item.testId === test?.testId"></app-info-container>
+                            [class.active]="item._id === test?._id"></app-info-container>
       </app-highlighted-container>
     </div>
   </div>

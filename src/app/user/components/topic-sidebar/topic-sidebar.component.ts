@@ -134,7 +134,7 @@ export class TopicSidebarComponent implements OnInit {
                   mergeMap(() => this.testingService.getTestsByThemeId(params.topicId)),
                   tap(tests => {
                     this.tests = tests;
-                    this.test = this.tests.find(({ testId }) => testId === Number(params.testId));
+                    this.test = this.tests.find(({ _id }) => _id === params.testId);
 
                     if (this.test) {
                       this.activeTab = TabsEnum.TESTS;
@@ -159,7 +159,7 @@ export class TopicSidebarComponent implements OnInit {
     this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'task', taskId]);
   }
 
-  public navigateToTopicTest(topicId: number, testId: number): void {
+  public navigateToTopicTest(topicId: number, testId: string): void {
     this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'test', testId]);
   }
 

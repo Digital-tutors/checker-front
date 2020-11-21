@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
+import {combineLatest, EMPTY, Observable, of, Subject} from 'rxjs';
 
 import shuffle from 'shuffle-list';
 
@@ -10,12 +10,14 @@ import {QuestionInterface} from '../../../testing/services/interfaces/question.i
 import {TestInterface} from '../../../testing/services/interfaces/test.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestingService} from '../../../testing/services/testing.service';
-import {filter, first, map, mergeMap, tap} from 'rxjs/operators';
+import {catchError, filter, first, map, mergeMap, tap} from 'rxjs/operators';
 import {Select} from '@ngxs/store';
 import {UserDTO} from '@swagger/model/userDTO';
 import {RouteParamsService} from '@share/services/route-params/route-params.service';
 import {AppState} from '@store/app.state';
 import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-tests.interface';
+import {LessonControllerService} from '@swagger/api/lessonController.service';
+import {LessonDTO} from '@swagger/model/lessonDTO';
 
 @Component({
   selector: 'app-user-test-page',
@@ -33,6 +35,9 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
   public isDone: boolean;
 
+  public result: any;
+  public lessons: LessonDTO[];
+
   @Select(AppState.user)
   public user$: Observable<UserDTO>;
 
@@ -42,11 +47,11 @@ export class TestPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private testingService: TestingService,
     private routeParamsService: RouteParamsService,
+    private lessonControllerService: LessonControllerService,
   ) {
   }
 
   ngOnInit(): void {
-    this.user$.subscribe(item => console.log(item));
     this.activatedRoute.params.subscribe(params => this.routeParamsService.updateState(params));
     this.sidebarService.setSidebar(TopicSidebarComponent);
     this.getData();
@@ -60,30 +65,63 @@ export class TestPageComponent implements OnInit, OnDestroy {
     this.activatedRoute
       .params
       .pipe(
-        mergeMap(params => this.testingService.getTest(params.topicId, params.testId)),
-        tap(test => this.test = test),
-        map((test: ThemeTestsInterface) => [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions]),
-        tap(questions => this.questions = questions),
+        mergeMap(params => {
+          return this.getTestResults().pipe(
+            mergeMap(() => this.getTest(params)),
+          );
+        }),
       )
       .subscribe();
   }
 
-  private postQuestionAnswer(question: QuestionInterface, answers: number[]): Observable<any> {
+  private getTest(params: any): Observable<any> {
+    return this.testingService.getTest(params.topicId, params.testId).pipe(
+      tap(test => this.test = test),
+      map((test: ThemeTestsInterface) => [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions]),
+      tap(questions => this.questions = questions),
+    );
+  }
+
+  private getTestResults(): Observable<any> {
+    return this.getUser().pipe(
+      mergeMap(user => this.testingService.getTestResult(
+        Number(this.activatedRoute.snapshot.params.topicId),
+        this.activatedRoute.snapshot.params.testId,
+        user.id,
+      )),
+      mergeMap(results => combineLatest<LessonDTO[]>(results.lessons.map(item => this.lessonControllerService.getLessonByIdUsingGET(item))).pipe(
+        tap((lessons: LessonDTO[]) => {
+          this.result = results;
+          this.lessons = lessons;
+          this.isDone = true;
+        }),
+      ))
+    );
+  }
+
+  private getUser(): Observable<UserDTO> {
     return this.user$
       .pipe(
-        first(),
         filter(user => !!user),
-        mergeMap(user => this.testingService.postQuestionResult(
-          user.id,
-          this.test.theme_id,
-          this.test.test_id,
-          question.id,
-          answers,
-        ))
+        first(),
+      );
+  }
+
+  private postQuestionAnswer(question: QuestionInterface, answers: number[]): Observable<any> {
+    return this.getUser()
+      .pipe(
+        mergeMap(user => this.testingService.postQuestionResult({
+          user_id: user.id,
+          theme_id: this.test.theme_id,
+          test_id: this.test._id,
+          question: question._id,
+          user_answers: answers,
+        })),
       );
   }
 
   public startQuiz(): void {
+    this.isDone = false;
     this.activeQuestion = this.questions[0];
   }
 
@@ -95,12 +133,9 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   public handleCheckbox(item: { index: string; answer: string }): void {
-    console.log(item);
-
     if (!this.answerIndexes.includes(item.index)) {
       this.answerIndexes.push(item.index);
     } else {
-      console.log('ELSE');
       this.answerIndexes = this.answerIndexes.filter(i => i !== item.index);
     }
   }
@@ -109,20 +144,24 @@ export class TestPageComponent implements OnInit, OnDestroy {
     const question = {...this.activeQuestion};
     const answers: number[] = this.answerIndexes.map(item => Number(item));
 
-    const indexOfCurrentQuestion = this.questions.findIndex(({id}) => id === this.activeQuestion.id);
+    const indexOfCurrentQuestion = this.questions.findIndex(({ _id }) => _id === this.activeQuestion._id);
     this.activeQuestion = this.questions[indexOfCurrentQuestion + 1];
     this.answerIndexes = [];
 
     let observable$ = this.postQuestionAnswer(question, answers);
 
     if (!this.activeQuestion) {
+      console.log(this.test);
       // Получать результат теста
       observable$ = observable$.pipe(
-        mergeMap(() => EMPTY),
-        tap(() => this.isDone = true),
+        mergeMap(() => this.getTestResults()),
       );
     }
 
     observable$.subscribe();
+  }
+
+  public toLesson(lessonId: number): void {
+    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', this.routeParamsService.routeParamsSnapshot().topicId, 'lesson', lessonId]);
   }
 }

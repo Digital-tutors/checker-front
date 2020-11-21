@@ -4,5 +4,5 @@ export interface ResultInterface {
   test_id: string;
   question: string;
   result?: number;
-  user_answer: number[];
+  user_answers: number[];
 }
