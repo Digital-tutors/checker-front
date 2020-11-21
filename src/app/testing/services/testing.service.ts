@@ -16,8 +16,8 @@ export class TestingService {
 
   constructor(private http: HttpClient) { }
 
-  public getTest(topicId: number, testId: string): Observable<TestInterface> {
-    return this.http.get<TestInterface>(`${this.url}/test/${testId}/${topicId}`);
+  public getTest(topicId: number, testId: string): Observable<ThemeTestsInterface> {
+    return this.http.get<ThemeTestsInterface>(`${this.url}/test/${testId}/${topicId}`);
   }
 
   public postQuestionResult(result: ResultInterface): Observable<any> {

@@ -1,8 +1,10 @@
-<h1 class="headline-1">Тест по теме "Программирование очка"</h1>
+<h1 class="headline-1">Тест</h1>
 
 <app-shadow-container>
 
-  <div></div>
+  <div class="flex center" *ngIf="!activeQuestion && !isDone">
+    <app-button (click)="startQuiz()">Начать тестирование</app-button>
+  </div>
 
   <div class="question" *ngIf="activeQuestion">
     <h1 class="question__title title">{{ activeQuestion.text }}</h1>
@@ -10,7 +12,7 @@
     <ul class="question__answers">
       <li *ngFor="let item of answersMapToObj(activeQuestion.answers)"
           class="question__answers__item">
-        <mat-checkbox (change)="handleCheckbox(item)">{{ item.answer }}</mat-checkbox>
+        <mat-checkbox (click)="handleCheckbox(item)" [checked]="answerIndexes.includes(item.index)">{{ item.answer }}</mat-checkbox>
       </li>
     </ul>
 

@@ -10,10 +10,12 @@ import {QuestionInterface} from '../../../testing/services/interfaces/question.i
 import {TestInterface} from '../../../testing/services/interfaces/test.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestingService} from '../../../testing/services/testing.service';
-import {filter, map, mergeMap, tap} from 'rxjs/operators';
+import {filter, first, map, mergeMap, tap} from 'rxjs/operators';
 import {Select} from '@ngxs/store';
 import {UserDTO} from '@swagger/model/userDTO';
 import {RouteParamsService} from '@share/services/route-params/route-params.service';
+import {AppState} from '@store/app.state';
+import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-tests.interface';
 
 @Component({
   selector: 'app-user-test-page',
@@ -23,15 +25,15 @@ import {RouteParamsService} from '@share/services/route-params/route-params.serv
 export class TestPageComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
-  public test: TestInterface;
+  public test: ThemeTestsInterface;
   public questions: QuestionInterface[] = [];
 
   public activeQuestion: QuestionInterface;
-  public answerIndexes: string[];
+  public answerIndexes: string[] = [];
 
   public isDone: boolean;
 
-  @Select()
+  @Select(AppState.user)
   public user$: Observable<UserDTO>;
 
   constructor(
@@ -44,6 +46,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.user$.subscribe(item => console.log(item));
     this.activatedRoute.params.subscribe(params => this.routeParamsService.updateState(params));
     this.sidebarService.setSidebar(TopicSidebarComponent);
     this.getData();
@@ -59,13 +62,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
       .pipe(
         mergeMap(params => this.testingService.getTest(params.topicId, params.testId)),
         tap(test => this.test = test),
-        mergeMap((test: TestInterface) => {
-          const questions: string[] = [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions];
-
-          return combineLatest(questions.map(id => this.testingService.getQuestion(id))).pipe(
-            map(data => shuffle(data)),
-          );
-        }),
+        map((test: ThemeTestsInterface) => [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions]),
         tap(questions => this.questions = questions),
       )
       .subscribe();
@@ -74,8 +71,9 @@ export class TestPageComponent implements OnInit, OnDestroy {
   private postQuestionAnswer(question: QuestionInterface, answers: number[]): Observable<any> {
     return this.user$
       .pipe(
+        first(),
         filter(user => !!user),
-        mergeMap(user => this.testingService.postQuestionAnswer(
+        mergeMap(user => this.testingService.postQuestionResult(
           user.id,
           this.test.theme_id,
           this.test.test_id,
@@ -97,10 +95,13 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   public handleCheckbox(item: { index: string; answer: string }): void {
+    console.log(item);
+
     if (!this.answerIndexes.includes(item.index)) {
       this.answerIndexes.push(item.index);
     } else {
-      this.answerIndexes = this.answerIndexes.filter(i => i === item.index);
+      console.log('ELSE');
+      this.answerIndexes = this.answerIndexes.filter(i => i !== item.index);
     }
   }
 
