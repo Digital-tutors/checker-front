@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {combineLatest, Observable, Subject } from 'rxjs';
+import {combineLatest, Observable, of, Subject} from 'rxjs';
 
 import shuffle from 'shuffle-list';
 
@@ -84,6 +84,17 @@ export class TestPageComponent implements OnInit, OnDestroy {
     );
   }
 
+  private uniqueLessons(lessons: LessonDTO[]): LessonDTO[] {
+    const ids: number[] = [];
+    return lessons.map(item => {
+      if (!ids.includes(item.id)) {
+        ids.push(item.id);
+        return item;
+      }
+      return null;
+    }).filter(item => item !== null);
+  }
+
   private getTestResults(): Observable<any> {
     return this.getUser().pipe(
       mergeMap(user => this.testingService.getTestResult(
@@ -91,10 +102,11 @@ export class TestPageComponent implements OnInit, OnDestroy {
         this.activatedRoute.snapshot.params.testId,
         user.id,
       )),
-      mergeMap(results => combineLatest<LessonDTO[]>(results.lessons.map(item => this.lessonControllerService.getLessonByIdUsingGET(item))).pipe(
+      tap(console.log),
+      mergeMap((results: any) => (results.lessons.length > 0 ? combineLatest<LessonDTO[]>(results.lessons.map(item => this.lessonControllerService.getLessonByIdUsingGET(item))) : of([]).pipe(first())).pipe(
         tap((lessons: LessonDTO[]) => {
           this.result = results;
-          this.lessons = lessons;
+          this.lessons = this.uniqueLessons(lessons);
           this.isDone = true;
         }),
       ))

@@ -22,7 +22,8 @@
   <div *ngIf="isDone"
        class="results">
     <p class="title">Ваш результат: <b>{{ result.points }}</b></p>
-    <p class="text">Вы допустили ошибки в следующих занятиях:</p>
+    <p class="text" *ngIf="lessons.length">Вы допустили ошибки в следующих занятиях:</p>
+    <p class="text" *ngIf="!lessons.length">Вы не допустили ни одной ошибки</p>
     <ul class="results__subjects">
       <li *ngFor="let item of lessons"
           (click)="toLesson(item.id)"
