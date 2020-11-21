@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {combineLatest, Observable, Subject } from 'rxjs';
 
+import shuffle from 'shuffle-list';
+
 import {SidebarService} from '@share/services/sidebar.service';
 import {TopicSidebarComponent} from '../../components/topic-sidebar/topic-sidebar.component';
 import {QuestionInterface} from '../../../testing/services/interfaces/question.interface';
@@ -76,7 +78,9 @@ export class TestPageComponent implements OnInit, OnDestroy {
     return this.testingService.getTest(params.topicId, params.testId).pipe(
       tap(test => this.test = test),
       map((test: ThemeTestsInterface) => [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions]),
-      tap(questions => this.questions = questions),
+      tap(questions => {
+        this.questions = shuffle(questions);
+      }),
     );
   }
 
@@ -149,8 +153,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
     let observable$ = this.postQuestionAnswer(question, answers);
 
     if (!this.activeQuestion) {
-      console.log(this.test);
-      // Получать результат теста
       observable$ = observable$.pipe(
         mergeMap(() => this.getTestResults()),
       );
