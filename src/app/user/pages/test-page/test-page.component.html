@@ -29,7 +29,7 @@
           (click)="toLesson(item)"
           class="results__subjects__item link">{{ item.title }}</li>
     </ul>
-    <app-button (click)="startQuiz()">Попробовать еще раз</app-button>
+    <app-button *ngIf="lessons.length" (click)="startQuiz()">Попробовать еще раз</app-button>
   </div>
 
 </app-shadow-container>
