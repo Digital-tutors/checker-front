@@ -144,6 +144,15 @@ export class TopicSidebarComponent implements OnInit {
                     this.activeTab = TabsEnum.TASKS;
                   }
                 }),
+                mergeMap(() => this.testingService.getTestsByThemeId(params.topicId)),
+                tap(tests => {
+                  this.tests = tests;
+                  this.test = this.tests.find(({ _id }) => _id === params.testId);
+
+                  if (this.test) {
+                    this.activeTab = TabsEnum.TESTS;
+                  }
+                }),
               );
 
               if (params.lessonId) {
@@ -152,20 +161,6 @@ export class TopicSidebarComponent implements OnInit {
                   tap(lesson => {
                     this.lesson = lesson;
                     this.store.dispatch(new Lesson.Set(this.lesson));
-                  }),
-                );
-              }
-
-              if (params.testId) {
-                observable$ = observable$.pipe(
-                  mergeMap(() => this.testingService.getTestsByThemeId(params.topicId)),
-                  tap(tests => {
-                    this.tests = tests;
-                    this.test = this.tests.find(({ _id }) => _id === params.testId);
-
-                    if (this.test) {
-                      this.activeTab = TabsEnum.TESTS;
-                    }
                   }),
                 );
               }
