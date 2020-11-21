@@ -102,11 +102,11 @@ export class TestPageComponent implements OnInit, OnDestroy {
         this.activatedRoute.snapshot.params.testId,
         user.id,
       )),
-      tap(console.log),
       mergeMap((results: any) => (results.lessons.length > 0 ? combineLatest<LessonDTO[]>(results.lessons.map(item => this.lessonControllerService.getLessonByIdUsingGET(item))) : of([]).pipe(first())).pipe(
         tap((lessons: LessonDTO[]) => {
           this.result = results;
           this.lessons = this.uniqueLessons(lessons);
+          console.log(this.lessons);
           this.isDone = true;
         }),
       ))
@@ -173,7 +173,15 @@ export class TestPageComponent implements OnInit, OnDestroy {
     observable$.subscribe();
   }
 
-  public toLesson(lessonId: number): void {
-    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', this.routeParamsService.routeParamsSnapshot().topicId, 'lesson', lessonId]);
+  public toLesson(lesson: LessonDTO): void {
+    let id = lesson.id;
+
+    if (lesson.level === 'EASY') {
+      id = lesson.replacements.find(({ level }) => level === 'MIDDLE').id || id;
+    } else if (lesson.level === 'MIDDLE') {
+      id = lesson.replacements.find(({ level }) => level === 'HARD').id || id;
+    }
+
+    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', this.routeParamsService.routeParamsSnapshot().topicId, 'lesson', id]);
   }
 }

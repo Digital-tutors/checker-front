@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {Select} from '@ngxs/store';
 
-import {Observable, Subject} from 'rxjs';
+import {combineLatest, Observable, of, Subject} from 'rxjs';
 import {delay, filter, map, mergeMap, tap} from 'rxjs/operators';
 
 import {LessonDTO} from '@swagger/model/lessonDTO';
@@ -16,6 +16,8 @@ import {SidebarService} from '../../../share/services/sidebar.service';
 import {TopicSidebarComponent} from '../../components/topic-sidebar/topic-sidebar.component';
 import {LessonControllerService} from '@swagger/api/lessonController.service';
 import {ReplacementVO} from '@swagger/model/replacementVO';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {LevelPipe} from '@share/pipes/level.pipe';
 
 @Component({
   selector: 'app-lesson-page',
@@ -27,6 +29,8 @@ export class LessonPageComponent implements OnInit, OnDestroy, AfterContentInit 
 
   @Select(AppState.lesson)
   public lesson$: Observable<LessonDTO>;
+
+  public handledLesson$: Observable<LessonDTO>;
 
   @ViewChild('lessonContent', {read: ElementRef})
   public lessonContent: ElementRef;
@@ -41,6 +45,7 @@ export class LessonPageComponent implements OnInit, OnDestroy, AfterContentInit 
     private routeParamsService: RouteParamsService,
     private router: Router,
     private lessonControllerService: LessonControllerService,
+    private snackbar: MatSnackBar,
   ) {
   }
 
@@ -51,21 +56,61 @@ export class LessonPageComponent implements OnInit, OnDestroy, AfterContentInit 
   }
 
   ngAfterContentInit() {
-    this.lesson$
+    this.getHandledLesson();
+  }
+
+  ngOnDestroy(): void {
+    this.ngOnDestroy$.next();
+  }
+
+  private getHandledLesson(): void {
+    combineLatest([this.lesson$, this.activatedRoute.queryParams])
       .pipe(
-        filter(lesson => !!lesson),
+        filter(([lesson]) => !!lesson),
+        mergeMap(([lesson, query]) => {
+          if (query.isFailed) {
+            return of(lesson).pipe(
+              mergeMap(data => {
+                let nextLevel: any;
+
+                if (data.level === 'MIDDLE') {
+                  nextLevel = data.replacements.find(({ level }) => level === 'EASY');
+                } else if (data.level === 'HARD') {
+                  nextLevel = data.replacements.find(({ level }) => level === 'MIDDLE');
+                }
+
+                return nextLevel
+                  ? this.lessonControllerService.getLessonByIdUsingGET(nextLevel.id).pipe(
+                    tap(newLesson => {
+                      const url = this.router.url.split('/').slice(0, this.router.url.split('/').length - 1).join('/') + `/${newLesson.id}`;
+                      this.router.navigateByUrl(url, { queryParams: {} });
+                      this.snackbar.open(
+                        `Уровень подачи материала был изменен на ${new LevelPipe().transform(newLesson.level).toLowerCase()}. Обратно вернуться к другому уровню можно с помощью выбора напротив названия занятия.`,
+                        null,
+                        {
+                          panelClass: 'notify-snackbar',
+                          duration: 5000,
+                        }
+                      );
+                    })
+                  )
+                  : of(lesson);
+              }),
+            );
+          }
+
+          return of(lesson);
+        }),
         tap(lesson => {
           this.lesson = lesson;
         }),
         delay(0),
       )
       .subscribe(lesson => {
-        this.lessonContent.nativeElement.innerHTML = lesson.htmlBody;
+        if (this.lessonContent && lesson) {
+          this.lessonContent.nativeElement.innerHTML = lesson?.htmlBody;
+        }
       });
-  }
-
-  ngOnDestroy(): void {
-    this.ngOnDestroy$.next();
   }
 
   private getLevels(): void {

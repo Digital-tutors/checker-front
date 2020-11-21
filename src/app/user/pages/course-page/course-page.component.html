@@ -23,10 +23,10 @@
       <app-highlighted-container neutral>
         <app-info-container [bottom]="true" title="Тема" [text]="item.topic.title"></app-info-container>
       </app-highlighted-container>
-      <app-highlighted-container *ngFor="let lesson of item.lessons" color="#00D996" (click)="redirectToLesson(item.topic.id, lesson.id)">
+      <app-highlighted-container *ngFor="let lesson of item.lessons" [color]="lesson.isFailed ? '#D9534F' : '#00D996'" (click)="redirectToLesson(item.topic.id, lesson)">
         <app-info-container [bottom]="true" title="Занятие" [text]="lesson.title"></app-info-container>
       </app-highlighted-container>
-      <app-highlighted-container *ngFor="let test of item.tests; let i = index" color="#00D996" (click)="redirectToTest(item.topic.id, test.testId)">
+      <app-highlighted-container *ngFor="let test of item.tests; let i = index" color="#00D996" (click)="redirectToTest(item.topic.id, test._id)">
         <app-info-container [bottom]="true" title="Тест" [text]="'Тест #' + i"></app-info-container>
       </app-highlighted-container>
       <app-highlighted-container *ngFor="let task of item.tasks" color="#00D996" (click)="redirectToTask(item.topic.id, task.id)">

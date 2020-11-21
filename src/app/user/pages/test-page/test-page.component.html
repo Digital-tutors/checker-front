@@ -26,7 +26,7 @@
     <p class="text" *ngIf="!lessons.length">Вы не допустили ни одной ошибки</p>
     <ul class="results__subjects">
       <li *ngFor="let item of lessons"
-          (click)="toLesson(item.id)"
+          (click)="toLesson(item)"
           class="results__subjects__item link">{{ item.title }}</li>
     </ul>
     <app-button (click)="startQuiz()">Попробовать еще раз</app-button>

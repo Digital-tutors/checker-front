@@ -127,3 +127,7 @@ $tutor-app-theme: mat-light-theme($tutor-primary, $tutor-accent, $tutor-warn);
   }
 }
 
+.notify-snackbar {
+  background: $block-red;
+}
+

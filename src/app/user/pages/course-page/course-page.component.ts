@@ -1,29 +1,32 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { Select, Store } from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
 
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import {combineLatest, EMPTY, Observable, of, Subject} from 'rxjs';
+import {catchError, filter, map, mergeMap} from 'rxjs/operators';
 
-import { CourseControllerService } from '@swagger/api/courseController.service';
-import { LessonControllerService } from '@swagger/api/lessonController.service';
-import { TaskControllerService } from '@swagger/api/taskController.service';
-import { TopicControllerService } from '@swagger/api/topicController.service';
-import { CourseDTO } from '@swagger/model/courseDTO';
-import { TopicDTOShortResView } from '@swagger/model/topicDTOShortResView';
+import {CourseControllerService} from '@swagger/api/courseController.service';
+import {LessonControllerService} from '@swagger/api/lessonController.service';
+import {TaskControllerService} from '@swagger/api/taskController.service';
+import {TopicControllerService} from '@swagger/api/topicController.service';
+import {CourseDTO} from '@swagger/model/courseDTO';
+import {TopicDTOShortResView} from '@swagger/model/topicDTOShortResView';
 
-import { Course } from '@store/actions/course.actions';
-import { AppState } from '@store/app.state';
+import {Course} from '@store/actions/course.actions';
+import {AppState} from '@store/app.state';
 
-import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
-import { SidebarService } from '@share/services/sidebar.service';
+import {AboutCourseSidebarComponent} from '@share/components/about-course-sidebar/about-course-sidebar.component';
+import {SidebarService} from '@share/services/sidebar.service';
 
 import {TestingService} from '../../../testing/services/testing.service';
 
-import { TopicWithLessonsInterface } from './interfaces/topic-with-lessons.interface';
+import {TopicWithLessonsInterface} from './interfaces/topic-with-lessons.interface';
 
 import sort from 'sort-array';
+import {UserDTO} from '@swagger/model/userDTO';
+import {LessonDTO} from '@swagger/model/lessonDTO';
+import {LessonWithResultInterface} from './interfaces/lesson-with-result.interface';
 
 @Component({
   selector: 'app-user-course-page',
@@ -35,6 +38,9 @@ export class CoursePageComponent implements OnInit, OnDestroy {
 
   @Select(AppState.course)
   public course$: Observable<CourseDTO>;
+
+  @Select(AppState.user)
+  public user$: Observable<UserDTO>;
 
   public topicsWithLessons$: Observable<TopicWithLessonsInterface[]>;
 
@@ -48,7 +54,8 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     private testingService: TestingService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.setSidebar();
@@ -67,23 +74,39 @@ export class CoursePageComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  private getUser(): Observable<UserDTO> {
+    return this.user$.pipe(
+      filter(user => !!user),
+    );
+  }
+
   private setTopicsAndLessons(): void {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.activatedRoute.snapshot.params.courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest<TopicWithLessonsInterface[]>(
-          sort(topics, { by: 'priority' })
+          sort(topics, {by: 'priority'})
             .map((topic: TopicDTOShortResView) =>
               combineLatest([
                 this.lessonControllerService.getLessonByTopicIdUsingGET(topic.id),
                 this.taskControllerService.getTasksByTopicIdUsingGET(topic.id),
                 this.testingService.getTestsByThemeId(topic.id),
+                this.getUser().pipe(
+                  mergeMap(user => this.testingService.getTestResultByTopic(topic.id, user.id).pipe(
+                    catchError(() => of(null)),
+                  )),
+                ),
               ]).pipe(
-                map(([lessons, tasks, tests]) => ({
-                  topic,
-                  lessons: sort(lessons, { by: 'priority' }),
-                  tasks: sort(tasks, { by: 'priority' }),
-                  tests,
-                })),
+                map(([lessons, tasks, tests, testResult]) => {
+                  return {
+                    topic,
+                    lessons: sort(lessons, {by: 'priority'}).map(lesson => ({
+                      ...lesson,
+                      isFailed: testResult?.lessons?.includes(lesson.id)
+                    })),
+                    tasks: sort(tasks, {by: 'priority'}),
+                    tests,
+                  };
+                }),
               ),
             ),
         ),
@@ -95,15 +118,27 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     this.sidebarService.setSidebar(AboutCourseSidebarComponent);
   }
 
-  public redirectToLesson(topicId: number, lessonId: number): void {
-    this.router.navigate(['topic', topicId, 'lesson', lessonId], { relativeTo: this.activatedRoute });
+  public redirectToLesson(topicId: number, lesson: LessonWithResultInterface): void {
+    const query: any = {};
+
+    if (lesson.isFailed) {
+      query.isFailed = true;
+    }
+
+    this.router.navigate(
+      ['topic', topicId, 'lesson', lesson.id],
+      {
+          relativeTo: this.activatedRoute,
+          queryParams: query,
+        }
+      );
   }
 
-  public redirectToTest(topicId: number, testId: number): void {
-    this.router.navigate(['topic', topicId, 'test', testId], { relativeTo: this.activatedRoute });
+  public redirectToTest(topicId: number, testId: string): void {
+    this.router.navigate(['topic', topicId, 'test', testId], {relativeTo: this.activatedRoute});
   }
 
   public redirectToTask(topicId: number, taskId: number): void {
-    this.router.navigate(['topic', topicId, 'task', taskId], { relativeTo: this.activatedRoute });
+    this.router.navigate(['topic', topicId, 'task', taskId], {relativeTo: this.activatedRoute});
   }
 }
