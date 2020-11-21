@@ -60,6 +60,7 @@ $tutor-app-theme: mat-light-theme($tutor-primary, $tutor-accent, $tutor-warn);
   text-decoration: underline !important;
   color: $text-paragraph;
   letter-spacing: 0.38px !important;
+  cursor: pointer;
 }
 
 .text {
