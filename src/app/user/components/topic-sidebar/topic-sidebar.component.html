@@ -18,9 +18,9 @@
     </nav>
     <div class="content__data" *ngIf="activeTab === tabsEnum.LESSONS">
       <app-highlighted-container *ngFor="let item of lessons"
-                                 color="#00D996"
+                                 [color]="item.isFailed ? '#D9534F' : '#00D996'"
                                  [bgColor]="item.id === lesson?.id ? '#00AD78' : null"
-                                 (click)="navigateToTopicLesson(currentTopic.id, item.id)">
+                                 (click)="navigateToTopicLesson(currentTopic.id, item.id, item)">
         <app-info-container [center]="true"
                             title="Занятие"
                             [text]="item.title"

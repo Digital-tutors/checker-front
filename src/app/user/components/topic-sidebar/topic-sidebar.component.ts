@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Store } from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
 
-import {Observable, of } from 'rxjs';
-import { filter, first, mergeMap, tap } from 'rxjs/operators';
+import {combineLatest, Observable, of} from 'rxjs';
+import {catchError, filter, first, mergeMap, tap} from 'rxjs/operators';
 
 import { LessonControllerService } from '@swagger/api/lessonController.service';
 import { TaskControllerService } from '@swagger/api/taskController.service';
@@ -27,6 +27,9 @@ import { TabInterface } from './interfaces/tab.interface';
 import sort from 'sort-array';
 import {TestingService} from '../../../testing/services/testing.service';
 import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-tests.interface';
+import {UserDTO} from '@swagger/model/userDTO';
+import {AppState} from '@store/app.state';
+import {LessonWithResultInterface} from '../../pages/course-page/interfaces/lesson-with-result.interface';
 
 @Component({
   selector: 'app-topic-sidebar',
@@ -35,11 +38,12 @@ import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-te
 })
 export class TopicSidebarComponent implements OnInit {
   public lesson: LessonDTO;
-  public lessons: LessonDTO[] = [];
+  public lessons: LessonWithResultInterface[] = [];
 
   public task: TaskDTO;
   public tasks: TaskDTO[] = [];
 
+  public testResults: any;
   public test: ThemeTestsInterface;
   public tests: ThemeTestsInterface[] = [];
 
@@ -53,6 +57,9 @@ export class TopicSidebarComponent implements OnInit {
   public tabs: TabInterface[] = TABS;
   public activeTab: TabsEnum = TabsEnum.LESSONS;
   public tabsEnum: typeof TabsEnum = TabsEnum;
+
+  @Select(AppState.user)
+  public user$: Observable<UserDTO>;
 
   constructor(
     private router: Router,
@@ -86,14 +93,29 @@ export class TopicSidebarComponent implements OnInit {
     );
   }
 
+  private getUser(): Observable<UserDTO> {
+    return this.user$.pipe(
+      filter(user => !!user),
+    );
+  }
+
   private getData(): void {
     this.routeParamsService.routeParams$
       .pipe(
         filter((params: RouteParamMapInterface) => !!params.topicId),
         mergeMap((params: RouteParamMapInterface) =>
-          this.topicControllerService.getTopicByIdUsingGET(params.topicId).pipe(
-            tap((topic: TopicDTO) => {
+          combineLatest([
+            this.topicControllerService.getTopicByIdUsingGET(params.topicId),
+            this.getUser().pipe(
+              mergeMap(user => this.testingService.getTestResultByTopic(params.topicId, user.id).pipe(
+                catchError(() => of(null)),
+              )),
+            ),
+          ])
+          .pipe(
+            tap(([topic, testResults]) => {
               this.currentTopic = topic;
+              this.testResults = testResults;
               this.store.dispatch(new Topic.Set(topic));
             }),
             mergeMap(() => this.topicControllerService.getTopicsByCourseIdUsingGET(params.courseId)),
@@ -107,7 +129,12 @@ export class TopicSidebarComponent implements OnInit {
             mergeMap(() => this.topicFirstLesson(this.nextTopic, (id: number) => (this.nextTopicFirstLessonId = id))),
             mergeMap(() => {
               let observable$: Observable<any> = this.lessonControllerService.getLessonByTopicIdUsingGET(params.topicId).pipe(
-                tap((lessons: LessonDTO[]) => (this.lessons = sort(lessons, { by: 'priority' }))),
+                tap((lessons: LessonDTO[]) => {
+                  this.lessons = sort(lessons, {by: 'priority'}).map(lesson => ({
+                    ...lesson,
+                    isFailed: this.testResults?.lessons?.includes(lesson.id)
+                  }));
+                }),
                 mergeMap(() => this.taskControllerService.getTasksByTopicIdUsingGET(params.topicId)),
                 tap((tasks: TaskDTO[]) => {
                   this.tasks = sort(tasks, { by: 'priority' });
@@ -151,8 +178,14 @@ export class TopicSidebarComponent implements OnInit {
       .subscribe();
   }
 
-  public navigateToTopicLesson(topicId: number, lessonId: number): void {
-    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'lesson', lessonId]);
+  public navigateToTopicLesson(topicId: number, lessonId: number, lesson?: LessonWithResultInterface): void {
+    const query: any = {};
+
+    if (lesson?.isFailed) {
+      query.isFailed = true;
+    }
+
+    this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', topicId, 'lesson', lessonId], { queryParams: query });
   }
 
   public navigateToTopicTask(topicId: number, taskId: number): void {
