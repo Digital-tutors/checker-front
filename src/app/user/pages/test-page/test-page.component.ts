@@ -1,13 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {combineLatest, EMPTY, Observable, of, Subject} from 'rxjs';
-
-import shuffle from 'shuffle-list';
+import {combineLatest, Observable, Subject } from 'rxjs';
 
 import {SidebarService} from '@share/services/sidebar.service';
 import {TopicSidebarComponent} from '../../components/topic-sidebar/topic-sidebar.component';
 import {QuestionInterface} from '../../../testing/services/interfaces/question.interface';
-import {TestInterface} from '../../../testing/services/interfaces/test.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestingService} from '../../../testing/services/testing.service';
 import {catchError, filter, first, map, mergeMap, tap} from 'rxjs/operators';
@@ -68,6 +65,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
         mergeMap(params => {
           return this.getTestResults().pipe(
             mergeMap(() => this.getTest(params)),
+            catchError(() => this.getTest(params)),
           );
         }),
       )
