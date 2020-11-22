@@ -116,7 +116,7 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
   public addLesson(topicId: number): void {
     this.lessonAdminControllerService
       .createLessonUsingPOST({
-        title: 'Новое занятие',
+        title: 'Новая лекция',
       })
       .pipe(mergeMap((lesson: LessonDTO) => this.lessonAdminControllerService.linkWithTopicUsingPUT(lesson.id, topicId)))
       .subscribe(() => {

@@ -16,7 +16,7 @@
     </app-shadow-container>
   </app-two-box-grid>
 </section>
-<h2 class="headline-2">Темы и занятия курса</h2>
+<h2 class="headline-2">Темы и лекции курса</h2>
 <ul class="lessons">
   <li class="lessons__item" *ngFor="let item of (topicsWithLessons$ | async)">
     <div class="lessons__item__line">
@@ -24,7 +24,7 @@
         <app-info-container [bottom]="true" title="Тема" [text]="item.topic.title"></app-info-container>
       </app-highlighted-container>
       <app-highlighted-container *ngFor="let lesson of item.lessons" [color]="lesson.isFailed ? '#D9534F' : '#00D996'" (click)="redirectToLesson(item.topic.id, lesson)">
-        <app-info-container [bottom]="true" title="Занятие" [text]="lesson.title"></app-info-container>
+        <app-info-container [bottom]="true" title="Лекция" [text]="lesson.title"></app-info-container>
       </app-highlighted-container>
       <app-highlighted-container *ngFor="let test of item.tests; let i = index" color="#00D996" (click)="redirectToTest(item.topic.id, test._id)">
         <app-info-container [bottom]="true" title="Тест" [text]="'Тест #' + i"></app-info-container>

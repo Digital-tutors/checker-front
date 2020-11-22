@@ -1,0 +1,9 @@
+<section class="alert-box">
+  <h1 mat-dialog-title class="title">Вы вошли в систему как преподаватель</h1>
+  <div class="text">Если Вы хотите перейти в административную панель, то нажмите "Перейти". <br><br> Если Вы хотите остаться на странице, то нажмите на свободную область или на кнопку "Остаться"</div>
+  <mat-divider></mat-divider>
+  <div class="actions">
+    <button mat-stroked-button mat-dialog-close color="warn">Остаться</button>
+    <button mat-stroked-button color="primary" (click)="navigateToAdmin()">Перейти</button>
+  </div>
+</section>

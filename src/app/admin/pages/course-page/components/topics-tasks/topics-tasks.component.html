@@ -17,7 +17,7 @@
         <app-shadow-container *ngFor="let lesson of item.lessons"
                               class="shadow-container">
           <app-info-container center
-                              [title]="'Занятие ('+lesson.priority+')'"
+                              [title]="'Лекция ('+lesson.priority+')'"
                               [text]="lesson.title"
                               [routerLink]="['/admin/topic', item.topic.id, 'lesson', lesson.id]"></app-info-container>
         </app-shadow-container>
@@ -40,8 +40,8 @@
 
     <aside class="subject__actions">
       <div class="subject__actions__row">
-        <app-button class="button" [bordered]="true" (click)="addLesson(item.topic.id)">Добавить занятие</app-button>
-        <app-button class="button" [bordered]="true" (click)="addTask(item.topic.id)">Добавить практ. занятие</app-button>
+        <app-button class="button" [bordered]="true" (click)="addLesson(item.topic.id)">Добавить лекцию</app-button>
+        <app-button class="button" [bordered]="true" (click)="addTask(item.topic.id)">Добавить практ. задание</app-button>
         <app-button *ngIf="i === 0" class="button" [bordered]="true" (click)="addTopic()">Добавить тему</app-button>
       </div>
     </aside>

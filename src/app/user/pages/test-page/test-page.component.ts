@@ -17,6 +17,8 @@ import {AppState} from '@store/app.state';
 import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-tests.interface';
 import {LessonControllerService} from '@swagger/api/lessonController.service';
 import {LessonDTO} from '@swagger/model/lessonDTO';
+import {MatDialog} from '@angular/material/dialog';
+import {TestWindowComponent} from '../../../admin/components/test-window/test-window.component';
 
 @Component({
   selector: 'app-user-test-page',
@@ -47,10 +49,17 @@ export class TestPageComponent implements OnInit, OnDestroy {
     private testingService: TestingService,
     private routeParamsService: RouteParamsService,
     private lessonControllerService: LessonControllerService,
+    public dialog: MatDialog
   ) {
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('test') !== '1') {
+      const dialogRef = this.dialog.open(TestWindowComponent, {
+        width: '600px',
+      });
+    }
+
     this.activatedRoute.params.subscribe(params => this.routeParamsService.updateState(params));
     this.sidebarService.setSidebar(TopicSidebarComponent);
     this.getData();
@@ -106,7 +115,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
         tap((lessons: LessonDTO[]) => {
           this.result = results;
           this.lessons = this.uniqueLessons(lessons);
-          console.log(this.lessons);
           this.isDone = true;
         }),
       ))

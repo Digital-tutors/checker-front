@@ -6,6 +6,7 @@ app-shadow-container {
 }
 
 .question {
+  max-width: 400px;
 
   &__title {
     margin-bottom: $space * 2;
@@ -16,10 +17,10 @@ app-shadow-container {
     list-style: none;
     flex-wrap: wrap;
     padding: 0;
-    margin: 0;
+    margin-bottom: $space * 1;
 
     &__item {
-      width: 49%;
+      width: 100%;
       margin-bottom: $space;
 
 
@@ -41,4 +42,13 @@ app-shadow-container {
       margin-bottom: $space;
     }
   }
+}
+
+.desc {
+  display: block;
+  width: 100%;
+}
+
+.info {
+  line-height: 27px;
 }

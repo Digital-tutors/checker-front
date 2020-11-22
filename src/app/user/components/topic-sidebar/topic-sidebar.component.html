@@ -22,7 +22,7 @@
                                  [bgColor]="item.id === lesson?.id ? '#00AD78' : null"
                                  (click)="navigateToTopicLesson(currentTopic.id, item.id, item)">
         <app-info-container [center]="true"
-                            title="Занятие"
+                            title="Лекция"
                             [text]="item.title"
                             [class.active]="item.id === lesson?.id"></app-info-container>
       </app-highlighted-container>
