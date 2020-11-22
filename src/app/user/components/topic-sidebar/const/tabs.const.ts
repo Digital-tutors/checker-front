@@ -3,7 +3,7 @@ import { TabInterface } from '../interfaces/tab.interface';
 
 export const TABS: TabInterface[] = [
   {
-    title: 'Занятия',
+    title: 'Лекции',
     selector: TabsEnum.LESSONS,
   },
   {

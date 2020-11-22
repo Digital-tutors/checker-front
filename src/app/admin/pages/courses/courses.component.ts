@@ -11,6 +11,8 @@ import { SidebarService } from '../../../share/services/sidebar.service';
 
 import { coursesMock } from './courses.mock';
 import {CourseAdminControllerService} from '@swagger/api/courseAdminController.service';
+import { MatDialog } from '@angular/material/dialog';
+import {TeacherWindowComponent} from '../../components/teacher-window/teacher-window.component';
 
 @Component({
   selector: 'app-user-profile',

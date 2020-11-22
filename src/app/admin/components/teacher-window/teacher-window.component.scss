@@ -1,0 +1,33 @@
+@import "../../../../vars";
+@import "../../../../colors";
+
+.alert-box {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+
+  .title {
+    text-align: center;
+    letter-spacing: 0.264px;
+  }
+
+  .text {
+    text-align: center;
+    letter-spacing: 0.264px;
+    padding-bottom: $space;
+  }
+
+  mat-divider {
+    width: 50%;
+    align-self: center;
+  }
+
+  .actions {
+    margin: 0 0px;
+    padding-top: $space * 1.5;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}

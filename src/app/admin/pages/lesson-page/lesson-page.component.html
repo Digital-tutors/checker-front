@@ -3,13 +3,13 @@
 </div>
 
 <header>
-  <h1 class='headline-1'>Добавление занятия</h1>
-  <app-button [alert]="true" (click)="openDialog()">Удалить занятие</app-button>
+  <h1 class='headline-1'>Добавление лекции</h1>
+  <app-button [alert]="true" (click)="openDialog()">Удалить лекцию</app-button>
 </header>
 
 <section>
   <app-shadow-container *ngIf="lesson$ | async as lesson">
-    <h3 class="title">Текст занятия</h3>
+    <h3 class="title">Содержимое лекции</h3>
     <app-wysiwyg-editor id="level1"
                         [initialData]="lesson.htmlBody"
                         (valueChange)="handleHtmlChange($event, lesson)"></app-wysiwyg-editor>
@@ -19,7 +19,7 @@
 <!--    <mat-expansion-panel class="text" >-->
 <!--      <mat-expansion-panel-header collapsedHeight="70px">-->
 <!--        <mat-panel-title class="title">-->
-<!--          Текст занятия-->
+<!--          Текст лекции-->
 <!--        </mat-panel-title>-->
 <!--      </mat-expansion-panel-header>-->
 <!--      <mat-divider></mat-divider>-->

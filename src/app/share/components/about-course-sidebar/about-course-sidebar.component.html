@@ -28,7 +28,7 @@
     </app-two-box-grid>
     <app-two-box-grid [center]="true">
       <app-rating [value]="data.courseStats.topicsCount" caption="Количество тем"></app-rating>
-      <app-rating [value]="data.courseStats.countOfLessons" caption="Количество занятий"></app-rating>
+      <app-rating [value]="data.courseStats.countOfLessons" caption="Количество лекций"></app-rating>
     </app-two-box-grid>
   </div>
   <div class="footer" *ngIf="user$ | async as user">
