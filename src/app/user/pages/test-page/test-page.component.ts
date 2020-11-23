@@ -32,10 +32,10 @@ export class TestPageComponent implements OnInit, OnDestroy {
   public questions: QuestionVoInterface[] = [];
 
   public activeQuestion: QuestionVoInterface;
-  public activeQuestionIndex = 0;
   public answerIndexes: string[] = [];
 
   public isDone: boolean;
+  public isStarted: boolean;
 
   public isLoading: boolean;
 
@@ -87,12 +87,13 @@ export class TestPageComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  private getTest(params: any): Observable<any> {
+  private getTest(params: any): Observable<TestVoInterface> {
     return this.testingService.getTest(params.topicId, params.testId).pipe(
-      tap(test => this.test = test),
-      map((test: TestVoInterface) => [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions]),
-      tap(questions => {
-        this.questions = shuffle(questions);
+      tap(test => {
+        this.test = test;
+        this.questions = test.difficult_questions.slice(0);
+        this.activeQuestion = shuffle(test.difficult_questions)[0];
+        this.isLoading = false;
       }),
     );
   }
@@ -135,7 +136,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
       );
   }
 
-  private postQuestionAnswer(question: QuestionVoInterface, answers: number[]): Observable<any> {
+  private postQuestionAnswer(question: QuestionVoInterface, answers: number[]): Observable<QuestionVoInterface> {
     return this.getUser()
       .pipe(
         mergeMap(user => this.testingService.postQuestionResult({
@@ -145,12 +146,18 @@ export class TestPageComponent implements OnInit, OnDestroy {
           question: question._id,
           user_answers: answers,
         })),
+        tap((data: QuestionVoInterface) => {
+          if (data._id) {
+            this.activeQuestion = data;
+          }
+        }),
       );
   }
 
   public startQuiz(): void {
     this.isDone = false;
-    this.activeQuestion = this.questions[0];
+    this.isStarted = true;
+    this.activeQuestion = shuffle(this.questions)[0];
   }
 
   public answersMapToObj(answers: any): { index: string; answer: string }[] {
@@ -172,30 +179,34 @@ export class TestPageComponent implements OnInit, OnDestroy {
     const question = {...this.activeQuestion};
     const answers: number[] = this.answerIndexes.map(item => Number(item));
 
-    const indexOfCurrentQuestion = this.questions.findIndex(({ _id }) => _id === this.activeQuestion._id);
-    this.activeQuestion = this.questions[indexOfCurrentQuestion + 1];
-    this.activeQuestionIndex = indexOfCurrentQuestion + 1;
     this.answerIndexes = [];
 
-    let observable$ = this.postQuestionAnswer(question, answers);
-
-    if (!this.activeQuestion) {
-      this.isLoading = true;
-      observable$ = observable$.pipe(
-        mergeMap(() => this.getTestResults()),
-      );
-    }
-
-    observable$.subscribe();
+    this.postQuestionAnswer(question, answers)
+      .pipe(
+        tap(() => {
+          if (!this.activeQuestion) {
+            this.isLoading = true;
+            this.isStarted = false;
+          }
+        }),
+        mergeMap(() => {
+          let observable$: Observable<any> = of(this.activeQuestion).pipe(first());
+          if (!this.activeQuestion) {
+            observable$ = this.getTestResults();
+          }
+          return observable$;
+        })
+      )
+      .subscribe();
   }
 
   public toLesson(lesson: LessonDTO): void {
     let id = lesson.id;
 
     if (lesson.level === 'EASY') {
-      id = lesson.replacements.find(({ level }) => level === 'MIDDLE').id || id;
+      id = lesson.replacements.find(({level}) => level === 'MIDDLE').id || id;
     } else if (lesson.level === 'MIDDLE') {
-      id = lesson.replacements.find(({ level }) => level === 'HARD').id || id;
+      id = lesson.replacements.find(({level}) => level === 'HARD').id || id;
     }
 
     this.router.navigate(['user/courses', this.routeParamsService.routeParamsSnapshot().courseId, 'topic', this.routeParamsService.routeParamsSnapshot().topicId, 'lesson', id]);

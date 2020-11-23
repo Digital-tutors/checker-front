@@ -25,8 +25,8 @@ export class TestingService {
     return this.http.get<TestVoInterface>(`${this.url}/test/${testId}/${topicId}/admin`);
   }
 
-  public postQuestionResult(result: ResultInterface): Observable<any> {
-    return this.http.post(`${this.url}/question/results`, result);
+  public postQuestionResult(result: ResultInterface): Observable<QuestionVoInterface> {
+    return this.http.post<QuestionVoInterface>(`${this.url}/question/results`, result);
   }
 
   public getTestResult(topicId: number, testId: string, userId: number): Observable<any> {

@@ -2,7 +2,7 @@
 
 <app-shadow-container *ngIf="!isLoading">
 
-  <div class="question" *ngIf="activeQuestion">
+  <div class="question" *ngIf="activeQuestion && isStarted">
     <h1 class="question__title title">{{ activeQuestion.text }}</h1>
 
     <ul class="question__answers">
@@ -13,7 +13,7 @@
       </li>
     </ul>
 
-    <app-button (click)="submitQuestion()">{{ activeQuestionIndex === questions.length - 1 ? 'Завершить' : 'Далее' }}</app-button>
+    <app-button (click)="submitQuestion()">Перейти к следующему вопросу</app-button>
   </div>
 
   <div *ngIf="isDone"
@@ -29,7 +29,7 @@
     <app-button *ngIf="lessons.length" (click)="startQuiz()">Попробовать еще раз</app-button>
   </div>
 
-  <div class="flex center desc" *ngIf="!activeQuestion && !isDone">
+  <div class="flex center desc" *ngIf="!isStarted && !isDone">
     <div class="desc">
       <p class="title">Описание</p>
       <p class="text info">Адаптивное тестирование представляет из себя тестирование.<br>
