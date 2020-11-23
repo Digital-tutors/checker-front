@@ -1,7 +1,6 @@
 import {QuestionTypeEnum} from '../enums/question-type.enum';
 
-export interface QuestionInterface {
-  _id: string;
+export interface QuestionDtoInterface {
   text: string;
   qType: QuestionTypeEnum;
   difficulty: number;

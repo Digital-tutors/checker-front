@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 
 import {Observable} from 'rxjs';
 
-import {QuestionInterface} from './interfaces/question.interface';
+import {QuestionVoInterface} from './interfaces/question-vo.interface';
 import {ResultInterface} from './interfaces/result.interface';
-import {TestInterface} from './interfaces/test.interface';
-import {ThemeTestsInterface} from './interfaces/theme-tests.interface';
+import {TestVoInterface} from './interfaces/test-vo.interface';
+import {TestDtoInterface} from './interfaces/test-dto.interface';
+import {QuestionDtoInterface} from './interfaces/question-dto.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class TestingService {
 
   constructor(private http: HttpClient) { }
 
-  public getTest(topicId: number, testId: string): Observable<ThemeTestsInterface> {
-    return this.http.get<ThemeTestsInterface>(`${this.url}/test/${testId}/${topicId}`);
+  public getTest(topicId: number, testId: string): Observable<TestVoInterface> {
+    return this.http.get<TestVoInterface>(`${this.url}/test/${testId}/${topicId}`);
   }
 
   public postQuestionResult(result: ResultInterface): Observable<any> {
@@ -32,7 +33,31 @@ export class TestingService {
     return this.http.get(`${this.url}/test/results/${topicId}/${userId}`);
   }
 
-  public getTestsByThemeId(themeId: number): Observable<ThemeTestsInterface[]> {
-    return this.http.get<ThemeTestsInterface[]>(`${this.url}/test/${themeId}/all`);
+  public getTestsByThemeId(themeId: number): Observable<TestVoInterface[]> {
+    return this.http.get<TestVoInterface[]>(`${this.url}/test/${themeId}/all`);
+  }
+
+  public createTest(data: TestDtoInterface): Observable<TestVoInterface> {
+    return this.http.post<TestVoInterface>(`${this.url}/test`, data);
+  }
+
+  public updateTest(id: string, data: TestDtoInterface): Observable<TestVoInterface> {
+    return this.http.put<TestVoInterface>(`${this.url}/test/${id}`, data);
+  }
+
+  public deleteTest(id: string): Observable<any> {
+    return this.http.delete(`${this.url}/test/${id}`);
+  }
+
+  public createQuestion(data: QuestionDtoInterface): Observable<QuestionVoInterface> {
+    return this.http.post<QuestionVoInterface>(`${this.url}/question`, data);
+  }
+
+  public updateQuestion(id: string, data: QuestionDtoInterface): Observable<QuestionVoInterface> {
+    return this.http.put<QuestionVoInterface>(`${this.url}/question/${id}`, data);
+  }
+
+  public deleteQuestion(id: string): Observable<any> {
+    return this.http.delete(`${this.url}/question/${id}`);
   }
 }

@@ -1,38 +1,39 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { Select, Store } from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
 
-import { combineLatest, Observable, race, Subject } from 'rxjs';
-import { filter, map, mergeMap, repeatWhen } from 'rxjs/operators';
+import {combineLatest, Observable, race, Subject} from 'rxjs';
+import {filter, map, mergeMap, repeatWhen} from 'rxjs/operators';
 
 import sort from 'sort-array';
 
-import { CourseControllerService } from '@swagger/api/courseController.service';
-import { LessonAdminControllerService } from '@swagger/api/lessonAdminController.service';
-import { LessonControllerService } from '@swagger/api/lessonController.service';
-import { TaskAdminControllerService } from '@swagger/api/taskAdminController.service';
-import { TaskControllerService } from '@swagger/api/taskController.service';
-import { TopicAdminControllerService } from '@swagger/api/topicAdminController.service';
-import { TopicControllerService } from '@swagger/api/topicController.service';
-import { CourseDTO } from '@swagger/model/courseDTO';
-import { LessonDTO } from '@swagger/model/lessonDTO';
-import { TaskDTO } from '@swagger/model/taskDTO';
-import { TopicDTO } from '@swagger/model/topicDTO';
-import { TopicDTOShortResView } from '@swagger/model/topicDTOShortResView';
+import {CourseControllerService} from '@swagger/api/courseController.service';
+import {LessonAdminControllerService} from '@swagger/api/lessonAdminController.service';
+import {LessonControllerService} from '@swagger/api/lessonController.service';
+import {TaskAdminControllerService} from '@swagger/api/taskAdminController.service';
+import {TaskControllerService} from '@swagger/api/taskController.service';
+import {TopicAdminControllerService} from '@swagger/api/topicAdminController.service';
+import {TopicControllerService} from '@swagger/api/topicController.service';
+import {CourseDTO} from '@swagger/model/courseDTO';
+import {LessonDTO} from '@swagger/model/lessonDTO';
+import {TaskDTO} from '@swagger/model/taskDTO';
+import {TopicDTO} from '@swagger/model/topicDTO';
+import {TopicDTOShortResView} from '@swagger/model/topicDTOShortResView';
 
-import { Topic } from '@store/actions/topic.actions';
-import { AppState } from '@store/app.state';
+import {Topic} from '@store/actions/topic.actions';
+import {AppState} from '@store/app.state';
 
-import { AboutCourseSidebarComponent } from '@share/components/about-course-sidebar/about-course-sidebar.component';
-import { RouteParamsService } from '@share/services/route-params/route-params.service';
-import { SidebarService } from '@share/services/sidebar.service';
+import {AboutCourseSidebarComponent} from '@share/components/about-course-sidebar/about-course-sidebar.component';
+import {RouteParamsService} from '@share/services/route-params/route-params.service';
+import {SidebarService} from '@share/services/sidebar.service';
 
-import { EditTopicSidebarComponent } from '../../../../components/edit-topic-sidebar/edit-topic-sidebar.component';
+import {EditTopicSidebarComponent} from '../../../../components/edit-topic-sidebar/edit-topic-sidebar.component';
 
-import { TopicWithPayloadInterface } from './interfaces/topic-with-payload.interface';
+import {TopicWithPayloadInterface} from './interfaces/topic-with-payload.interface';
 import {TopicWithLessonsInterface} from '../../../../../user/pages/course-page/interfaces/topic-with-lessons.interface';
 import {TestingService} from '../../../../../testing/services/testing.service';
+import {TestVoInterface} from '../../../../../testing/services/interfaces/test-vo.interface';
 
 @Component({
   selector: 'app-topics-tasks',
@@ -66,7 +67,8 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private routeParamsService: RouteParamsService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.setTopicsAndLessons();
@@ -92,7 +94,7 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
     this.topicsWithLessons$ = this.topicControllerService.getTopicsByCourseIdUsingGET(this.routeParamsService.routeParamsSnapshot().courseId).pipe(
       mergeMap((topics: TopicDTOShortResView[]) =>
         combineLatest<TopicWithLessonsInterface[]>(
-          sort(topics, { by: 'priority' })
+          sort(topics, {by: 'priority'})
             .map(topic =>
               combineLatest([
                 this.lessonAdminControllerService.getLessonForAdminByTopicIdUsingGET(topic.id),
@@ -101,8 +103,8 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
               ]).pipe(
                 map(([lessons, tasks, tests]) => ({
                   topic,
-                  lessons: sort(lessons, { by: 'priority' }),
-                  tasks: sort(tasks, { by: 'priority' }),
+                  lessons: sort(lessons, {by: 'priority'}),
+                  tasks: sort(tasks, {by: 'priority'}),
                   tests,
                 })),
               ),
@@ -145,6 +147,19 @@ export class TopicsTasksComponent implements OnInit, OnDestroy {
           this.topicAdminControllerService.linkWithCourseUsingPUT(+this.routeParamsService.routeParamsSnapshot().courseId, topic.id),
         ),
       )
+      .subscribe(() => {
+        this.replayFetch$.next();
+      });
+  }
+
+  public addTest(topicId: number): void {
+    this.testingService
+      .createTest({
+        theme_id: topicId,
+        easy_questions: [],
+        medium_questions: [],
+        difficult_questions: [],
+      })
       .subscribe(() => {
         this.replayFetch$.next();
       });

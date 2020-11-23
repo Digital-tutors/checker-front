@@ -26,7 +26,7 @@ import { TabsEnum } from './enums/tabs.enum';
 import { TabInterface } from './interfaces/tab.interface';
 import sort from 'sort-array';
 import {TestingService} from '../../../testing/services/testing.service';
-import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-tests.interface';
+import {TestVoInterface} from '../../../testing/services/interfaces/test-vo.interface';
 import {UserDTO} from '@swagger/model/userDTO';
 import {AppState} from '@store/app.state';
 import {LessonWithResultInterface} from '../../pages/course-page/interfaces/lesson-with-result.interface';
@@ -44,8 +44,8 @@ export class TopicSidebarComponent implements OnInit {
   public tasks: TaskDTO[] = [];
 
   public testResults: any;
-  public test: ThemeTestsInterface;
-  public tests: ThemeTestsInterface[] = [];
+  public test: TestVoInterface;
+  public tests: TestVoInterface[] = [];
 
   public previousTopic: TopicDTOShortResView;
   public currentTopic: TopicDTO;
