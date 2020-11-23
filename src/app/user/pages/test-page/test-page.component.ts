@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {combineLatest, Observable, of, Subject} from 'rxjs';
+import {combineLatest, Observable, of, Subject, throwError} from 'rxjs';
 
 import shuffle from 'shuffle-list';
 
@@ -58,7 +58,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (localStorage.getItem('test') !== '1') {
-      const dialogRef = this.dialog.open(TestWindowComponent, {
+      this.dialog.open(TestWindowComponent, {
         width: '600px',
       });
     }
@@ -149,6 +149,8 @@ export class TestPageComponent implements OnInit, OnDestroy {
         tap((data: QuestionVoInterface) => {
           if (data._id) {
             this.activeQuestion = data;
+          } else {
+            this.activeQuestion = null;
           }
         }),
       );
