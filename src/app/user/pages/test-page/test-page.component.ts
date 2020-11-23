@@ -6,7 +6,7 @@ import shuffle from 'shuffle-list';
 
 import {SidebarService} from '@share/services/sidebar.service';
 import {TopicSidebarComponent} from '../../components/topic-sidebar/topic-sidebar.component';
-import {QuestionInterface} from '../../../testing/services/interfaces/question.interface';
+import {QuestionVoInterface} from '../../../testing/services/interfaces/question-vo.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestingService} from '../../../testing/services/testing.service';
 import {catchError, filter, first, map, mergeMap, tap} from 'rxjs/operators';
@@ -14,7 +14,7 @@ import {Select} from '@ngxs/store';
 import {UserDTO} from '@swagger/model/userDTO';
 import {RouteParamsService} from '@share/services/route-params/route-params.service';
 import {AppState} from '@store/app.state';
-import {ThemeTestsInterface} from '../../../testing/services/interfaces/theme-tests.interface';
+import {TestVoInterface} from '../../../testing/services/interfaces/test-vo.interface';
 import {LessonControllerService} from '@swagger/api/lessonController.service';
 import {LessonDTO} from '@swagger/model/lessonDTO';
 import {MatDialog} from '@angular/material/dialog';
@@ -28,13 +28,16 @@ import {TestWindowComponent} from '../../../admin/components/test-window/test-wi
 export class TestPageComponent implements OnInit, OnDestroy {
   private ngOnDestroy$: Subject<void> = new Subject();
 
-  public test: ThemeTestsInterface;
-  public questions: QuestionInterface[] = [];
+  public test: TestVoInterface;
+  public questions: QuestionVoInterface[] = [];
 
-  public activeQuestion: QuestionInterface;
+  public activeQuestion: QuestionVoInterface;
+  public activeQuestionIndex = 0;
   public answerIndexes: string[] = [];
 
   public isDone: boolean;
+
+  public isLoading: boolean;
 
   public result: any;
   public lessons: LessonDTO[];
@@ -70,6 +73,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   private getData(): void {
+    this.isLoading = true;
     this.activatedRoute
       .params
       .pipe(
@@ -86,7 +90,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   private getTest(params: any): Observable<any> {
     return this.testingService.getTest(params.topicId, params.testId).pipe(
       tap(test => this.test = test),
-      map((test: ThemeTestsInterface) => [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions]),
+      map((test: TestVoInterface) => [...test.easy_questions, ...test.medium_questions, ...test.difficult_questions]),
       tap(questions => {
         this.questions = shuffle(questions);
       }),
@@ -105,6 +109,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   private getTestResults(): Observable<any> {
+    this.isLoading = true;
     return this.getUser().pipe(
       mergeMap(user => this.testingService.getTestResult(
         Number(this.activatedRoute.snapshot.params.topicId),
@@ -116,6 +121,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
           this.result = results;
           this.lessons = this.uniqueLessons(lessons);
           this.isDone = true;
+          this.isLoading = false;
         }),
       ))
     );
@@ -129,7 +135,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
       );
   }
 
-  private postQuestionAnswer(question: QuestionInterface, answers: number[]): Observable<any> {
+  private postQuestionAnswer(question: QuestionVoInterface, answers: number[]): Observable<any> {
     return this.getUser()
       .pipe(
         mergeMap(user => this.testingService.postQuestionResult({
@@ -168,11 +174,13 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
     const indexOfCurrentQuestion = this.questions.findIndex(({ _id }) => _id === this.activeQuestion._id);
     this.activeQuestion = this.questions[indexOfCurrentQuestion + 1];
+    this.activeQuestionIndex = indexOfCurrentQuestion + 1;
     this.answerIndexes = [];
 
     let observable$ = this.postQuestionAnswer(question, answers);
 
     if (!this.activeQuestion) {
+      this.isLoading = true;
       observable$ = observable$.pipe(
         mergeMap(() => this.getTestResults()),
       );

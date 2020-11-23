@@ -26,7 +26,7 @@
           <app-info-container center
                               title="Тест"
                               [text]="'Тест #' + i"
-                              [routerLink]="['/admin/topic', item.topic.id, 'task', test.testId]"></app-info-container>
+                              [routerLink]="['/admin/topic', item.topic.id, 'test', test._id]"></app-info-container>
         </app-shadow-container>
         <app-shadow-container *ngFor="let task of item.tasks"
                               class="shadow-container">
@@ -42,6 +42,7 @@
       <div class="subject__actions__row">
         <app-button class="button" [bordered]="true" (click)="addLesson(item.topic.id)">Добавить лекцию</app-button>
         <app-button class="button" [bordered]="true" (click)="addTask(item.topic.id)">Добавить практ. задание</app-button>
+        <app-button class="button" [bordered]="true" (click)="addTest(item.topic.id)">Добавить тест</app-button>
         <app-button *ngIf="i === 0" class="button" [bordered]="true" (click)="addTopic()">Добавить тему</app-button>
       </div>
     </aside>
