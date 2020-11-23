@@ -19,6 +19,8 @@ import {LessonAdminControllerService} from '@swagger/api/lessonAdminController.s
 import {LessonDTO} from '@swagger/model/lessonDTO';
 import {QuestionVoInterface} from '../../../testing/services/interfaces/question-vo.interface';
 import {QuestionTypeEnum} from '../../../testing/services/enums/question-type.enum';
+import {TestDtoInterface} from '../../../testing/services/interfaces/test-dto.interface';
+import {QuestionDtoInterface} from '../../../testing/services/interfaces/question-dto.interface';
 
 @Component({
   selector: 'app-admin-test-page',
@@ -109,6 +111,8 @@ export class TestPageComponent implements OnInit {
   }
 
   private setQuestionsForm(questions: QuestionVoInterface[]): FormArray {
+    // console.log(questions.filter(item => item !== null));
+    console.log(questions);
     return this.fb.array(questions.map(question => this.getQuestionForm(question)));
   }
 
@@ -218,6 +222,12 @@ export class TestPageComponent implements OnInit {
               difficult_questions: this.test.difficult_questions.map(item => item._id),
             }
           ).pipe(
+            tap(() => {
+              this.test = {
+                ...this.test,
+                easy_questions: [...this.test.easy_questions, question],
+              };
+            }),
             map(() => question),
           )
         )
@@ -228,7 +238,7 @@ export class TestPageComponent implements OnInit {
   }
 
   public saveQuestion(): void {
-    const handledQuestion = {
+    const handledQuestion: QuestionDtoInterface & { id: string } = {
       ...this.selectedQuestionForm.value,
       answers: {},
     };
@@ -250,7 +260,26 @@ export class TestPageComponent implements OnInit {
       )
     });
 
-    this.testingService.updateQuestion(handledQuestion.id, handledQuestion)
+    const updatedTest: TestDtoInterface & { _id: string; } = {
+      ...this.test,
+      difficult_questions: this.test.medium_questions.filter(item => item._id !== handledQuestion.id).map(item => item._id),
+      medium_questions: this.test.medium_questions.filter(item => item._id !== handledQuestion.id).map(item => item._id),
+      easy_questions: this.test.medium_questions.filter(item => item._id !== handledQuestion.id).map(item => item._id),
+    };
+
+    if (handledQuestion.difficulty === 1) {
+      updatedTest.easy_questions.push(handledQuestion.id);
+    } else if (handledQuestion.difficulty === 2) {
+      updatedTest.medium_questions.push(handledQuestion.id);
+    } else if (handledQuestion.difficulty === 3) {
+      updatedTest.difficult_questions.push(handledQuestion.id);
+    }
+
+    this.testingService
+      .updateQuestion(handledQuestion.id, handledQuestion)
+      .pipe(
+        mergeMap(() => this.testingService.updateTest(updatedTest._id, updatedTest)),
+      )
       .subscribe(() => {
         this.selectedQuestionForm = null;
         this.openSnackBar();

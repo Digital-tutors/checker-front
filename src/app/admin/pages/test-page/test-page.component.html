@@ -16,6 +16,11 @@
             <input matInput formControlName="text">
           </mat-form-field>
 
+          <mat-form-field >
+            <mat-label>Количество очков</mat-label>
+            <input type="number" matInput formControlName="points" min="1">
+          </mat-form-field>
+
           <mat-form-field class="select">
             <mat-label>Уровень сложности</mat-label>
             <mat-select formControlName="difficulty">
