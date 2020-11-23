@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {combineLatest, Observable, of, Subject, throwError} from 'rxjs';
+import {combineLatest, Observable, of, Subject} from 'rxjs';
 
 import shuffle from 'shuffle-list';
 
@@ -9,7 +9,7 @@ import {TopicSidebarComponent} from '../../components/topic-sidebar/topic-sideba
 import {QuestionVoInterface} from '../../../testing/services/interfaces/question-vo.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TestingService} from '../../../testing/services/testing.service';
-import {catchError, filter, first, map, mergeMap, tap} from 'rxjs/operators';
+import {catchError, filter, first, mergeMap, tap} from 'rxjs/operators';
 import {Select} from '@ngxs/store';
 import {UserDTO} from '@swagger/model/userDTO';
 import {RouteParamsService} from '@share/services/route-params/route-params.service';
