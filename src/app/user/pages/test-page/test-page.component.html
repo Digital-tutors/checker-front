@@ -1,6 +1,6 @@
 <h1 class="headline-1">Адаптивный тест</h1>
 
-<app-shadow-container>
+<app-shadow-container *ngIf="!isLoading">
 
   <div class="question" *ngIf="activeQuestion">
     <h1 class="question__title title">{{ activeQuestion.text }}</h1>
@@ -13,7 +13,7 @@
       </li>
     </ul>
 
-    <app-button (click)="submitQuestion()">Подтвердить</app-button>
+    <app-button (click)="submitQuestion()">{{ activeQuestionIndex === questions.length - 1 ? 'Завершить' : 'Далее' }}</app-button>
   </div>
 
   <div *ngIf="isDone"
@@ -44,4 +44,8 @@
   </div>
 
 </app-shadow-container>
+
+<div class="flex center" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
 

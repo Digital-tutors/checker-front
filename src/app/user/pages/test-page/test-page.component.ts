@@ -32,9 +32,12 @@ export class TestPageComponent implements OnInit, OnDestroy {
   public questions: QuestionInterface[] = [];
 
   public activeQuestion: QuestionInterface;
+  public activeQuestionIndex = 0;
   public answerIndexes: string[] = [];
 
   public isDone: boolean;
+
+  public isLoading: boolean;
 
   public result: any;
   public lessons: LessonDTO[];
@@ -70,6 +73,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   private getData(): void {
+    this.isLoading = true;
     this.activatedRoute
       .params
       .pipe(
@@ -105,6 +109,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   private getTestResults(): Observable<any> {
+    this.isLoading = true;
     return this.getUser().pipe(
       mergeMap(user => this.testingService.getTestResult(
         Number(this.activatedRoute.snapshot.params.topicId),
@@ -116,6 +121,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
           this.result = results;
           this.lessons = this.uniqueLessons(lessons);
           this.isDone = true;
+          this.isLoading = false;
         }),
       ))
     );
@@ -168,11 +174,13 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
     const indexOfCurrentQuestion = this.questions.findIndex(({ _id }) => _id === this.activeQuestion._id);
     this.activeQuestion = this.questions[indexOfCurrentQuestion + 1];
+    this.activeQuestionIndex = indexOfCurrentQuestion + 1;
     this.answerIndexes = [];
 
     let observable$ = this.postQuestionAnswer(question, answers);
 
     if (!this.activeQuestion) {
+      this.isLoading = true;
       observable$ = observable$.pipe(
         mergeMap(() => this.getTestResults()),
       );
