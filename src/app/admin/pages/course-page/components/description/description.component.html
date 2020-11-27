@@ -10,7 +10,7 @@
     </app-shadow-container>
     <app-shadow-container>
       <div class="card-header">
-        <p class="title">Полученные знания</p>
+        <p class="title">Компетенции</p>
       </div>
       <ul class="skills">
         <li class="skills__item" *ngFor="let skillControl of skillsControls">
@@ -21,7 +21,7 @@
              [formControl]="skillControl"></p>
         </li>
       </ul>
-      <app-button [bordered]="true" (click)="onAddSkill()">Добавить знание</app-button>
+      <app-button [bordered]="true" (click)="onAddSkill()">Добавить компетенцию</app-button>
     </app-shadow-container>
   </app-two-box-grid>
 
